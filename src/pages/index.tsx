@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import NavBar from '@/components/Layout/NavBar'
-import Home from './Home'
+import Home from '../views/Home'
 
 export default function IndexPage() {
   return (

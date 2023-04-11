@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const PotentialUsers: React.FC = () => (
   <List>
-    <ListItem>You just started earning money, and don't have enough fund or plan for investment yet.</ListItem>
-    <ListItem>You find personal finance overly complicated and don't know where to start.</ListItem>
+    <ListItem>You just started earning money, and don&#39;t have enough fund or plan for investment yet.</ListItem>
+    <ListItem>You find personal finance overly complicated and don&#39;t know where to start.</ListItem>
     <ListItem>You want to stop procrastinating. You are willing to do monthly bookkeeping and frequently record transactions.</ListItem>
   </List>
 )
