@@ -13,12 +13,12 @@ export default function Home () {
   return (
     <>
       {/* hero */}
-      <BGPageSection>
-        <Background gradient='sky' />
+      <PageSection>
         <PaddedInner>
+          <Background gradient='sky' />
           <Hero />
         </PaddedInner>
-      </BGPageSection>
+      </PageSection>
 
       {/* about */}
       <PageSection>
@@ -67,10 +67,6 @@ export default function Home () {
     </>
   )
 }
-
-const BGPageSection = styled(PageSection)`
-  position: relative;
-`
 
 const Background = styled.div<{gradient: string}>`
   z-index: -100;
