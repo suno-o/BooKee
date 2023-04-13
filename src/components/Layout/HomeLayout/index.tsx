@@ -1,17 +1,17 @@
 import React from "react"
 import NavBar from "../components/NavBar"
-import HomeFooter from "../components/Footer"
+import Footer from "../components/Footer"
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function HomeMain({children}: Props) {
+export default function HomeLayout({children}: Props) {
   return (
     <>
       <NavBar />
       <main>{children}</main>
-      <HomeFooter />
+      <Footer />
     </>
   )
 }
