@@ -14,9 +14,9 @@ const Step1: React.FC = () => (
           Understanding your spending habit, and choosing the right banking product is the first step.
           BooKee helps you categorize your spendings, so you can better analyze them.
         </p>
-        <Note>Learn how I save and benefit $1500+ anually just by choosing the right product</Note>
-        <Link href='/case-study'>
-          <StepButton width={140}>Case study</StepButton>
+        <Note>Learn how I save and benefit $1500+ annually just by choosing the right product</Note>
+        <Link href='/learn/choosing-banking-products'>
+          <StepButton width={140}>Read more</StepButton>
         </Link>
       </Jumbotron.Content>
     </Jumbotron.Pane>

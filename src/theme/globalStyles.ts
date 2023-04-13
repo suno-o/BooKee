@@ -12,6 +12,10 @@ export default createGlobalStyle<{theme: BooKeeTheme}>`
     padding: 0;
   }
 
+  ul, ol {
+    margin-left: 1rem;
+  }
+
   b {
     color: ${p => p.theme.colors.primary};
     white-space: nowrap;
