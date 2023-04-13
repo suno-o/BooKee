@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import Head from 'next/head'
-import HomeMain from '@/components/Layout/HomeLayout'
+import HomeLayout from '@/components/Layout/HomeLayout'
 import Home from '../views/Home'
 
 export default function IndexPage() {
@@ -19,6 +19,6 @@ export default function IndexPage() {
 
 IndexPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <HomeMain>{page}</HomeMain>
+    <HomeLayout>{page}</HomeLayout>
   )
 }
