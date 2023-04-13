@@ -1,3 +1,5 @@
+import type { ReactElement, ReactNode } from 'react'
+import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import { BooKeeTheme } from '@/theme'
@@ -6,11 +8,21 @@ import { Open_Sans } from 'next/font/google'
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
-export default function App({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? (page => page);
+
   return <div className={openSans.className}>
     <ThemeProvider theme={BooKeeTheme}>
       <GlobalStyles />
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </ThemeProvider>
   </div>
 }

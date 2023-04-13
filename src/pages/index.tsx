@@ -1,5 +1,6 @@
+import type { ReactElement } from 'react'
 import Head from 'next/head'
-import NavBar from '@/components/Layout/NavBar'
+import HomeMain from '@/components/Layout/HomeLayout'
 import Home from '../views/Home'
 
 export default function IndexPage() {
@@ -11,10 +12,13 @@ export default function IndexPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <NavBar />
-        <Home />
-      </main>
+      <Home />
     </>
+  )
+}
+
+IndexPage.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <HomeMain>{page}</HomeMain>
   )
 }

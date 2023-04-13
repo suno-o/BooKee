@@ -4,7 +4,6 @@ import Step1 from "./components/Steps/Step1"
 import Step2 from "./components/Steps/Step2"
 import PotentialUsers from "./components/PotentialUsers"
 import TryNow from "./components/TryNow"
-import HomeFooter from "@/components/Layout/HomeFooter"
 import { PageSection, PaddedInner } from "@/components/Layout/Page"
 import { Heading2 } from "@/components/Heading"
 import styled from "styled-components"
@@ -61,9 +60,6 @@ export default function Home () {
         <Heading>Sounds like you? Try <b>BooKee</b> Now!</Heading>
         <TryNow />
       </PageSection>
-
-      {/* footer */}
-      <HomeFooter />
     </>
   )
 }
