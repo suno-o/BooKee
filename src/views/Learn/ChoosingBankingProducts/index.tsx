@@ -8,7 +8,7 @@ export default function ChoosingBankingProducts() {
     <PageSection>
       <Header>
         <Heading1>Choosing Your Banking Products</Heading1>
-        <Date>April 13, 2024 10:30pm</Date>
+        <Date>April 12, 2023 10:30pm</Date>
       </Header>
       <Content>
         <Img src={savingImg} alt='Choosing banking products article image' />
