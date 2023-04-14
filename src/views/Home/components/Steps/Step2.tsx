@@ -11,12 +11,12 @@ const Step2: React.FC = () => (
       <Jumbotron.Heading>Pay your credit bills in advance</Jumbotron.Heading>
       <Jumbotron.Content>
         <p>
-          This is the core feature of BooKee. It suggests you to pay credit bills on the last day of each month. This way, 
-          your payment <b>matches</b> your spending every month.
+          This is the core feature of BooKee. It suggests you to change statement period, and pay credit bills on the last day of each month.
+          This way, your payment <b>matches</b> your spendings every month.
         </p>
         <Note>Learn about misconceptions and benefits of paying credit bills in advance</Note>
-        <Link href='/paying-bills'>
-          <StepButton bgTheme='secondary' width={140}>Learn</StepButton>
+        <Link href='/learn/paying-bills'>
+          <StepButton bgTheme='secondary' width={140}>Learn more</StepButton>
         </Link>
       </Jumbotron.Content>
     </Jumbotron.Pane>
