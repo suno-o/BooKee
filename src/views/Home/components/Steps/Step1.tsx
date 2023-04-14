@@ -8,7 +8,7 @@ const Step1: React.FC = () => (
   <Jumbotron>
     <Jumbotron.Pane>
       <Jumbotron.SubHeading colorTheme='success'>First</Jumbotron.SubHeading>
-      <Jumbotron.Heading>Choose the right product</Jumbotron.Heading>
+      <Jumbotron.Heading>Choose the right banking product</Jumbotron.Heading>
       <Jumbotron.Content>
         <p>
           Understanding your spending habit, and choosing the right banking product is the first step.
