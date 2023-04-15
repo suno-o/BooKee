@@ -21,7 +21,7 @@ export default function ChoosingBankingProducts() {
           Instead, we started talking more about our future. Our career goals. Financial goals. And of course, our plans for marriage.
         </P>
         <P>
-          One of the hottest topic was always this. <b>"What do you do with your money"</b>. We all had our own sort of baby approach, but a lot of my friends were 
+          One of the hottest topic was always this. <b>&quot;What do you do with your money&quot;</b>. We all had our own sort of baby approach, but a lot of my friends were 
           specifically impressed with mine, and started to adopt it. This was my motivation to start working on this project.
         </P>
         <P>
@@ -29,7 +29,7 @@ export default function ChoosingBankingProducts() {
         </P>
 
         {/* begin */}
-        <Heading3 style={{margin: '32px 0'}}>Let's begin</Heading3>
+        <Heading3 style={{margin: '32px 0'}}>Let&apos;s begin</Heading3>
         <P>I am an adult who lives in a small apartment in Downtown Toronto. My primary spendings are:</P>
         <Ol>
           <Li>Rent</Li>
@@ -61,7 +61,7 @@ export default function ChoosingBankingProducts() {
           <Li>
             Scotia One Package
             <Ul>
-              <Li>Since 2 banks above only offer online banking, I opened this for urgent situation when I need to visit branch and talk to a real person. Also it's good to have at least one account from big 5 banks</Li>
+              <Li>Since 2 banks above only offer online banking, I opened this for urgent situation when I need to visit branch and talk to a real person. Also it&apos;s good to have at least one account from big 5 banks</Li>
               <Li>Deposit some cash as an emergency fund and get credit card fee waived</Li>
             </Ul>
           </Li>
@@ -121,7 +121,7 @@ export default function ChoosingBankingProducts() {
         <Heading3 style={{margin: '32px 0'}}>Summary</Heading3>
         <P>
           Based on the above calculation, the total amount I save is around $1,091/year. If I consider some of the spending
-          I did not disclose here, and value of benefits I receive, the total becomes around $1,500+/year. Some might say this isn't much. But
+          I did not disclose here, and value of benefits I receive, the total becomes around $1,500+/year. Some might say this isn&apos;t much. But
           something is better than nothing :) And all I have done is <b>choosing the right banking products based on my spending habit.</b>
         </P>
 

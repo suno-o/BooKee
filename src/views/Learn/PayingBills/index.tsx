@@ -21,7 +21,7 @@ export default function PayingBills() {
         </P>
 
         <P>
-          Let's assume the following:
+          Let&apos;s assume the following:
         </P>
 
         <Ol>
@@ -47,36 +47,36 @@ export default function PayingBills() {
         </P>
 
         {/* why */}
-        <Heading3 style={{margin: '32px 0'}}>So, what's the benefit of it?</Heading3>
+        <Heading3 style={{margin: '32px 0'}}>So, what&apos;s the benefit of it?</Heading3>
 
         <P>
-          By the way, did you notice anything weird on the above example? "Your credit statement issued on Mar 20 says,
-          you have to make a payment of $1,000 by Apr 10, and that payment is for the purchase you had made from Feb 21 to Mar 20."
+          By the way, did you notice anything weird on the above example? &quot;Your credit statement issued on Mar 20 says,
+          you have to make a payment of $1,000 by Apr 10, and that payment is for the purchase you had made from Feb 21 to Mar 20.&quot;
         </P>
 
         <P>
           What do you think an average young adult would do when they receive that credit card statement? 7/10 of my friends will make payments between Apr 3-10.
           That makes managing their spendings overly complicated. Come on! Do you really want to pay for the stuff (you purchased on Feb 21) on Apr 7?
-          And imagine you have multiple credit cards with different statement periods and deadlines. Yuck! 🤮 Let's not do that.
+          And imagine you have multiple credit cards with different statement periods and deadlines. Yuck! 🤮 Let&apos;s not do that.
         </P>
 
         <P>
           In summary, changing your statement period and paying credit bills on the last day of each month allow you to easily manage your spendings
-          by making a payment for the purchase you've made in the <b>same month</b> the purchase was made.
+          by making a payment for the purchase you&apos;ve made in the <b>same month</b> the purchase was made.
           It also helps maintaining a good credit score by reducing the chance of paying late (my credit score is 830+ 😉)
         </P>
 
         <P>
           On the other hand, this approach is highly opinionated, and some might argue that it has downsides as well as paying your credit bills in advance
           defeats the purpose of having credit. But, I am not saying this is what everyone should do. The whole purpose of BooKee is to share
-          my opinion and approach with my friends who are willing to adopt it, and to help many young adults out there who don't know where to start.
+          my opinion and approach with my friends who are willing to adopt it, and to help many young adults out there who don&apos;t know where to start.
         </P>
 
         <P>
-          If you feel like this is misleading, please don't hesitate to raise your concern and contact me. I am always open to criticism, learn from it, and fix mistakes I've made.
+          If you feel like this is misleading, please don&apos;t hesitate to raise your concern and contact me. I am always open to criticism, learn from it, and fix mistakes I&apos;ve made.
         </P>
 
-        <P style={{color: 'green'}}>// add mini contact form here later or maybe my email</P>
+        <P style={{color: 'green'}}>&#47;&#47; add mini contact form here later or maybe my email</P>
 
       </Content>
     </PageSection>
