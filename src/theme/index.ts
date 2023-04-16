@@ -24,6 +24,7 @@ const colors: Colors = {
   success: '#31d0af',
   warning: '#ffb237',
   failure: '#ee4a9a',
+  white: '#fff',
   sky_blue: '#e6faff',
   sky_purple: '#f3eeff',
   text_grey: '#707070',
@@ -32,12 +33,15 @@ const colors: Colors = {
 }
 
 const gradients: Gradients = {
+  primary: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primary}aa 100%)`,
   sky: `linear-gradient(60deg, ${colors.sky_blue} 0%, ${colors.sky_purple} 100%)`,
   purple: `linear-gradient(60deg, #fff 0%, ${colors.sky_purple} 100%)`,
 }
 
 const shadows: Shadows = {
+  grey_small: '1px 1px 3px 1px rgba(100,100,100,0.1)',
   grey: '1px 1px 5px 2px rgba(100,100,100,0.1)',
+  grey_blurry: '1px 1px 20px 1px rgba(100,100,100,0.2)',
 }
 
 const layout: Layout = {

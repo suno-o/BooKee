@@ -24,18 +24,22 @@ export type Colors = {
   failure: string;
   sky_blue: string;
   sky_purple: string;
+  white: string;
   text_grey: string;
   text_grey_light: string;
   text_grey_dark: string;
 }
 
 export type Gradients = {
+  primary: string;
   sky: string;
   purple: string;
 }
 
 export type Shadows = {
-  grey: '1px 1px 5px 2px rgba(100,100,100,0.1)',
+  grey_small: string,
+  grey: string,
+  grey_blurry: string,
 }
 
 export type Layout = {
