@@ -1,6 +1,6 @@
 export interface AccountData {
   total: number;
-  balanceByBank: Balance[];
+  balances: Balance[];
 }
 
 export interface Balance {

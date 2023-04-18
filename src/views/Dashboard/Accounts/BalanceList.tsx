@@ -1,5 +1,7 @@
-import styled from "styled-components"
+import { useContext } from "react"
+import styled, { ThemeContext } from "styled-components"
 import { formatCash } from "@/utils/numbers"
+import { getRandomColor } from "@/utils/colors"
 import { Balance } from "@/state/mockTypes"
 
 interface Props {
@@ -7,34 +9,37 @@ interface Props {
 }
 
 export default function BalanceList({data}: Props) {
+  const theme = useContext(ThemeContext);
 
   return (
     <Container>
       <Wrapper>
-      {data.map((item: Balance) => (
-        <BankBalance key={item.bankName}>
-          <Bank>{item.bankName}</Bank>
-          <Amount>{formatCash(item.balance)}</Amount>
-        </BankBalance>
-      ))}
+      {data.map((item: Balance) => {
+        const [randomTheme, opacity] = getRandomColor();
+        return (
+          <BankBalance key={item.bankName} bgColor={`${theme.colors[randomTheme]+opacity}`}>
+            <Bank>{item.bankName}</Bank>
+            <Amount>{formatCash(item.balance)}</Amount>
+          </BankBalance>
+        )
+      })}
       </Wrapper>
     </Container>
   )
 }
 
+
+/* styles */
 const Container = styled.div`
   border-radius: 16px;
-  padding: 12px 0;
+  padding: 8px 0;
+  text-align: center;
 `
 
 const Wrapper = styled.div`
   overflow-x: auto;
   white-space: nowrap;
-  padding-bottom: 10px;
-
-  ${p => p.theme.mediaQueries.md} {
-    max-width: 300px;
-  }
+  padding-bottom: 12px;
   
   &::-webkit-scrollbar {
     border-radius: 16px;
@@ -42,24 +47,31 @@ const Wrapper = styled.div`
   }
   &::-webkit-scrollbar-track {
     border-radius: 16px;
-    background-color: ${p => p.theme.colors.sky_purple};
-    margin-left: 8px;
-    margin-right: 8px;
+    background-color: ${p => p.theme.colors.text_grey}20;
+    margin-left: 16px;
+    margin-right: 16px;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 16px;
-    background-color: ${p => p.theme.colors.primary}40;
+    background-color: ${p => p.theme.colors.text_grey}30;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${p => p.theme.colors.text_grey}50;
   }
 `
 
-const BankBalance = styled.div`
+const BankBalance = styled.div<{bgColor: string}>`
   display: inline-block;
   border-radius: 20px;
-  background-color: ${p => p.theme.colors.sky_purple};
+  background-color: ${p => p.bgColor};
   margin: 0 8px;
   padding: 8px 12px;
   text-align: center;
   color: ${p => p.theme.colors.text_grey_dark};
+
+  &:first-child {
+    margin-left: 16px;
+  }
 `
 
 const Bank = styled.div`
