@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import styled, { ThemeContext } from "styled-components"
 import { formatCash } from "@/utils/numbers"
-import { getRandomColor } from "@/utils/colors"
+import { getListItemLightBgColor } from "@/utils/colors"
 import { Balance } from "@/state/mockTypes"
 
 interface Props {
@@ -14,10 +14,10 @@ export default function BalanceList({data}: Props) {
   return (
     <Container>
       <Wrapper>
-      {data.map((item: Balance) => {
-        const [randomTheme, opacity] = getRandomColor();
+      {data.map((item: Balance, index) => {
+        const [bgTheme, opacity] = getListItemLightBgColor(index);
         return (
-          <BankBalance key={item.bankName} bgColor={`${theme.colors[randomTheme]+opacity}`}>
+          <BankBalance key={item.bankName} bgColor={`${theme.colors[bgTheme]+opacity}`}>
             <Bank>{item.bankName}</Bank>
             <Amount>{formatCash(item.balance)}</Amount>
           </BankBalance>
