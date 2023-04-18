@@ -1,5 +1,7 @@
 import { BreakpointMap, MediaQueries, Colors, Gradients, Shadows, Layout } from "./types"
 
+const generateGradient = (color: string) => `linear-gradient(135deg, ${color} 0%, ${color}aa 100%)`;
+
 const breakpointMap: BreakpointMap = {
   xs: 0,
   sm: 576,
@@ -33,7 +35,10 @@ const colors: Colors = {
 }
 
 const gradients: Gradients = {
-  primary: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primary}aa 100%)`,
+  primary: generateGradient(colors.primary),
+  secondary: generateGradient(colors.secondary),
+  warning: generateGradient(colors.warning),
+  failure: generateGradient(colors.failure),
   sky: `linear-gradient(60deg, ${colors.sky_blue} 0%, ${colors.sky_purple} 100%)`,
   purple: `linear-gradient(60deg, #fff 0%, ${colors.sky_purple} 100%)`,
 }

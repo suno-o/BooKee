@@ -1,5 +1,6 @@
 import { PageSection } from "@/components/Layout/Page"
 import Accounts from "./Accounts"
+import MonthlySummary from "./MonthlySummary"
 
 export default function Dashboard() {
 
@@ -7,6 +8,10 @@ export default function Dashboard() {
     <>
       <PageSection>
         <Accounts />
+      </PageSection>
+
+      <PageSection>
+        <MonthlySummary />
       </PageSection>
     </>
   )

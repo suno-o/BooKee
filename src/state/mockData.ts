@@ -75,7 +75,7 @@ export const yearlyBalanceData = [
   }
 ];
 
-export const AprilTransactionData = {
+export const aprilTransactionData = {
   total: -1500,
   cashEarning: 0,
   cashSpending: -1000,
