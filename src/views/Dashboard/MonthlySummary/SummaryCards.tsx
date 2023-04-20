@@ -50,9 +50,16 @@ const MonthlySummaryCard = styled(Card)`
 
 const CardHeader = styled(Card.Header)`
   white-space: nowrap;
+  font-size: 0.9rem;
+  ${p => p.theme.mediaQueries.sm} {
+    font-size: 1rem;
+  }
 `
 
 const CardContent = styled(Card.Content)`
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  ${p => p.theme.mediaQueries.sm} {
+    font-size: 1.5rem;
+  }
 `
