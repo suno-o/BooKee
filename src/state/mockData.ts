@@ -1,4 +1,9 @@
-export const accountData = {
+import {
+  AccountData,
+  MonthlyTransactions
+} from "./mockTypes"
+
+export const accountData: AccountData = {
   total: 50123.32,
   balances: [
     {
@@ -15,7 +20,7 @@ export const accountData = {
     },
     {
       bankName: 'RBC',
-      balance: 10123.32,
+      balance: 10000,
     },
     {
       bankName: 'Scotia',
@@ -75,7 +80,7 @@ export const yearlyBalanceData = [
   }
 ];
 
-export const aprilTransactionData = {
+export const aprilTransactionData: MonthlyTransactions = {
   total: -1500,
   cashEarning: 0,
   cashSpending: -1000,
@@ -84,42 +89,142 @@ export const aprilTransactionData = {
     {
       id: 1,
       type: 'cash',
-      amount: '-100',
+      amount: -100,
       date: '',
-      category_id: '1',
-      bank_id: '1'
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 1,
+      bank_name: 'TD'
     },
     {
       id: 2,
       type: 'credit',
-      amount: '-200',
+      amount: -200,
       date: '',
-      category_id: '1',
-      bank_id: '1'
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 1,
+      bank_name: 'TD'
     },
     {
       id: 3,
       type: 'credit',
-      amount: '-300',
+      amount: -300,
       date: '',
-      category_id: '1',
-      bank_id: '1'
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 1,
+      bank_name: 'TD'
     },
     {
       id: 4,
       type: 'cash',
-      amount: '-400',
+      amount: -400,
       date: '',
-      category_id: '1',
-      bank_id: '1'
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 1,
+      bank_name: 'TD'
     },
     {
       id: 5,
       type: 'cash',
-      amount: '-500',
+      amount: -500,
       date: '',
-      category_id: '1',
-      bank_id: '1'
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 1,
+      bank_name: 'TD'
+    },
+    {
+      id: 6,
+      type: 'credit',
+      amount: -200,
+      date: '',
+      category_id: 3,
+      category_name: 'Category 3',
+      bank_id: 2,
+      bank_name: 'CIBC',
+    },
+    {
+      id: 7,
+      type: 'cash',
+      amount: 300,
+      date: '',
+      category_id: 2,
+      category_name: 'Category 2',
+      bank_id: 3,
+      bank_name: 'BMO',
+    },
+    {
+      id: 5,
+      type: 'cash',
+      amount: -500,
+      date: '',
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 1,
+      bank_name: 'TD'
+    },
+    {
+      id: 6,
+      type: 'credit',
+      amount: -200,
+      date: '',
+      category_id: 3,
+      category_name: 'Category 3',
+      bank_id: 2,
+      bank_name: 'CIBC',
+    },
+    {
+      id: 7,
+      type: 'cash',
+      amount: 300,
+      date: '',
+      category_id: 2,
+      category_name: 'Category 2',
+      bank_id: 3,
+      bank_name: 'BMO',
+    },
+    {
+      id: 8,
+      type: 'cash',
+      amount: 500,
+      date: '',
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 1,
+      bank_name: 'TD'
+    },
+    {
+      id: 9,
+      type: 'cash',
+      amount: 500,
+      date: '',
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 2,
+      bank_name: 'CIBC'
+    },
+    {
+      id: 10,
+      type: 'cash',
+      amount: 500,
+      date: '',
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 4,
+      bank_name: 'RBC'
+    },
+    {
+      id: 11,
+      type: 'cash',
+      amount: 500,
+      date: '',
+      category_id: 1,
+      category_name: 'Category 1',
+      bank_id: 5,
+      bank_name: 'Scotia'
     },
   ]
 }

@@ -27,6 +27,7 @@ export type Colors = {
   white: string;
   text_grey: string;
   text_grey_light: string;
+  text_grey_lighter: string;
   text_grey_dark: string;
 }
 

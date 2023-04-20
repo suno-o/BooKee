@@ -31,6 +31,7 @@ const colors: Colors = {
   sky_purple: '#f3eeff',
   text_grey: '#707070',
   text_grey_light: '#969696',
+  text_grey_lighter: '#bbbbbb',
   text_grey_dark: '#333333',
 }
 
@@ -46,7 +47,7 @@ const gradients: Gradients = {
 const shadows: Shadows = {
   grey_small: '1px 1px 3px 1px rgba(100,100,100,0.1)',
   grey: '1px 1px 5px 2px rgba(100,100,100,0.1)',
-  grey_blurry: '1px 1px 20px 1px rgba(100,100,100,0.2)',
+  grey_blurry: '1px 1px 10px 1px rgba(100,100,100,0.2)',
 }
 
 const layout: Layout = {

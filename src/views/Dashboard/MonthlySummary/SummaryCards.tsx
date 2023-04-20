@@ -1,20 +1,11 @@
 import styled from "styled-components"
 import Card from "@/components/Card"
 import { formatCash } from "@/utils/numbers"
+import { aprilTransactionData } from "@/state/mockData"
 
-interface Props {
-  cashEarning: number;
-  cashSpending: number;
-  creditSpending: number;
-  total: number;
-}
-
-export default function SummaryCards({
-  cashEarning,
-  cashSpending,
-  creditSpending,
-  total
-}: Props) {
+export default function SummaryCards() {
+  const { cashEarning, cashSpending, creditSpending, total } = aprilTransactionData;
+  
   return (
     <CardSection>
       <MonthlySummaryCard styles={{bgTheme:'primary', colorTheme:'white'}}>
@@ -42,15 +33,15 @@ const CardSection = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+
+  ${p => p.theme.mediaQueries.md} {
+    gap: 32px;
+  }
 `
 
 const MonthlySummaryCard = styled(Card)`
   flex: 0 0 auto;
-  width: 100%;
-
-  ${p => p.theme.mediaQueries.sm} {
-    width: calc(50% - 16px / 2);
-  }
+  width: calc(50% - 16px / 2);
 
   ${p => p.theme.mediaQueries.md} {
     flex: 1;
