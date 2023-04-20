@@ -61,16 +61,16 @@ export default function TransactionSummaryTable({
           <TabItemsWrapper>
             {tabs.map((tab: string) => {
               if (tab === currentTab)
-                return <ActiveTab bgTheme={theme} onClick={onTabChange(tab)}>{tab}</ActiveTab>
+                return <ActiveTab key={tab} bgTheme={theme} onClick={onTabChange(tab)}>{tab}</ActiveTab>
 
-              return <TabItem onClick={onTabChange(tab)}>{tab}</TabItem>
+              return <TabItem key={tab} onClick={onTabChange(tab)}>{tab}</TabItem>
             })}
           </TabItemsWrapper>
         </Tab>
       </Header>
       <Content scrollTheme={theme}>
         {tabData.map((data: TransactionSummaryData, index: number) => (
-          <AnimatedWrapper index={index} visible={currentTab === tabs[index]}>
+          <AnimatedWrapper key={tabs[index]} index={index} visible={currentTab === tabs[index]}>
             <TransactionTable
               header={tabs[index]}
               data={data}
