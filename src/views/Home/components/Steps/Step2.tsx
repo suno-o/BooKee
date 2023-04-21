@@ -15,7 +15,7 @@ const Step2: React.FC = () => (
           This way, your payment <b>matches</b> your spendings every month.
         </p>
         <Note>Learn about misconceptions and benefits of paying credit bills in advance</Note>
-        <Link href='/learn/paying-bills'>
+        <Link href='/article/paying-bills'>
           <StepButton bgTheme='secondary' width={140}>Learn more</StepButton>
         </Link>
       </Jumbotron.Content>

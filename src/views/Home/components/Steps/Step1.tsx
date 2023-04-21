@@ -15,7 +15,7 @@ const Step1: React.FC = () => (
           BooKee helps you categorize your spendings, so you can better analyze them.
         </p>
         <Note>Learn how I save and benefit $1500+ annually just by choosing the right product</Note>
-        <Link href='/learn/choosing-banking-products'>
+        <Link href='/article/choosing-banking-products'>
           <StepButton width={140}>Read more</StepButton>
         </Link>
       </Jumbotron.Content>

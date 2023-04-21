@@ -5,8 +5,8 @@ const Footer = () => (
   <FooterContainer>
     <FooterWrapper>
       <Links>
-        <LinkItem href='/learn/choosing-banking-products'>How to save money</LinkItem>
-        <LinkItem href='/learn/paying-bills'>Paying credit bills</LinkItem>
+        <LinkItem href='/article/choosing-banking-products'>How to save money</LinkItem>
+        <LinkItem href='/article/paying-bills'>Paying credit bills</LinkItem>
         <LinkItem href='/privacy-policy'>Privacy Policy</LinkItem>
       </Links>
 
