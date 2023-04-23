@@ -6,6 +6,6 @@ export const getListItemLightBgColor = (index: number) => {
   if (selectedTheme.indexOf('sky') !== -1)
     return [selectedTheme, 'cc'];
   
-  const hexOpacity = Math.floor(Math.random() * 20) + 21; // 21-40
+  const hexOpacity = 30;
   return [selectedTheme, hexOpacity];
 };
