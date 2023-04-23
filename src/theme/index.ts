@@ -31,7 +31,7 @@ const colors: Colors = {
   sky_purple: '#f3eeff',
   text_grey: '#707070',
   text_grey_light: '#969696',
-  text_grey_lighter: '#bbbbbb',
+  text_grey_lighter: '#d2d2d7',
   text_grey_dark: '#333333',
 }
 

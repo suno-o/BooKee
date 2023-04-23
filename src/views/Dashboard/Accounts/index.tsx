@@ -24,7 +24,7 @@ export default function Accounts() {
           <BalanceList data={accountData.balances}/>
         </Account>
         <GraphContainer>
-          <ResponsiveContainer width='99%' height={200}>
+          <ResponsiveContainer width='99%' height={220}>
             <LineChart
               data={yearlyBalanceData}
             >
@@ -59,18 +59,21 @@ const Content = styled.div`
 const Account = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
   border-radius: 16px;
   box-shadow: ${p => p.theme.shadows.grey_blurry};
 
   ${p => p.theme.mediaQueries.md} {
-    width: 40%;
+    width: calc(50% - 16px);
   }
 `
 
 const BalanceCard = styled(Card)`
-  padding-left: 8px;
-  padding-right: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 8px;
 `
 
 const BalanceCardContent= styled(Card.Content)`
@@ -84,6 +87,6 @@ const GraphContainer = styled.div`
   padding: 16px 16px 0 0;
 
   ${p => p.theme.mediaQueries.md} {
-    width: 60%;
+    width: calc(50% - 16px);
   }
 `
