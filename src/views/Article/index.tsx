@@ -5,7 +5,7 @@ import { Article } from "@/pages/article/[slug]"
 import { PageSection } from "@/components/Layout/Page"
 import { Heading1 } from "@/components/Heading"
 import { Header, Date, Content, Img, markdownComponents } from "./styles"
-import { prettifyDate } from "@/utils/date"
+import { prettifyDateDetailed } from "@/utils/date"
 
 export default function ArticleView(props: {article: Article}) {
   /* NOTE: img_url holds a filename for now. It needs to be updated later to hold an actual url - requires updating line #21 containing '<Img src=...' */
@@ -15,7 +15,7 @@ export default function ArticleView(props: {article: Article}) {
     <PageSection>
       <Header>
         <Heading1>{title}</Heading1>
-        <Date>{prettifyDate(created)}</Date>
+        <Date>{prettifyDateDetailed(created)}</Date>
       </Header>
       <Content>
         <Img src={require(`@/assets/images/${img_url}.jpg`)} alt='Paying credit bills early article image' />
