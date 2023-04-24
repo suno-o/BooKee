@@ -45,8 +45,8 @@ const gradients: Gradients = {
 }
 
 const shadows: Shadows = {
-  grey_small: '1px 1px 3px 1px rgba(100,100,100,0.1)',
   grey: '1px 1px 5px 2px rgba(100,100,100,0.1)',
+  grey_dark: '4px 4px 16px 3px rgba(100,100,100,0.3)',
   grey_blurry: '1px 1px 10px 1px rgba(100,100,100,0.2)',
 }
 

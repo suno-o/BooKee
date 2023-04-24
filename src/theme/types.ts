@@ -41,8 +41,8 @@ export type Gradients = {
 }
 
 export type Shadows = {
-  grey_small: string,
   grey: string,
+  grey_dark: string,
   grey_blurry: string,
 }
 
