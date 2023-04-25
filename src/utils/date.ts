@@ -27,3 +27,14 @@ export const prettifyDateConcise = (dateStr: string) => {
   
   return `${m < 10 ? `0${m}`: m}/${d < 10 ? `0${d}`: d}/${date.getFullYear()}`;
 }
+
+const monthShorthandNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+export const getLastNMonths = (n: number) => {
+  const date = new Date();
+
+  return Array.from({ length: n }, (_, i: number) => {
+    const d = new Date(date.getFullYear(), date.getMonth() - i, 1);
+    return `${monthShorthandNames[d.getMonth()]} ${d.getFullYear()}`;
+  })
+}
