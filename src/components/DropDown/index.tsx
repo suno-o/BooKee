@@ -4,16 +4,21 @@ import { useOutsideClickAlert } from "@/hooks/useOutsideClickAlert"
 
 interface Props {
   width?: number;
+  label?: string;
+  selected?: string;
+  onChange: (selected: string) => () => void;
   listItems: string[]; // use label as a key for now
 }
 
 const DropDown = ({
+  label,
+  selected,
+  onChange,
   listItems,
   ...rest
 }: Props) => {
   const selectRef = useRef<HTMLDivElement>(null);
   const [outsideClicked, reset] = useOutsideClickAlert(selectRef);
-  const [selected, setSelected] = useState(listItems[0]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -25,16 +30,14 @@ const DropDown = ({
   }, [outsideClicked])
 
   return (
-    <>
-      <Select ref={selectRef} optionsVisible={open} onClick={() => setOpen(st => !st)} {...rest}>
-        {selected}
-        <Options visible={open} top={selectRef?.current?.clientHeight}>
-          {listItems.map(item => (item !== selected) && (
-            <Option key={item} onClick={() => setSelected(item)}>{item}</Option>
-          ))}
-        </Options>
-      </Select>
-    </>
+    <Select ref={selectRef} optionsVisible={open} onClick={() => setOpen(st => !st)} {...rest}>
+      {selected ? selected : label}
+      <Options visible={open} top={selectRef?.current?.clientHeight}>
+        {listItems.map(item => (item !== selected) && (
+          <Option key={item} onClick={onChange(item)}>{item}</Option>
+        ))}
+      </Options>
+    </Select>
   )
 }
 export default DropDown;
