@@ -1,24 +1,16 @@
 import React from 'react'
 import styled, { css } from 'styled-components';
 
-interface ButtonProps {
-  bgTheme?: string;
-  width?: number;
-  height?: number;
+interface ButtonCSSProps {
   color?: string;
+  disabled?: boolean;
 }
-
-export const StyledButton = styled.button<ButtonProps>`
-  box-shadow: ${p => p.theme.shadows.grey};
-  border: 0;
-  border-radius: 8px;
-  background-color: ${p => p.theme.colors[p.bgTheme ? p.bgTheme : 'primary']};
-  width: ${p => p.width ? `${p.width}px` : '100%'};
-  height: ${p => p.height ? `${p.height}px` : '100%'};
-  padding: 12px;
+const buttonCSS = css<ButtonCSSProps>`
   font-weight: bold;
   color: ${p => p.color ? p.color : 'white'};
   white-space: nowrap;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   
   ${props => !props.disabled && css`
     cursor: pointer;
@@ -32,7 +24,24 @@ export const StyledButton = styled.button<ButtonProps>`
   `}
 `
 
-interface Props extends ButtonProps {
+interface ButtonProps {
+  bgTheme?: string;
+  width?: number;
+  height?: number;
+}
+const StyledButton = styled.button<ButtonProps>`
+  box-shadow: ${p => p.theme.shadows.grey};
+  border: 0;
+  border-radius: 8px;
+  background-color: ${p => p.theme.colors[p.bgTheme ? p.bgTheme : 'primary']};
+  width: ${p => p.width ? `${p.width}px` : '100%'};
+  height: ${p => p.height ? `${p.height}px` : '100%'};
+  padding: 12px;
+  ${buttonCSS}
+`
+
+/* Button */
+interface Props extends ButtonProps, ButtonCSSProps {
   onClick?: () => void;
   children: React.ReactNode;
 }
@@ -53,3 +62,29 @@ const Button = ({
 }
 
 export default Button;
+
+/* Wrapper */
+const BasicButton = styled.button`
+  all: unset;
+  ${buttonCSS}
+`
+
+interface BasicButtonProps extends ButtonCSSProps {
+  onClick?: () => void;
+  children: React.ReactNode;
+}
+
+export const ButtonWrapper = ({
+  onClick,
+  children,
+  ...rest
+}: BasicButtonProps) => {
+  return (
+    <BasicButton
+      onClick={onClick}
+      {...rest}
+    >
+      {children}
+    </BasicButton>
+  );
+}
