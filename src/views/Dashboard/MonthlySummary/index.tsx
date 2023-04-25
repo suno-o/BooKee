@@ -37,6 +37,6 @@ export default function MonthlySummary() {
 }
 
 const DropDownWrapper = styled.div`
-  margin-bottom: 16px;
+  margin-bottom: 32px;
   text-align: right;
 `

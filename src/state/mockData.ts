@@ -24,7 +24,11 @@ export const accountData: AccountData = {
     },
     {
       bankName: 'Scotia',
-      balance: 10000,
+      balance: 5000,
+    },
+    {
+      bankName: 'Tangerine',
+      balance: 5000,
     },
   ]
 }
@@ -36,39 +40,39 @@ export const yearlyBalanceData = [
   },
   {
     month: 'Jun',
-    balance: 0,
+    balance: 29123.32,
   },
   {
     month: 'Jul',
-    balance: 0,
+    balance: 30123.32,
   },
   {
     month: 'Aug',
-    balance: 0,
+    balance: 31123.32,
   },
   {
     month: 'Sep',
-    balance: 30123.32,
+    balance: 33123.32,
   },
   {
     month: 'Oct',
-    balance: 38123.32,
+    balance: 37123.32,
   },
   {
     month: 'Nov',
-    balance: 48123.32,
+    balance: 39123.32,
   },
   {
     month: 'Dec',
-    balance: 50123.32,
+    balance: 41123.32,
   },
   {
     month: 'Jan',
-    balance: 30123.32,
+    balance: 44123.32,
   },
   {
     month: 'Feb',
-    balance: 38123.32,
+    balance: 46123.32,
   },
   {
     month: 'Mar',

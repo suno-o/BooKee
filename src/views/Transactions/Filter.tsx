@@ -45,14 +45,14 @@ const Filter = () => {
           selected={bankFilter}
           onChange={handleChangeCreator(setBankFilter)}
           label={'Bank'}
-          listItems={['TD', 'CIBC', 'RBC']}
+          listItems={['TD', 'CIBC', 'BMO', 'RBC', 'Scotia', 'Tangerine']}
         />
          <DropDown
           width={150}
           selected={categoryFilter}
           onChange={handleChangeCreator(setCategoryFilter)}
           label={'Category'}
-          listItems={['Grocery', 'Kijiji']}
+          listItems={['Grocery', 'Kijiji', 'Part-time Job']}
         />
         <Btn bgTheme='text_grey' onClick={resetCategoryFilters}>Reset</Btn>
       </CategoryFilterWrapper>
@@ -69,7 +69,7 @@ const Container = styled.div`
 const TypeFilterWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 
   ${p => p.theme.mediaQueries.md} {
     justify-content: flex-start;
@@ -82,7 +82,7 @@ const BtnWrapper = styled(ButtonWrapper)<{disabled?: boolean}>`
   transition: transform 300ms ease-in-out;
 
   &:hover {
-    ${p => !p.disabled && `transform: translateY(-5px);`}
+    ${p => !p.disabled && `transform: translateY(-4px);`}
   }
 
   ${p => p.disabled && css`
@@ -100,11 +100,9 @@ const BtnWrapper = styled(ButtonWrapper)<{disabled?: boolean}>`
 `
 
 const FilterCard = styled(Card)`
-  padding: 8px 20px;
-
-  ${p => p.theme.mediaQueries.sm} {
-    padding: 12px 32px;
-  }
+  padding: 8px 24px;
+  ${p => p.theme.mediaQueries.sm} { padding: 10px 28px; }
+  ${p => p.theme.mediaQueries.md} { padding: 12px 32px; }
 `
 
 const FilterHeader = styled(Card.Header)`
