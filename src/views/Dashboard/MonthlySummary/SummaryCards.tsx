@@ -9,20 +9,20 @@ export default function SummaryCards() {
   return (
     <CardSection>
       <MonthlySummaryCard styles={{bgTheme:'primary', colorTheme:'white'}}>
-        <CardHeader>Earning</CardHeader>
-        <CardContent>{formatCash(cashEarning)}</CardContent>
+        <Card.Header>Earning</Card.Header>
+        <Card.Content>{formatCash(cashEarning)}</Card.Content>
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'secondary', colorTheme:'white'}}>
-        <CardHeader>Cash Spending</CardHeader>
-        <CardContent>{formatCash(cashSpending)}</CardContent>
+        <Card.Header>Cash Spending</Card.Header>
+        <Card.Content>{formatCash(cashSpending)}</Card.Content>
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'warning', colorTheme:'white'}}>
-        <CardHeader>Credit Spending</CardHeader>
-        <CardContent>{formatCash(creditSpending)}</CardContent>
+        <Card.Header>Credit Spending</Card.Header>
+        <Card.Content>{formatCash(creditSpending)}</Card.Content>
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'failure', colorTheme:'white'}}>
-        <CardHeader>{total > 0 ? 'Net Income' : 'Net Loss'}</CardHeader>
-        <CardContent>{formatCash(total)}</CardContent>
+        <Card.Header>{total > 0 ? 'Net Income' : 'Net Loss'}</Card.Header>
+        <Card.Content>{formatCash(total)}</Card.Content>
       </MonthlySummaryCard>
     </CardSection>
   )
@@ -45,21 +45,5 @@ const MonthlySummaryCard = styled(Card)`
 
   ${p => p.theme.mediaQueries.md} {
     flex: 1;
-  }
-`
-
-const CardHeader = styled(Card.Header)`
-  white-space: nowrap;
-  font-size: 0.9rem;
-  ${p => p.theme.mediaQueries.sm} {
-    font-size: 1rem;
-  }
-`
-
-const CardContent = styled(Card.Content)`
-  font-weight: bold;
-  font-size: 1.3rem;
-  ${p => p.theme.mediaQueries.sm} {
-    font-size: 1.5rem;
   }
 `

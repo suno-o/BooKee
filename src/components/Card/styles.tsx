@@ -13,15 +13,21 @@ export const Container = styled.div<{styles: CardStyles}>`
   ${p => p.theme.mediaQueries.md} {
     padding: 24px
   }
-
-  ${p => p.theme.mediaQueries.md} {
-    padding: 24px 32px;
-  }
 `
 
 export const Header = styled.div`
   font-weight: 500;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  ${p => p.theme.mediaQueries.sm} {
+    font-size: 1rem;
+  }
 `
 
 export const Content = styled.div`
+  font-weight: bold;
+  font-size: 1.2rem;
+  ${p => p.theme.mediaQueries.sm} {
+    font-size: 1.4rem;
+  }
 `
