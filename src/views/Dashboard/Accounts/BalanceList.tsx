@@ -27,11 +27,11 @@ export default function BalanceList({data}: Props) {
   return (
     <Container>
       <Wrapper>
-        <Paddle visible={leftPaddleVisible} onClick={onScroll(false)}>&lt;</Paddle>
+        <Paddle visible={leftPaddleVisible} onClick={onScroll(false)}>&#10094;</Paddle>
         <BankBalances ref={scrollViewRef} lVisible={leftPaddleVisible} rVisible={rightPaddleVisible}>
           {bankBalanceViews}
         </BankBalances>
-        <Paddle visible={rightPaddleVisible} onClick={onScroll(true)}>&gt;</Paddle>
+        <Paddle visible={rightPaddleVisible} onClick={onScroll(true)}>&#10095;</Paddle>
       </Wrapper>
     </Container>
   )

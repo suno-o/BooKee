@@ -2,6 +2,9 @@ import styled from "styled-components"
 import { CardStyles } from "./types"
 
 export const Container = styled.div<{styles: CardStyles}>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border-radius: 16px;
   padding: 16px;
   text-align: center;
@@ -10,7 +13,7 @@ export const Container = styled.div<{styles: CardStyles}>`
   color: ${p => p.styles.colorTheme && p.theme.colors[p.styles.colorTheme]};
   box-shadow: ${p => p.styles.shadow && p.theme.shadows.grey_blurry};
 
-  ${p => p.theme.mediaQueries.md} {
+  ${p => p.theme.mediaQueries.sm} {
     padding: 24px
   }
 `
