@@ -35,7 +35,7 @@ const StyledButton = styled.button<ButtonProps>`
   border-radius: 8px;
   background-color: ${p => p.theme.colors[p.bgTheme ? p.bgTheme : 'primary']};
   width: ${p => p.width ? `${p.width}px` : '100%'};
-  height: ${p => p.height ? `${p.height}px` : '100%'};
+  height: ${p => p.height ? `${p.height}px` : 'auto'};
   padding: 12px;
   ${buttonCSS}
 `

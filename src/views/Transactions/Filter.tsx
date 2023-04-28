@@ -126,7 +126,6 @@ const CategoryFilterWrapper = styled.div`
 
 const Btn = styled(Button)`
   width: auto;
-  height: auto;
   border-radius: 24px;
   padding: 4px 12px;
   font-weight: normal;
