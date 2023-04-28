@@ -17,7 +17,7 @@ export interface MonthlySummary {
 
 export interface Transaction {
   id: number;
-  type: string;
+  transaction_type: string;
   amount: number;
   description: string;
   date: string;
@@ -25,6 +25,7 @@ export interface Transaction {
   category_name: string;
   bank_id: number;
   bank_name: string;
+  account_type: string;
 }
 
 export interface MonthlyTransactions extends MonthlySummary {

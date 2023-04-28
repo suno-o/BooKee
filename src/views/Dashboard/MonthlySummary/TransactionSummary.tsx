@@ -2,28 +2,7 @@ import { useMemo } from "react"
 import styled from "styled-components"
 import TransactionSummaryTable from "./TransactionSummaryTable";
 import { aprilTransactionData } from "@/state/mockData"
-import { Transaction } from "@/state/mockTypes"
-
-/* helper: move to selector later and memoize */
-const filterTransactionsByType = (transactions: Transaction[]) => {
-  const earningTransactions: Transaction[] = [];
-  const cashSpendingTransactions: Transaction[] = [];
-  const creditSpendingTransactions: Transaction[] = [];
-
-  transactions.forEach((transaction: Transaction) => {
-    if (transaction.type === 'cash') {
-      if (transaction.amount < 0) {
-        cashSpendingTransactions.push(transaction);
-      } else {
-        earningTransactions.push(transaction);
-      }
-    } else if (transaction.type === 'credit' && transaction.amount < 0) {
-      creditSpendingTransactions.push(transaction);
-    }
-  })
-
-  return [earningTransactions, cashSpendingTransactions, creditSpendingTransactions];
-}
+import { filterTransactionsByType } from "@/state/mockSelector"
 
 /**
  * TransactionSummary Component

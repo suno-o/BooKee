@@ -33,7 +33,7 @@ const NavBar = () => {
           Style these later:
           <Link href='/dashboard'>Dashboard</Link>
           <Link href='/transactions'>Transactions</Link>
-          <Link href='/credit-bill-calculator'>Credit bill calculator</Link>
+          <Link href='/credit-bill-payment'>Credit bill payment</Link>
         </Links>
       )}
         <p style={{textAlign: 'center', fontWeight: 'bold'}}>BooKee is currently under development</p>
