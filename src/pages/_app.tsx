@@ -1,6 +1,8 @@
 import type { ReactElement, ReactNode } from 'react'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
+import { store } from '@/state'
 import { ThemeProvider } from 'styled-components'
 import { BooKeeTheme } from '@/theme'
 import GlobalStyles from '@/theme/globalStyles'
@@ -20,9 +22,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? (page => page);
 
   return <div className={openSans.className}>
-    <ThemeProvider theme={BooKeeTheme}>
-      <GlobalStyles />
-      {getLayout(<Component {...pageProps} />)}
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={BooKeeTheme}>
+        <GlobalStyles />
+        {getLayout(<Component {...pageProps} />)}
+      </ThemeProvider>
+    </Provider>
   </div>
 }
