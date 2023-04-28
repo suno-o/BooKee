@@ -19,7 +19,7 @@ export default function ArticleView(props: {article: Article}) {
       </Header>
       <Content>
         <Img src={require(`@/assets/images/${img_url}.jpg`)} alt='Paying credit bills early article image' />
-        <ReactMarkdown rehypePlugins={[rehypeRaw]} components={markdownComponents} children={content} />
+        <ReactMarkdown rehypePlugins={[rehypeRaw]} components={markdownComponents}>{content}</ReactMarkdown>
       </Content>
     </PageSection>
   )
