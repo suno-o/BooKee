@@ -32,7 +32,7 @@ export default function PayBill() {
   return (
     <>
       <Note>
-        BooKee strongly recommends you to pay off your credit bills in full end of every month, so that you are paying for the purchase you've made in the <b>same month</b> the purchase was made.
+        BooKee strongly recommends you to pay off your credit bills in full end of every month, so that you are paying for the purchase you&apos;ve made in the <b>same month</b> the purchase was made.
         But, we still provide you an option to carry over some transactions to upcoming month in case you are unable to pay off in full. Please note that your credit card issuers may charge fees for any unpaid amount.
       </Note>
       {Object.keys(creditTransactionsByBank).map((bankName: string) => (
@@ -49,7 +49,7 @@ export default function PayBill() {
 
 /* styles */
 const Note = styled.p`
-  margin: 32px 16px;
+  margin: 16px;
   font-size: 0.8rem;
   color: ${p => p.theme.colors.text_grey};
 
