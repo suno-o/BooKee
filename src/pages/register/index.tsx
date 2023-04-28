@@ -3,10 +3,13 @@ import Link from "next/link"
 import Button from "@/components/Button"
 
 export default function Register() {
+  const login = () => {
+    localStorage.setItem('dummy-bookee-user', 'something');
+  }
   return (
     <Container>
       <p style={{fontSize: '1rem', marginBottom: '16px'}}>Register service is not available yet.</p>
-      <Link href='/dashboard'>
+      <Link href='/dashboard' onClick={login}>
         <Button>Go to Dashboard</Button>
       </Link>
     </Container>
