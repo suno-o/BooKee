@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int @id @default(autoincrement())
+  username      String @unique
+  password      String
+  fname         String
+  lname         String
+  categories    Category[]
+  accounts      Account[]
+  transactions  Transaction[]
+  userBalanceSnapshot UserBalanceSnapshot[]
+}
+
+// store total balance end of each month after credit bill payment is completed
+model UserBalanceSnapshot {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  month   Int
+  year    Int
+  balance Decimal @db.Decimal(30, 2)
+  user    User @relation(fields: [userId], references: [id])
+}
+
+model Bank {
+  id            Int @id @default(autoincrement())
+  name          String
+  accounts      Account[]
+}
+
+model Category {
+  id            Int @id @default(autoincrement())
+  userId        Int
+  name          String
+  transactions  Transaction[]
+  user          User @relation(fields: [userId], references: [id])
+}
+
+model Account {
+  id            Int @id @default(autoincrement())
+  accountType   AccountType
+  name          String
+  userId        Int
+  bankId        Int
+  balance       Decimal @db.Decimal(30, 2)
+  user          User @relation(fields: [userId], references: [id])
+  bank          Bank @relation(fields: [bankId], references: [id])
+  transactions  Transaction[]
+}
+
+model Transaction {
+  id                  Int @id @default(autoincrement())
+  transactionType     TransactionType
+  userId              Int
+  accountId           Int
+  categoryId          Int
+  description         String
+  amount              Decimal @db.Decimal(30, 2)
+  created             DateTime @default(now()) @db.Timestamptz
+  user                User @relation(fields: [userId], references: [id])
+  account             Account @relation(fields: [accountId], references: [id])
+  category            Category @relation(fields: [categoryId], references: [id])
+  purchaseTransaction CreditPayment? @relation("purchaseTransaction")
+  paymentTransaction  CreditPayment? @relation("paymentTransaction")
+}
+
+model CreditPayment {
+  purchaseTransactionId Int @unique
+  paymentTransactionId  Int? @unique
+  carryoverDate         DateTime?  @db.Timestamptz
+  purchaseTransaction   Transaction @relation("purchaseTransaction", fields: [purchaseTransactionId], references: [id])
+  paymentTransaction    Transaction? @relation("paymentTransaction", fields: [paymentTransactionId], references: [id])
+  
+  @@id([purchaseTransactionId])
+}
+
+enum TransactionType {
+  CASH
+  CREDIT
+}
+
+enum AccountType {
+  CHEQUING
+  SAVINGS
+  // INVESTMENT
+  CREDIT
+}
