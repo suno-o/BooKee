@@ -1,5 +1,18 @@
 import { TransactionType } from "@prisma/client"
-import { AccountResponse, TransactionsSum, TransactionResponse } from "./types"
+import { AccountResponse, BalanceSnapshotResponse, TransactionsSum, TransactionResponse } from "./types"
+import { monthToMonthName } from "@/utils/date"
+
+export const mapAccount = (account: AccountResponse) => ({
+  accountType: account.accountType,
+  accountName: account.name,
+  bankName: account.bank.name,
+  balance: account.balance,
+})
+
+export const mapBalanceSnapshot = (snapshot: BalanceSnapshotResponse) => ({
+  month: monthToMonthName(snapshot.month),
+  balance: snapshot.balance
+})
 
 export const mapTransactionSums = (sums: TransactionsSum[]) => {
   const newSums = { earningTotal: 0,  spendingTotal: 0, creditSpendingTotal: 0 };
@@ -15,13 +28,6 @@ export const mapTransactionSums = (sums: TransactionsSum[]) => {
 
   return newSums;
 }
-
-export const mapAccount = (account: AccountResponse) => ({
-  accountType: account.accountType,
-  accountName: account.name,
-  bankName: account.bank.name,
-  balance: account.balance,
-})
 
 export const mapTransaction = (transaction: TransactionResponse) => ({
   id: transaction.id,

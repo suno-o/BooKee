@@ -38,3 +38,5 @@ export const getLastNMonths = (n: number) => {
     return `${monthShorthandNames[d.getMonth()]} ${d.getFullYear()}`;
   })
 }
+
+export const monthToMonthName = (index: number) => monthShorthandNames[index%12];

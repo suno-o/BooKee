@@ -1,9 +1,9 @@
 import { request, gql } from "graphql-request"
-import { mapAccount, mapTransactionSums, mapTransaction } from "./helper"
-import { AccountResult, TransactionResult } from "./types";
+import { mapAccount, mapBalanceSnapshot, mapTransactionSums, mapTransaction } from "./helper"
+import { AccountsBalancesResponse, TransactionsResponse } from "./types";
 
-export const getAccounts = async () => {
-  const res = await request<AccountResult>(
+export const getAccountsAndBalances = async () => {
+  const res = await request<AccountsBalancesResponse>(
     'api/graphql',
     gql`
       {
@@ -15,16 +15,24 @@ export const getAccounts = async () => {
             name
           }
         }
+        balanceSnapshots: balance_snapshots {
+          month,
+          balance
+        }
       }
     `
   )
   
-  const accounts = res?.accounts;
-  return accounts ? accounts.map(mapAccount) : [];
+  const { accounts, balanceSnapshots } = res;
+
+  return {
+    accounts: accounts.map(mapAccount),
+    balanceSnapshots: balanceSnapshots.map(mapBalanceSnapshot).reverse(), // reverse for recharts graph - data comes in desc order
+  }
 }
 
 export const getTransactionsData = async (month: number, year: number) => {
-  const res = await request<TransactionResult>(
+  const res = await request<TransactionsResponse>(
     '/api/graphql',
     gql`
       query getTransactions($month: Int!, $year: Int!) {

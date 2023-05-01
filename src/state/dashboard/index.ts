@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
-import { DashboardState, DashboardData, Account, TransactionsData } from "./types"
-import { getTransactionsData, getAccounts } from "./api"
+import { DashboardState, AccountsBalances, TransactionsData } from "./types"
+import { getTransactionsData, getAccountsAndBalances } from "./api"
 
 const initialState: DashboardState = {
   accounts: [],
-  monthlyBalanceSnapshots: [],
+  balanceSnapshots: [],
   transactionsData: {
     earningTotal: 0,
     spendingTotal: 0,
@@ -16,24 +16,25 @@ const initialState: DashboardState = {
 }
 
 /* fetch accounts and transactions data */
-export const fetchDashboardData = createAsyncThunk<DashboardData, {month: number; year: number}>(
+export const fetchDashboardData = createAsyncThunk<DashboardState, {month: number; year: number}>(
   'transactions/getAllData',
   async ({ month, year }) => {
-    const [accounts, transactionsData] = await Promise.all([getAccounts(), getTransactionsData(month, year)]);
+    const [{accounts, balanceSnapshots}, transactionsData] = await Promise.all([getAccountsAndBalances(), getTransactionsData(month, year)]);
 
     return {
       accounts,
+      balanceSnapshots,
       transactionsData
     }
   }
 )
 
-/* fetch accounts */
-const fetchAccounts = createAsyncThunk<Account[]>(
-  'transactions/getAccounts',
+/* fetch accounts and balance snapshots */
+const fetchAccountsAndBalances = createAsyncThunk<AccountsBalances>(
+  'transactions/getAccountsAndBalanceSnapshots',
   async () => {
-    const accounts = await getAccounts();
-    return accounts;
+    const res = await getAccountsAndBalances();
+    return res;
   }
 )
 
@@ -53,11 +54,16 @@ const dashboadSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchDashboardData.fulfilled, (state, action: PayloadAction<DashboardData>) => {
+      .addCase(fetchAccountsAndBalances.fulfilled, (state, action: PayloadAction<AccountsBalances>) => {
         state.accounts = action.payload.accounts;
+        state.balanceSnapshots = action.payload.balanceSnapshots;
+      })
+      
+      .addCase(fetchDashboardData.fulfilled, (state, action: PayloadAction<DashboardState>) => {
+        state.accounts = action.payload.accounts;
+        state.balanceSnapshots = action.payload.balanceSnapshots;
         state.transactionsData = action.payload.transactionsData;
       })
-
   },
 })
 
