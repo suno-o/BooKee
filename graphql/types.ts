@@ -1,6 +1,8 @@
+import { AccountType, TransactionType } from "@prisma/client";
+
 export interface Transaction {
   id: number;
-  transactionType: string;
+  transactionType: TransactionType;
   userId: number;
   accountId: number;
   categoryId: number;
@@ -12,7 +14,7 @@ export interface Transaction {
 
 export interface Account {
   id: number;
-  accountType: string;
+  accountType: AccountType;
   name: string;
   userId: number;
   bankId: number;

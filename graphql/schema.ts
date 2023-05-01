@@ -9,6 +9,12 @@ export const typeDefs = `
     amount: Float
     created: String
     account: Account
+    category: Category
+  }
+
+  type TransactionSum {
+    type: TransactionType
+    total: Float
   }
 
   type Account {
@@ -26,8 +32,27 @@ export const typeDefs = `
     name: String
   }
 
+  type Category {
+    id: ID
+    name: String
+  }
+
+  enum AccountType {
+    CHEQUING,
+    SAVINGS,
+    CREDIT
+  }
+  
+  enum TransactionType {
+    CASH_EARNING,
+    CASH_SPENDING,
+    CREDIT_SPENDING,
+    CREDIT_BILL_PAYMENT
+  }
+
   type Query {
     accounts: [Account]!
-    transactions(month: Int!, year: Int!): [Transaction]!
+    transactions_total(month: Int!, year: Int!): [TransactionSum]!
+    transactions(month: Int!, year: Int!, type: TransactionType): [Transaction]!
   }
 `
