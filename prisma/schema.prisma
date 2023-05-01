@@ -82,8 +82,10 @@ model CreditPayment {
 }
 
 enum TransactionType {
-  CASH
-  CREDIT
+  CASH_EARNING
+  CASH_SPENDING
+  CREDIT_SPENDING
+  CREDIT_BILL_PAYMENT
 }
 
 enum AccountType {

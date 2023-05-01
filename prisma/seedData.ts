@@ -73,7 +73,8 @@ export const categories = [
   { userId: 1, name: 'Grocery' },
   { userId: 1, name: 'Utility' },
   { userId: 1, name: 'Subscription' },
-  { userId: 1, name: 'Kijiji sales'}
+  { userId: 1, name: 'Kijiji sales'},
+  { userId: 1, name: 'Home Office'},
 ];
 
 export const accounts = [
@@ -136,8 +137,54 @@ export const accounts = [
 ];
 
 export const transactions = [
+  // April dummy transactions
   {
-    transactionType: TransactionType.CASH,
+    transactionType: TransactionType.CASH_SPENDING,
+    userId: 1,
+    accountId: 1,
+    categoryId: 6,
+    description: 'Mouse',
+    amount: -69.49,
+    created: new Date('2023-04-20 20:00:00.550000-04'),
+  },
+  {
+    transactionType: TransactionType.CASH_SPENDING,
+    userId: 1,
+    accountId: 6,
+    categoryId: 6,
+    description: 'Keyboard',
+    amount: -99,
+    created: new Date('2023-04-17 20:00:00.550000-04'),
+  },
+  {
+    transactionType: TransactionType.CASH_SPENDING,
+    userId: 1,
+    accountId: 3,
+    categoryId: 6,
+    description: 'Chair',
+    amount: -200,
+    created: new Date('2023-04-17 20:00:00.550000-04'),
+  },
+  {
+    transactionType: TransactionType.CASH_SPENDING,
+    userId: 1,
+    accountId: 2,
+    categoryId: 6,
+    description: 'Desk',
+    amount: -500,
+    created: new Date('2023-04-16 20:00:00.550000-04'),
+  },
+  {
+    transactionType: TransactionType.CREDIT_SPENDING,
+    userId: 1,
+    accountId: 8,
+    categoryId: 6,
+    description: 'MacBook Pro',
+    amount: -1999.99,
+    created: new Date('2023-04-16 20:00:00.550000-04'),
+  },
+  {
+    transactionType: TransactionType.CASH_EARNING,
     userId: 1,
     accountId: 1,
     categoryId: 1,
@@ -146,7 +193,7 @@ export const transactions = [
     created: new Date('2023-04-15 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CASH,
+    transactionType: TransactionType.CASH_SPENDING,
     userId: 1,
     accountId: 5,
     categoryId: 4,
@@ -155,7 +202,7 @@ export const transactions = [
     created: new Date('2023-04-12 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CASH,
+    transactionType: TransactionType.CASH_SPENDING,
     userId: 1,
     accountId: 5,
     categoryId: 4,
@@ -164,7 +211,7 @@ export const transactions = [
     created: new Date('2023-04-11 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CREDIT,
+    transactionType: TransactionType.CREDIT_SPENDING,
     userId: 1,
     accountId: 7,
     categoryId: 3,
@@ -173,7 +220,7 @@ export const transactions = [
     created: new Date('2023-04-09 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CREDIT,
+    transactionType: TransactionType.CREDIT_SPENDING,
     userId: 1,
     accountId: 7,
     categoryId: 3,
@@ -182,7 +229,7 @@ export const transactions = [
     created: new Date('2023-04-08 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CASH,
+    transactionType: TransactionType.CASH_EARNING,
     userId: 1,
     accountId: 4,
     categoryId: 5,
@@ -191,7 +238,7 @@ export const transactions = [
     created: new Date('2023-04-07 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CREDIT,
+    transactionType: TransactionType.CREDIT_SPENDING,
     userId: 1,
     accountId: 8,
     categoryId: 2,
@@ -200,7 +247,7 @@ export const transactions = [
     created: new Date('2023-04-06 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CREDIT,
+    transactionType: TransactionType.CREDIT_SPENDING,
     userId: 1,
     accountId: 8,
     categoryId: 2,
@@ -209,7 +256,7 @@ export const transactions = [
     created: new Date('2023-04-05 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CREDIT,
+    transactionType: TransactionType.CREDIT_SPENDING,
     userId: 1,
     accountId: 8,
     categoryId: 2,
@@ -218,12 +265,32 @@ export const transactions = [
     created: new Date('2023-04-02 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CASH,
+    transactionType: TransactionType.CASH_EARNING,
     userId: 1,
     accountId: 1,
     categoryId: 1,
     description: 'Pay cheque deposit',
     amount: 2500,
     created: new Date('2023-04-01 20:00:00.550000-04'),
+  },
+
+  // March dummy transactions
+  {
+    transactionType: TransactionType.CASH_EARNING,
+    userId: 1,
+    accountId: 1,
+    categoryId: 1,
+    description: 'Pay cheque deposit',
+    amount: 2500,
+    created: new Date('2023-03-15 20:00:00.550000-04'),
+  },
+  {
+    transactionType: TransactionType.CASH_EARNING,
+    userId: 1,
+    accountId: 1,
+    categoryId: 1,
+    description: 'Pay cheque deposit',
+    amount: 2500,
+    created: new Date('2023-03-01 20:00:00.550000-04'),
   },
 ];
