@@ -27,6 +27,14 @@ export const typeDefs = `
     bank: Bank
   }
 
+  type UserBalanceSnapshot {
+    id: ID
+    userId: ID
+    month: Int
+    year: Int
+    balance: Float
+  }
+
   type Bank {
     id: ID
     name: String
@@ -42,7 +50,7 @@ export const typeDefs = `
     SAVINGS,
     CREDIT
   }
-  
+
   enum TransactionType {
     CASH_EARNING,
     CASH_SPENDING,
@@ -52,6 +60,7 @@ export const typeDefs = `
 
   type Query {
     accounts: [Account]!
+    balance_snapshots: [UserBalanceSnapshot]!
     transactions_total(month: Int!, year: Int!): [TransactionSum]!
     transactions(month: Int!, year: Int!, type: TransactionType): [Transaction]!
   }
