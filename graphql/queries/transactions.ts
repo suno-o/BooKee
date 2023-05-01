@@ -15,7 +15,6 @@ interface TransactionQueryArgs {
   month: number;
   year: number;
   type?: TransactionType;
-  positiveAmount?: boolean;
 }
 
 export const getTransactions = (_: Transaction, args: TransactionQueryArgs) => {
@@ -26,11 +25,6 @@ export const getTransactions = (_: Transaction, args: TransactionQueryArgs) => {
     typeComparision = { transactionType: { equals: args.type } }
   }
 
-  let amountComparision = {}
-  if (args.positiveAmount !== undefined) {
-    amountComparision = { amount: { [args.positiveAmount ? 'gt' : 'lte']: 0 } }
-  }
-
   return prisma.transaction.findMany({
     where: {
       created: {
@@ -38,7 +32,6 @@ export const getTransactions = (_: Transaction, args: TransactionQueryArgs) => {
         lt: endDate
       },
       ...typeComparision,
-      ...amountComparision,
     },
     include: {
       account: {
