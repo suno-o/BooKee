@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import styled, { css } from "styled-components"
 import TransactionTable from "@/components/TransactionTable"
-import { Transaction } from "@/state/mockTypes"
+import { Transaction } from "@/state/dashboard/types"
 
 interface TransactionSummaryTableProps {
   theme: string;
@@ -14,9 +14,7 @@ interface TransactionSummaryData {
 }
 
 /* 
- * helper: this might be used in the selector logic later
- *
- * calculate transaction amount total by category
+ * helper: calculate transaction amount total by category
  * (ex. if the category is 'bank_name', it will calculate total transaction amounts by each bank - TD: $1000, RBC: $2000, etc..)
  */
 const getTransactionSummaryDataByCategory = (transactions: Transaction[], category: string) => {
@@ -45,8 +43,8 @@ export default function TransactionSummaryTable({
 }: TransactionSummaryTableProps) {
   const tabs = ['Bank', 'Category'];
   const tabData = useMemo(() => ([
-    getTransactionSummaryDataByCategory(transactions, 'bank_name'),
-    getTransactionSummaryDataByCategory(transactions, 'category_name')
+    getTransactionSummaryDataByCategory(transactions, 'bankName'),
+    getTransactionSummaryDataByCategory(transactions, 'categoryName')
   ]), [transactions]);
   
   const [currentTab, setCurrentTab] = useState(tabs[0]);

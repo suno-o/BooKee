@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 
-export const useHorizontalPaddleScroll = () => {
+export const useHorizontalPaddleScroll = (data: any) => {
   const scrollViewRef = useRef<HTMLDivElement>(null);
   const [leftPaddleVisible, setLPV] = useState(false);
   const [rightPaddleVisible, setRPV] = useState(false);
@@ -19,7 +19,7 @@ export const useHorizontalPaddleScroll = () => {
   /* paddle reset on init */
   useEffect(() => {
     if (scrollViewRef) resetScrollPaddle();
-  }, [scrollViewRef])
+  }, [scrollViewRef, data])
 
   /* attach window resize event listener - reset paddles on window size change */
   useEffect(() => {

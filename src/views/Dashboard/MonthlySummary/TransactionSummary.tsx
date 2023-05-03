@@ -1,17 +1,17 @@
-import { useMemo } from "react"
+import { useAppSelector } from "@/state"
+import { transactionsByTypeSelector } from "@/state/dashboard/selector"
 import styled from "styled-components"
 import TransactionSummaryTable from "./TransactionSummaryTable";
-import { aprilTransactionData } from "@/state/mockData"
-import { filterTransactionsByType } from "@/state/mockSelector"
 
 /**
  * TransactionSummary Component
  */
 export default function TransactionSummary() {
-
-  /* get from selector later, and remove memoization here once memoized in selector */
-  const { transactions } = aprilTransactionData;
-  const [earnings, cashSpendings, creditSpendings] = useMemo(() => filterTransactionsByType(transactions), [transactions]);
+  const {
+    earningTransactions,
+    spendingTransactions,
+    creditSpendingTransactions
+  } = useAppSelector(transactionsByTypeSelector);
 
   return (
     <Container>
@@ -19,21 +19,21 @@ export default function TransactionSummary() {
         <TransactionSummaryTable
           theme='primary'
           header='Earning'
-          transactions={earnings}
+          transactions={earningTransactions}
         />
       </Item>
       <Item>
         <TransactionSummaryTable
           theme='secondary'
           header='Spending'
-          transactions={cashSpendings}
+          transactions={spendingTransactions}
         />
       </Item>
       <Item>
         <TransactionSummaryTable
           theme='warning'
           header='Credit'
-          transactions={creditSpendings}
+          transactions={creditSpendingTransactions}
         />
       </Item>
     </Container>

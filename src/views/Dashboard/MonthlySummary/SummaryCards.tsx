@@ -1,24 +1,25 @@
+import { useAppSelector } from "@/state"
+import { transactionTotalSummarySelector } from "@/state/dashboard/selector"
 import styled from "styled-components"
 import Card from "@/components/Card"
 import { formatCash } from "@/utils/numbers"
-import { aprilTransactionData } from "@/state/mockData"
 
 export default function SummaryCards() {
-  const { cashEarning, cashSpending, creditSpending, total } = aprilTransactionData;
+  const { earningTotal, spendingTotal, creditSpendingTotal, total } = useAppSelector(transactionTotalSummarySelector);
   
   return (
     <CardSection>
       <MonthlySummaryCard styles={{bgTheme:'primary', colorTheme:'white'}}>
         <Card.Header>Earning</Card.Header>
-        <Card.Content>{formatCash(cashEarning)}</Card.Content>
+        <Card.Content>{formatCash(earningTotal)}</Card.Content>
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'secondary', colorTheme:'white'}}>
         <Card.Header>Cash Spending</Card.Header>
-        <Card.Content>{formatCash(cashSpending)}</Card.Content>
+        <Card.Content>{formatCash(spendingTotal)}</Card.Content>
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'warning', colorTheme:'white'}}>
         <Card.Header>Credit Spending</Card.Header>
-        <Card.Content>{formatCash(creditSpending)}</Card.Content>
+        <Card.Content>{formatCash(creditSpendingTotal)}</Card.Content>
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'failure', colorTheme:'white'}}>
         <Card.Header>{total > 0 ? 'Net Income' : 'Net Loss'}</Card.Header>

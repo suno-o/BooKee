@@ -3,18 +3,18 @@ import styled, { ThemeContext } from "styled-components"
 import { useHorizontalPaddleScroll } from "@/hooks/useHorizontalPaddleScroll"
 import { formatCash } from "@/utils/numbers"
 import { getListItemLightBgColor } from "@/utils/colors"
-import { Balance } from "@/state/mockTypes"
+import { Account } from "@/state/dashboard/types"
 
 interface Props {
-  data: Balance[];
+  data: Account[];
 }
 
 export default function BalanceList({data}: Props) {
   const theme = useContext(ThemeContext);
-  const { scrollViewRef, leftPaddleVisible, rightPaddleVisible, onScroll } = useHorizontalPaddleScroll();
+  const { scrollViewRef, leftPaddleVisible, rightPaddleVisible, onScroll } = useHorizontalPaddleScroll(data);
 
   /* generate bank balance views */
-  const bankBalanceViews = useMemo(() => data.map((item: Balance, index) => {
+  const bankBalanceViews = useMemo(() => data.map((item: Account, index) => {
     const [bgTheme, opacity] = getListItemLightBgColor(index);
     return (
       <BankBalance key={item.bankName} bgColor={`${theme.colors[bgTheme]+opacity}`}>

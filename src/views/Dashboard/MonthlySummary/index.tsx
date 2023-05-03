@@ -1,4 +1,6 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useAppDispatch } from "@/state"
+import { fetchDashboardData } from "@/state/dashboard"
 import styled from "styled-components"
 import { DashboardHeading } from "../styles"
 import SummaryCards from "./SummaryCards"
@@ -7,7 +9,12 @@ import DropDown from "@/components/DropDown"
 import { getLastNMonths } from "@/utils/date"
 
 export default function MonthlySummary() {
+  const dispatch = useAppDispatch();
   const [selected, setSelected] = useState(getLastNMonths(1)[0]);
+
+  useEffect(() => {
+    dispatch(fetchDashboardData({ month: 3, year: 2023 }));
+  }, [])
 
   const handleChange = (newSelected: string) => () => {
     setSelected(newSelected);
