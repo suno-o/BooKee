@@ -6,7 +6,7 @@ interface Props {
   width?: number;
   label?: string;
   selected?: string;
-  onChange: (selected: string) => () => void;
+  onChange: (selected: any) => void;
   listItems: string[]; // use label as a key for now
 }
 
@@ -34,7 +34,7 @@ const DropDown = ({
       {selected ? selected : label}
       <Options visible={open} top={selectRef?.current?.clientHeight}>
         {listItems.map(item => (item !== selected) && (
-          <Option key={item} onClick={onChange(item)}>{item}</Option>
+          <Option key={item} onClick={() => onChange(item)}>{item}</Option>
         ))}
       </Options>
     </Select>

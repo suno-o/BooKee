@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useAppDispatch } from "@/state"
 import { fetchDashboardData } from "@/state/dashboard"
 import styled from "styled-components"
@@ -6,18 +6,18 @@ import { DashboardHeading } from "../styles"
 import SummaryCards from "./SummaryCards"
 import TransactionSummary from "./TransactionSummary"
 import DropDown from "@/components/DropDown"
-import { getLastNMonths } from "@/utils/date"
+import { useLastNMonthDropdown } from "@/hooks/useLastNMonthDropdown"
 
 export default function MonthlySummary() {
   const dispatch = useAppDispatch();
-  const [selected, setSelected] = useState(getLastNMonths(1)[0]);
+  const { selectedMonthLabel, setSelectedMonthLabel, labels, getLabelValue } = useLastNMonthDropdown(6);
 
   useEffect(() => {
-    dispatch(fetchDashboardData({ month: 3, year: 2023 }));
-  }, [])
+    dispatch(fetchDashboardData(getLabelValue(selectedMonthLabel)));
+  }, [selectedMonthLabel])
 
-  const handleChange = (newSelected: string) => () => {
-    setSelected(newSelected);
+  const handleChange = (newMonthname: string) => {
+    setSelectedMonthLabel(newMonthname);
   }
 
   return (
@@ -28,9 +28,9 @@ export default function MonthlySummary() {
       <DropDownWrapper>
         <DropDown
           width={150}
-          selected={selected}
+          selected={selectedMonthLabel}
           onChange={handleChange}
-          listItems={getLastNMonths(6)}
+          listItems={labels}
         />
       </DropDownWrapper>
 

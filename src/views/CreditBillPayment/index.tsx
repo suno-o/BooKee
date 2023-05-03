@@ -2,10 +2,10 @@ import { PageSection } from "@/components/Layout/Page"
 import { Heading, PayBillHeading, Hr } from "./styles"
 import SpendingSummary from "./SpendingSummary"
 import PayBill from "./PayBill"
-import { getLastNMonths } from "@/utils/date"
+import { useLastNMonthDropdown } from "@/hooks/useLastNMonthDropdown"
 
 export default function CreditBillPayment() {
-  const month = getLastNMonths(1);
+  const { selectedMonthLabel } = useLastNMonthDropdown(1); // add dropdown later
   
   return (
     <>
@@ -19,7 +19,7 @@ export default function CreditBillPayment() {
       </PageSection>
 
       <PageSection>
-        <PayBillHeading>Pay your credit bills for {month}</PayBillHeading>
+        <PayBillHeading>Pay your credit bills for {selectedMonthLabel}</PayBillHeading>
         <PayBill />
       </PageSection>
     </>
