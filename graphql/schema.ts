@@ -1,4 +1,6 @@
 export const typeDefs = `
+  scalar Date
+  
   type Transaction {
     id: ID
     transactionType: String
@@ -7,7 +9,7 @@ export const typeDefs = `
     categoryId: ID
     description: String
     amount: Float
-    created: String
+    created: Date
     account: Account
     category: Category
   }
