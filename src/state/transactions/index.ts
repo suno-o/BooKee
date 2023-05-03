@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
-import { TransactionsState, Transaction } from "../types"
+import { TransactionsState, Transaction } from "./types"
 import { getTransactions } from "./api"
 
 const initialState: TransactionsState = {
