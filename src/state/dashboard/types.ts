@@ -61,7 +61,7 @@ export interface BalanceSnapshotResponse {
 
 /* Transaction */
 export interface Transaction {
-  id: number;
+  id: string;
   amount: number;
   categoryName: string;
   bankName: string;
@@ -80,7 +80,7 @@ export interface TransactionsSum {
 }
 
 export interface TransactionResponse {
-  id: number;
+  id: string;
   amount: number;
   account: AccountResponse;
   category: Category;

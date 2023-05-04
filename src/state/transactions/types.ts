@@ -5,12 +5,12 @@ export interface TransactionsState {
 }
 
 export interface Transaction {
-  id: number;
+  id: string;
   transactionType: TransactionType;
   created: string;
-  bankId: number;
+  bankId: string;
   bankName: string;
-  categoryId: number;
+  categoryId: string;
   categoryName: string;
   description: string;
   amount: number;
@@ -21,7 +21,7 @@ export interface Response {
 }
 
 export interface TransactionResponse {
-  id: number;
+  id: string;
   transactionType: TransactionType;
   created: string;
   account: Account;
@@ -35,11 +35,11 @@ interface Account {
 }
 
 interface Bank {
-  id: number;
+  id: string;
   name: string;
 }
 
 interface Category {
-  id: number;
+  id: string;
   name: string;
 }
