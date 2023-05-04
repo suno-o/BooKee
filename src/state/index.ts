@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux"
 import dashboard from "./dashboard"
 import transactions from './transactions'
+import creditBillPayment from './creditBillPayment'
 
 export const store = configureStore({
   reducer: {
     dashboard,
-    transactions
+    transactions,
+    creditBillPayment
   }
 })
 
