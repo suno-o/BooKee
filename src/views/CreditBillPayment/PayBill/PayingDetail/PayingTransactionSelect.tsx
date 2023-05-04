@@ -25,7 +25,7 @@ export default function PayingTransactionSelect({
       <Table>
         <thead>
           <tr>
-            <Th></Th>
+            <Th>Pay</Th>
             <Th>Date</Th>
             <Th>Category</Th>
             <Th>Amounts</Th>
