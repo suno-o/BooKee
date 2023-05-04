@@ -1,28 +1,26 @@
+import { useAppSelector } from "@/state"
 import styled from "styled-components"
 import Card from "@/components/Card"
 import TransactionSummaryTable from "@/views/Dashboard/MonthlySummary/TransactionSummaryTable" // move this to components folder later
-import { filterTransactionsByType } from "@/state/mockSelector"
 import { formatCash } from "@/utils/numbers"
-import { aprilTransactionData } from "@/state/mockData"
 
 const SpendingSummary = () => {
-  const { cashSpending, creditSpending, transactions } = aprilTransactionData;
-  const [,,creditTransactions] = filterTransactionsByType(transactions);
+  const { cashSpendingTotal, creditSpendingTotal, creditTransactions } = useAppSelector(state => state.creditBillPayment);
 
   return (
     <Container>
       <CardWrapper>
         <TotalCard styles={{bgTheme:'primary', colorTheme:'white'}}>
           <Card.Header>Total Spending</Card.Header>
-          <Card.Content>{formatCash(cashSpending + creditSpending)}</Card.Content>
+          <Card.Content>{formatCash(cashSpendingTotal + creditSpendingTotal)}</Card.Content>
         </TotalCard>
         <SpendingCard styles={{bgTheme:'secondary', colorTheme:'white'}}>
           <Card.Header>Cash Spending</Card.Header>
-          <Card.Content>{formatCash(cashSpending)}</Card.Content>
+          <Card.Content>{formatCash(cashSpendingTotal)}</Card.Content>
         </SpendingCard>
         <SpendingCard styles={{bgTheme:'warning', colorTheme:'white'}}>
           <Card.Header>Credit Spending</Card.Header>
-          <Card.Content>{formatCash(creditSpending)}</Card.Content>
+          <Card.Content>{formatCash(creditSpendingTotal)}</Card.Content>
         </SpendingCard>
       </CardWrapper>
 

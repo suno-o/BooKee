@@ -3,7 +3,7 @@ import styled from "styled-components"
 import DropDown from "@/components/DropDown"
 import Button from "@/components/Button"
 import { formatCash } from "@/utils/numbers"
-import { Transaction } from "@/state/mockTypes"
+import { Transaction } from "@/state/creditBillPayment/types"
 import { CarryOverTransactionIDs } from "."
 
 interface Props {
@@ -15,17 +15,14 @@ export default function PayingDetail({
   transactions,
   carryoverTransactionIds
 }: Props) {
-  
   const [payingBank, setPayingBank] = useState('');
-  const bankSelectHandler = (selected: string) => () => setPayingBank(selected);
+  const bankSelectHandler = (selected: string) => setPayingBank(selected);
   
   // focusing on UI for now, optimize these later
   const totalBalance = transactions.reduce((sum: number, transaction: Transaction) => (sum + transaction.amount), 0);
   const totalCarryover = Object.keys(carryoverTransactionIds).reduce((sum: number, id: string) => {
-    const idNum = parseInt(id);
-
-    if (carryoverTransactionIds[idNum] === true) {
-      const trans = transactions.find((transaction: Transaction) => transaction.id === idNum);
+    if (carryoverTransactionIds[id] === true) {
+      const trans = transactions.find((transaction: Transaction) => transaction.id === id);
       return sum + (trans ? trans.amount : 0);
     }
     

@@ -1,33 +1,10 @@
-import { useMemo } from "react"
+import { useAppSelector } from "@/state"
+import { creditTransactionsByAccountSelector } from "@/state/creditBillPayment/selector"
 import styled from "styled-components"
 import PayingDetail from "./PayingDetail"
-import { aprilTransactionData } from "@/state/mockData"
-import { Transaction } from "@/state/mockTypes"
-
-interface TransactionsByBank {
-  [key: string]: Transaction[];
-}
-
-// Move to selector and rewrite later
-const getCreditTransactionsByBank = () => {
-  const result: TransactionsByBank = {};
-
-  aprilTransactionData.transactions.forEach((transaction: Transaction) => {
-    if (transaction.transaction_type !== 'credit') return;
-
-    const categoryValue = `${transaction['bank_name']} ${transaction['account_type']}`; // change later
-    if (result[categoryValue]) {
-      result[categoryValue].push(transaction);
-    } else {
-      result[categoryValue] = [transaction];
-    }
-  })
-
-  return result;
-}
 
 export default function PayBill() {
-  const creditTransactionsByBank = useMemo(getCreditTransactionsByBank, [aprilTransactionData.transactions]);
+  const creditTransactionsByAccount = useAppSelector(creditTransactionsByAccountSelector);
 
   return (
     <>
@@ -35,11 +12,11 @@ export default function PayBill() {
         BooKee strongly recommends you to pay off your credit bills in full end of every month, so that you are paying for the purchase you&apos;ve made in the <b>same month</b> the purchase was made.
         But, we still provide you an option to carry over some transactions to upcoming month in case you are unable to pay off in full. Please note that your credit card issuers may charge fees for any unpaid amount.
       </Note>
-      {Object.keys(creditTransactionsByBank).map((bankName: string) => (
-        <PayingDetailWrapper key={bankName}>
-          <Bank>{bankName}</Bank>
+      {Object.keys(creditTransactionsByAccount).map((accountName: string) => (
+        <PayingDetailWrapper key={accountName}>
+          <Account>{accountName}</Account>
           <PayingDetail
-            transactions={creditTransactionsByBank[bankName]}
+            transactions={creditTransactionsByAccount[accountName]}
           />
         </PayingDetailWrapper>
       ))}
@@ -70,7 +47,7 @@ const PayingDetailWrapper = styled.div`
   }
 `
 
-const Bank = styled.p`
+const Account = styled.p`
   margin-bottom: 32px;
   text-align: center;
   font-weight: 600;

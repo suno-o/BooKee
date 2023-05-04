@@ -1,11 +1,11 @@
 import styled from "styled-components"
-import { Transaction } from "@/state/mockTypes"
+import { Transaction } from "@/state/creditBillPayment/types"
 import { prettifyDateConcise } from "@/utils/date"
 import { formatCash } from "@/utils/numbers"
 
 interface Props {
   transactions: Transaction[];
-  transactionSelectHandler: (id: number) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  transactionSelectHandler: (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function PayingTransactionSelect({
@@ -14,7 +14,7 @@ export default function PayingTransactionSelect({
 }: Props) {
   
   /* show transaction description when hovering tooltip */
-  const onTransactionRowHoverHandler = (id: number, show?: boolean) => () => {
+  const onTransactionRowHoverHandler = (id: string, show?: boolean) => () => {
     const elem = document.getElementById(`transaction-description-${id}`);
     if (!elem) return;
     elem.style.display = show ? 'block' : 'none';
@@ -36,8 +36,8 @@ export default function PayingTransactionSelect({
           {transactions.map((transaction: Transaction) => (
             <tr key={transaction.id}>
               <Td><Checkbox type='checkbox' defaultChecked onChange={transactionSelectHandler(transaction.id)} /></Td>
-              <Td>{prettifyDateConcise(transaction.date)}</Td>
-              <Td>{transaction.category_name}</Td>
+              <Td>{prettifyDateConcise(transaction.created)}</Td>
+              <Td>{transaction.categoryName}</Td>
               <Td>{formatCash(transaction.amount)}</Td>
               <Td>
                 <TooltipWrapper
@@ -85,7 +85,7 @@ const Td = styled.td`
 
 const Checkbox = styled.input`
   cursor: pointer;
-  accent-color: ${p => p.theme.colors.primary_light};
+  accent-color: ${p => p.theme.colors.primary};
 `
 
 const TooltipWrapper = styled.div`
