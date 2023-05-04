@@ -1,43 +1,65 @@
+import { useState, useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "@/state"
+import { fetchTransactions } from "@/state/transactions"
+import { TransactionType } from "@prisma/client"
 import styled from "styled-components"
-import Filter from "./Filter"
-import TransactionItem, {TransactionHeader} from "./TransactionItem"
-import Separator from "@/components/Separator"
 import { PageSection } from "@/components/Layout/Page"
-import { prettifyDate } from "@/utils/date"
-import { aprilTransactionData } from "@/state/mockData"
+import Filter from "./Filter"
+import TransactionList from "./TransactionList"
 
+export type TransactionTypeFilter = TransactionType | string;
+
+export interface Filters {
+  transactionType: TransactionTypeFilter;
+  bank: string;
+  category: string;
+}
+
+const initialFilter = {
+  transactionType: '',
+  bank: '',
+  category: ''
+}
+
+/* Transactions Component */
 export default function Transactions() {
-  const { transactions } = aprilTransactionData;
-  
-  /* render transaction list with date separators */
-  const renderDatedTransactionList = () => {
-    // check if transactions are empty
-    if (transactions.length === 0) return [];
+  const dispatch = useAppDispatch();
+  const { transactions } = useAppSelector(state => state.transactions);
+  const [filters, setFilters] = useState(initialFilter);
 
-    const renderArr = [<TransactionHeader key='header' />]; // header will only show on window width >= md
-    let i=0, prevDate: string;
-    while (i < transactions.length) {
-      prevDate = transactions[i].date;
-      
-      // group all transactions made on the same day
-      const sameDayTransactions = [<DateSeparator key={transactions[i].date}>{prettifyDate(transactions[i].date)}</DateSeparator>];
-      while (i < transactions.length && prevDate === transactions[i].date) {
-        sameDayTransactions.push(<TransactionItem key={transactions[i].id} {...transactions[i]} />)
-        i++;
-      }
-      renderArr.push(<SameDayTransactions key={prevDate}>{sameDayTransactions}</SameDayTransactions>);
-    }
-    return renderArr;
+  /* filter transactions */
+  let filteredTransactions = transactions;
+  if (filters.transactionType)
+    filteredTransactions = filteredTransactions.filter(transaction => transaction.transactionType === filters.transactionType);
+  if (filters.bank)
+    filteredTransactions = filteredTransactions.filter(transaction => transaction.bankName === filters.bank);
+  if (filters.category)
+    filteredTransactions = filteredTransactions.filter(transaction => transaction.categoryName === filters.category);
+  
+  useEffect(() => {
+    dispatch(fetchTransactions({month: 3, year: 2023})); // hard code for now - change later
+  }, [])
+
+  const handleFilterChange = (key: string) => (value: TransactionTypeFilter) => {
+    setFilters(state => ({ ...state, [key]: value }));
+  }
+
+  const resetCategoryFilter = () => {
+    setFilters(state => ({ ...initialFilter, transactionType: state.transactionType }));
   }
 
   /* render */
   return (
-    <>
-      <Section>
-        <Filter />
-        {renderDatedTransactionList()}
-      </Section>
-    </>
+    <Section>
+      <Filter
+        filters={filters}
+        handleFilterChange={handleFilterChange}
+        resetCategoryFilter={resetCategoryFilter}
+      />
+      <TransactionList
+        transactions={filteredTransactions}
+      />
+    </Section>
   )
 }
 
@@ -47,19 +69,4 @@ const Section = styled(PageSection)`
   padding: 0 24px;
   ${p => p.theme.mediaQueries.sm} { padding: 0 64px; }
   ${p => p.theme.mediaQueries.md} { padding: 0 32px; }
-`
-
-const SameDayTransactions = styled.div`
-  margin: 64px 0;
-  ${p => p.theme.mediaQueries.md} { margin: 0; }
-`
-
-const DateSeparator = styled(Separator)`
-  margin: 32px;
-  font-size: 0.8rem;
-
-  /* only show date separators for screen width < md */
-  ${p => p.theme.mediaQueries.md} {
-    display: none;
-  }
 `

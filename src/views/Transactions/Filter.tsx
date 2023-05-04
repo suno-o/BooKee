@@ -1,38 +1,40 @@
-import { SetStateAction, useState, Dispatch } from "react"
+import { useAppSelector } from "@/state"
+import { bankAndCategorySelector } from "@/state/transactions/selector"
+import { TransactionType } from "@prisma/client"
+import { Filters, TransactionTypeFilter } from "."
 import styled, { css } from "styled-components"
 import Card from "@/components/Card"
 import DropDown from "@/components/DropDown"
 import Button, { ButtonWrapper } from "@/components/Button"
 
 const typeFilterData = [
-  { value: 'all', theme: 'failure' },
-  { value: 'earning', theme: 'primary' },
-  { value: 'spending', theme: 'secondary' },
-  { value: 'credit', theme: 'warning' }
+  { label: 'all', value: '', theme: 'failure' },
+  { label: 'earning', value: TransactionType.CASH_EARNING, theme: 'primary' },
+  { label: 'spending', value: TransactionType.CASH_SPENDING, theme: 'secondary' },
+  { label: 'credit', value: TransactionType.CREDIT_SPENDING, theme: 'warning' }
 ];
 
-const Filter = () => {
-  const [typeFilter, setTypeFilter] = useState('all');
-  const [bankFilter, setBankFilter] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
+interface Props {
+  filters: Filters;
+  handleFilterChange: (key: string) => (value: TransactionTypeFilter) => void;
+  resetCategoryFilter: () => void;
+}
 
-  const handleChangeCreator = (callback: Dispatch<SetStateAction<string>>) => (item: string) => () => {
-    callback(item);
-  }
-
-  const resetCategoryFilters = () => {
-    setBankFilter('');
-    setCategoryFilter('');
-  }
+const Filter = ({
+  filters,
+  handleFilterChange,
+  resetCategoryFilter
+}: Props) => {
+  const { banks, categories } = useAppSelector(bankAndCategorySelector);
 
   return (
     <Container>
       {/* transaction type: all, earning, spending, credit */}
       <TypeFilterWrapper>
         {typeFilterData.map((filter) => (
-          <BtnWrapper key={filter.value} disabled={filter.value === typeFilter} onClick={() => setTypeFilter(filter.value)}>
-            <FilterCard styles={{bgTheme: filter.theme, colorTheme:'white'}}>
-              <FilterHeader>{filter.value}</FilterHeader>
+          <BtnWrapper key={filter.value} disabled={filter.value === filters.transactionType} onClick={() => handleFilterChange('transactionType')(filter.value)}>
+            <FilterCard styles={{bgTheme: filter.theme, colorTheme: 'white'}}>
+              <FilterHeader>{filter.label}</FilterHeader>
             </FilterCard>
           </BtnWrapper>
         ))}
@@ -42,19 +44,19 @@ const Filter = () => {
       <CategoryFilterWrapper>
         <DropDown
           width={150}
-          selected={bankFilter}
-          onChange={handleChangeCreator(setBankFilter)}
+          selected={filters.bank}
+          onChange={handleFilterChange('bank')}
           label={'Bank'}
-          listItems={['TD', 'CIBC', 'BMO', 'RBC', 'Scotia', 'Tangerine']}
+          listItems={banks}
         />
          <DropDown
           width={150}
-          selected={categoryFilter}
-          onChange={handleChangeCreator(setCategoryFilter)}
+          selected={filters.category}
+          onChange={handleFilterChange('category')}
           label={'Category'}
-          listItems={['Grocery', 'Kijiji', 'Part-time Job']}
+          listItems={categories}
         />
-        <Btn bgTheme='text_grey' onClick={resetCategoryFilters}>Reset</Btn>
+        <Btn bgTheme='text_grey' onClick={resetCategoryFilter}>Reset</Btn>
       </CategoryFilterWrapper>
     </Container>
   );

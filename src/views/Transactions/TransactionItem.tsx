@@ -1,4 +1,4 @@
-import { Transaction } from "@/state/mockTypes"
+import { Transaction } from "@/state/transactions/types"
 import styled, { css } from "styled-components"
 import { formatCash } from "@/utils/numbers"
 import { prettifyDateConcise } from "@/utils/date"
@@ -7,15 +7,15 @@ import { prettifyDateConcise } from "@/utils/date"
 const TransactionItem = ({
   amount,
   description,
-  date,
-  category_name,
-  bank_name,
+  created,
+  categoryName,
+  bankName,
 }: Transaction) => (
   <Container>
     <AccountInfo>
-      <Date>{prettifyDateConcise(date)}</Date>
-      <Bank>{bank_name}</Bank>
-      <Category>{category_name}</Category>
+      <Date>{prettifyDateConcise(created)}</Date>
+      <Bank>{bankName}</Bank>
+      <Category>{categoryName}</Category>
     </AccountInfo>
     <Description>{description}</Description>
     <Amount gain={amount > 0}>{formatCash(amount)}</Amount>
