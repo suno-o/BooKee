@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
-import { DashboardState, AccountsBalances, TransactionsData } from "./types"
+import { DashboardState, DashboardData, AccountsBalances, TransactionsData } from "./types"
 import { getTransactionsData, getAccountsAndBalances } from "./api"
 
 const initialState: DashboardState = {
   accounts: [],
   balanceSnapshots: [],
+  accountDataLoaded: false,
   transactionsData: {
     earningTotal: 0,
     spendingTotal: 0,
@@ -12,11 +13,12 @@ const initialState: DashboardState = {
     earningTransactions: [],
     spendingTransactions: [],
     creditSpendingTransactions: []
-  }
+  },
+  transactionDataLoaded: false,
 }
 
 /* fetch accounts and transactions data */
-export const fetchDashboardData = createAsyncThunk<DashboardState, {month: number; year: number}>(
+export const fetchDashboardData = createAsyncThunk<DashboardData, {month: number; year: number}>(
   'transactions/getAllData',
   async ({ month, year }) => {
     const [{accounts, balanceSnapshots}, transactionsData] = await Promise.all([getAccountsAndBalances(), getTransactionsData(month, year)]);
@@ -29,21 +31,12 @@ export const fetchDashboardData = createAsyncThunk<DashboardState, {month: numbe
   }
 )
 
-/* fetch accounts and balance snapshots */
-const fetchAccountsAndBalances = createAsyncThunk<AccountsBalances>(
-  'transactions/getAccountsAndBalanceSnapshots',
-  async () => {
-    const res = await getAccountsAndBalances();
-    return res;
-  }
-)
-
 /* fetch transactions data */
 export const fetchTransactions = createAsyncThunk<TransactionsData, {month: number; year: number}>(
   'transactions/getTransactions',
   async ({ month, year }) => {
-    const transactions = await getTransactionsData(month, year);
-    return transactions;
+    const transactionsData = await getTransactionsData(month, year);
+    return transactionsData;
   }
 )
 
@@ -54,15 +47,20 @@ const dashboadSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAccountsAndBalances.fulfilled, (state, action: PayloadAction<AccountsBalances>) => {
-        state.accounts = action.payload.accounts;
-        state.balanceSnapshots = action.payload.balanceSnapshots;
-      })
-      
-      .addCase(fetchDashboardData.fulfilled, (state, action: PayloadAction<DashboardState>) => {
+      .addCase(fetchDashboardData.fulfilled, (state, action: PayloadAction<DashboardData>) => {
         state.accounts = action.payload.accounts;
         state.balanceSnapshots = action.payload.balanceSnapshots;
         state.transactionsData = action.payload.transactionsData;
+        state.accountDataLoaded = true;
+        state.transactionDataLoaded = true;
+      })
+
+      .addCase(fetchTransactions.pending, (state) => {
+        state.transactionDataLoaded = false;
+      })
+      .addCase(fetchTransactions.fulfilled, (state, action: PayloadAction<TransactionsData>) => {
+        state.transactionsData = action.payload;
+        state.transactionDataLoaded = true;
       })
   },
 })

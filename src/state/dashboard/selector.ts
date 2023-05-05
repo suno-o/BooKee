@@ -14,31 +14,34 @@ const selectAccountsSum = createSelector(
 export const accountsAndBalancesSelector = createSelector(
   dashboardSelector,
   selectAccountsSum,
-  ({accounts, balanceSnapshots}, total) => ({
+  ({ accounts, balanceSnapshots, accountDataLoaded }, total) => ({
     total,
     accounts,
-    balanceSnapshots
+    balanceSnapshots,
+    accountDataLoaded
   })
 )
 
 /* select transaction total by transaction type */
 export const transactionTotalSummarySelector = (state: RootState) => {
-  const { earningTotal, spendingTotal, creditSpendingTotal } = state.dashboard.transactionsData;
+  const { transactionDataLoaded, transactionsData: { earningTotal, spendingTotal, creditSpendingTotal } } = state.dashboard;
 
   return {
     total: earningTotal + spendingTotal + creditSpendingTotal,
     earningTotal,
     spendingTotal,
-    creditSpendingTotal
+    creditSpendingTotal,
+    transactionDataLoaded
   }
 }
 
 /* select transactions by transaction type */
 export const transactionsByTypeSelector = createSelector(
   dashboardSelector,
-  ({ transactionsData: { earningTransactions, spendingTransactions, creditSpendingTransactions } }) => ({
+  ({ transactionsData: { earningTransactions, spendingTransactions, creditSpendingTransactions }, transactionDataLoaded }) => ({
     earningTransactions,
     spendingTransactions,
-    creditSpendingTransactions
+    creditSpendingTransactions,
+    transactionDataLoaded
   })
 )

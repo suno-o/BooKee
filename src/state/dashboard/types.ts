@@ -5,6 +5,8 @@ export interface DashboardState {
   accounts: Account[];
   balanceSnapshots: BalanceSnapshot[];
   transactionsData: TransactionsData;
+  accountDataLoaded: boolean;
+  transactionDataLoaded: boolean;
 }
 
 export interface TransactionsData {
