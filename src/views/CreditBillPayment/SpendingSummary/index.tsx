@@ -5,7 +5,7 @@ import TransactionSummaryTable from "@/views/Dashboard/MonthlySummary/Transactio
 import { formatCash } from "@/utils/numbers"
 
 const SpendingSummary = () => {
-  const { cashSpendingTotal, creditSpendingTotal, creditTransactions } = useAppSelector(state => state.creditBillPayment);
+  const { cashSpendingTotal, creditSpendingTotal, creditTransactions, creditTransactionLoaded } = useAppSelector(state => state.creditBillPayment);
 
   return (
     <Container>
@@ -29,6 +29,7 @@ const SpendingSummary = () => {
           theme='warning'
           header='Credit Spending'
           transactions={creditTransactions}
+          dataLoaded={creditTransactionLoaded}
         />
       </TableWrapper>
     </Container>
