@@ -1,5 +1,6 @@
 import { Transaction } from "@/state/transactions/types"
 import styled, { css } from "styled-components"
+import Skeleton from "@/components/Skeleton"
 import { formatCash } from "@/utils/numbers"
 import { prettifyDateConcise } from "@/utils/date"
 
@@ -23,7 +24,6 @@ const TransactionItem = ({
 )
 export default TransactionItem;
 
-
 /* TransactionHeader Component */
 export const TransactionHeader = () => (
   <HeaderContainer>
@@ -37,6 +37,18 @@ export const TransactionHeader = () => (
   </HeaderContainer>
 )
 
+/* Skeleton */
+export const TransactionSkeletonRow = () => (
+  <Container>
+    <AccountInfo>
+      <Date><Skeleton width={70} height={18} /></Date>
+      <Bank><Skeleton width={40} height={18} /></Bank>
+      <Category><Skeleton width={60} height={18} /></Category>
+    </AccountInfo>
+    <Description><Skeleton width={100} height={18} /></Description>
+    <Amount><Skeleton height={18} /></Amount>
+  </Container>
+)
 
 /* styles */
 const Container = styled.div`
@@ -55,7 +67,7 @@ const Container = styled.div`
     border-bottom: 1px solid ${p => p.theme.colors.text_grey_lighter};
     box-shadow: none;
     margin: 0;
-    padding: 12px 0;
+    padding: 10px 0;
   }
 `
 
@@ -95,6 +107,7 @@ const AccountInfo = styled.div`
 
 /* AccountInfo child items */
 const AccountIntoItemStyle = css`
+  padding: 2px 0;
   ${p => p.theme.mediaQueries.md} {
     flex: 1;
     display: inherit;

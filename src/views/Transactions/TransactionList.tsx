@@ -1,17 +1,19 @@
 import { Transaction } from "@/state/transactions/types";
 import styled from "styled-components"
 import Separator from "@/components/Separator"
-import TransactionItem, { TransactionHeader } from "./TransactionItem"
+import TransactionItem, { TransactionHeader, TransactionSkeletonRow } from "./TransactionItem"
 import { prettifyDate } from "@/utils/date"
 
 interface Props {
   transactions: Transaction[];
+  transactionsLoaded: boolean;
 }
 
 const TransactionList = ({
-  transactions
+  transactions,
+  transactionsLoaded
 }: Props) => {
-  const transactionList = [<TransactionHeader key='header' />]; // header will only show on window width >= md
+  const transactionList = []; 
 
   /* generate transaction list with date separators */
   let i=0, prevDate: string;
@@ -40,7 +42,23 @@ const TransactionList = ({
     transactionList.push(<SameDayTransactions key={prevDate}>{sameDayTransactions}</SameDayTransactions>);
   }
 
-  return <div>{transactionList}</div>;
+  return (
+    <>
+      {/* header will only show on window width >= md */}
+      <TransactionHeader key='header' />
+
+      {/* render transacation list, or empty message if data is loaded; otherwise, show Skeleton rows */}
+      {transactionsLoaded ? (
+        transactions.length > 0 ? (
+          transactionList
+        ) : (
+          <NoTransactions>No transactions</NoTransactions>
+        )
+      ) : (
+        [...Array(7)].map(() => <TransactionSkeletonRow />)
+      )}
+    </>
+  )
 }
 
 export default TransactionList;
@@ -58,4 +76,11 @@ const DateSeparator = styled(Separator)`
   ${p => p.theme.mediaQueries.md} {
     display: none;
   }
+`
+
+const NoTransactions = styled.p`
+  margin: 32px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: ${p => p.theme.colors.text_grey}
 `

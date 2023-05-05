@@ -24,7 +24,7 @@ const initialFilter = {
 /* Transactions Component */
 export default function Transactions() {
   const dispatch = useAppDispatch();
-  const { transactions } = useAppSelector(state => state.transactions);
+  const { transactions, transactionsLoaded } = useAppSelector(state => state.transactions);
   const [filters, setFilters] = useState(initialFilter);
 
   /* filter transactions */
@@ -58,6 +58,7 @@ export default function Transactions() {
       />
       <TransactionList
         transactions={filteredTransactions}
+        transactionsLoaded={transactionsLoaded}
       />
     </Section>
   )
