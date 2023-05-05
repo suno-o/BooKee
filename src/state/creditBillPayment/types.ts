@@ -4,6 +4,13 @@ export interface CreditBillPaymentState {
   cashSpendingTotal: number;
   creditSpendingTotal: number;
   creditTransactions: Transaction[];
+  creditTransactionLoaded: boolean;
+}
+
+export interface CreditBillPaymentData {
+  cashSpendingTotal: number;
+  creditSpendingTotal: number;
+  creditTransactions: Transaction[];
 }
 
 export interface Transaction {

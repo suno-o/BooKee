@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
-import { CreditBillPaymentState } from "./types"
+import { CreditBillPaymentState, CreditBillPaymentData } from "./types"
 import { getTransactionsData } from "./api"
 
 const initialState: CreditBillPaymentState = {
   cashSpendingTotal: 0,
   creditSpendingTotal: 0,
   creditTransactions: [],
+  creditTransactionLoaded: false,
 }
 
-export const fetchTransactions = createAsyncThunk<CreditBillPaymentState, {month: number; year: number}>(
+export const fetchTransactions = createAsyncThunk<CreditBillPaymentData, {month: number; year: number}>(
   'billPayment/getTransactions',
   async ({ month, year }) => {
     const transactionsData = await getTransactionsData(month, year);
@@ -22,11 +23,12 @@ const billPaymentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTransactions.fulfilled, (state, action: PayloadAction<CreditBillPaymentState>) => {
+      .addCase(fetchTransactions.fulfilled, (state, action: PayloadAction<CreditBillPaymentData>) => {
         const { cashSpendingTotal, creditSpendingTotal, creditTransactions } = action.payload;
         state.cashSpendingTotal = cashSpendingTotal;
         state.creditSpendingTotal = creditSpendingTotal;
         state.creditTransactions = creditTransactions;
+        state.creditTransactionLoaded = true;
       })
 
   },
