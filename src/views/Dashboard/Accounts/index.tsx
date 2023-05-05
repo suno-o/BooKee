@@ -1,7 +1,6 @@
 import { useContext } from "react"
 import { useAppSelector } from "@/state"
 import { accountsAndBalancesSelector } from "@/state/dashboard/selector"
-import { DashboardHeading } from "../styles"
 import styled, { ThemeContext } from "styled-components"
 import Card from "@/components/Card"
 import Skeleton from "@/components/Skeleton"
@@ -15,55 +14,52 @@ export default function Accounts() {
   const { accounts, total, balanceSnapshots, accountDataLoaded } = useAppSelector(accountsAndBalancesSelector);
 
   return (
-    <>
-      <DashboardHeading>Accounts</DashboardHeading>
-      <Content>
-        <Account>
-          {/* account balance total */}
-          <BalanceCard styles={{bgTheme:'primary', colorTheme:'white'}}>
-            <Card.Header>Total Balance</Card.Header>
-            {accountDataLoaded ? (
-              <BalanceCardContent>{formatCash(total)}</BalanceCardContent>
-            ) : (
-              <Skeleton width={120} height={36} />
-            )}
-          </BalanceCard>
-          {/* account balance by bank */}
-          <BalanceList data={accounts} dataLoaded={accountDataLoaded} />
-        </Account>
-        <GraphContainer>
+    <Container>
+      <Account>
+        {/* account balance total */}
+        <BalanceCard styles={{bgTheme:'primary', colorTheme:'white'}}>
+          <Card.Header>Total Balance</Card.Header>
           {accountDataLoaded ? (
-            <GraphWrapper>
-              <ResponsiveContainer width='99%' height={220}>
-                <LineChart
-                  data={balanceSnapshots}
-                >
-                  <CartesianGrid strokeWidth={0.3} />
-                  <XAxis dataKey="month" stroke={theme.colors.text_grey_light} strokeWidth={0.7} tickSize={5} tick={{fontSize: 10}} />
-                  <YAxis stroke={theme.colors.text_grey_light} strokeWidth={0.7} tickSize={5} tick={{fontSize: 12}} />
-                  <Line
-                    type="monotone"
-                    dataKey="balance"
-                    stroke={theme.colors.primary}
-                    strokeWidth={3}
-                    isAnimationActive={process.env.NODE_ENV === 'production' ? true : false} // animation issue when strict mode is on
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </GraphWrapper>
+            <BalanceCardContent>{formatCash(total)}</BalanceCardContent>
           ) : (
-            <LoadingWrapper>
-              <LoadingIndicator height={32} width={32} />
-            </LoadingWrapper>
+            <Skeleton width={120} height={36} />
           )}
-        </GraphContainer>
-      </Content>
-    </>
+        </BalanceCard>
+        {/* account balance by bank */}
+        <BalanceList data={accounts} dataLoaded={accountDataLoaded} />
+      </Account>
+      <GraphContainer>
+        {accountDataLoaded ? (
+          <GraphWrapper>
+            <ResponsiveContainer width='99%' height={220}>
+              <LineChart
+                data={balanceSnapshots}
+              >
+                <CartesianGrid strokeWidth={0.3} />
+                <XAxis dataKey="month" stroke={theme.colors.text_grey_light} strokeWidth={0.7} tickSize={5} tick={{fontSize: 10}} />
+                <YAxis stroke={theme.colors.text_grey_light} strokeWidth={0.7} tickSize={5} tick={{fontSize: 12}} />
+                <Line
+                  type="monotone"
+                  dataKey="balance"
+                  stroke={theme.colors.primary}
+                  strokeWidth={3}
+                  isAnimationActive={process.env.NODE_ENV === 'production' ? true : false} // animation issue when strict mode is on
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </GraphWrapper>
+        ) : (
+          <LoadingWrapper>
+            <LoadingIndicator height={32} width={32} />
+          </LoadingWrapper>
+        )}
+      </GraphContainer>
+    </Container>
   )
 }
 
 /* styles */
-const Content = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
