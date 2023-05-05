@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { getLastNMonths } from "@/utils/date"
+import { getLastNMonthyearAndValue } from "@/utils/date"
 
 export const useLastNMonthDropdown = (n: number) => {
-  const lastNMonthLabelValueMap = getLastNMonths(n);
+  const lastNMonthLabelValueMap = getLastNMonthyearAndValue(n);
   const labels = Object.keys(lastNMonthLabelValueMap);
   const currentMonthLabel = labels[0];
   

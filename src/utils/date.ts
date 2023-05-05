@@ -30,13 +30,13 @@ export const prettifyDateConcise = (dateStr: string) => {
 
 const monthShorthandNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-interface NMonthsResult {
+interface NMonthyearResult {
   [key: string]: { month: number; year: number };
 }
 
-export const getLastNMonths = (n: number) => {
+export const getLastNMonthyearAndValue = (n: number) => {
   const date = new Date();
-  const result: NMonthsResult = {};
+  const result: NMonthyearResult = {};
 
   for (let i=0; i<n; i++) {
     const d = new Date(date.getFullYear(), date.getMonth() - i, 1);
