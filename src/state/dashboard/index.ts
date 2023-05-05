@@ -19,7 +19,7 @@ const initialState: DashboardState = {
 
 /* fetch accounts and transactions data */
 export const fetchDashboardData = createAsyncThunk<DashboardData, {month: number; year: number}>(
-  'transactions/getAllData',
+  'dashboard/getAllData',
   async ({ month, year }) => {
     const [{accounts, balanceSnapshots}, transactionsData] = await Promise.all([getAccountsAndBalances(), getTransactionsData(month, year)]);
 
@@ -33,7 +33,7 @@ export const fetchDashboardData = createAsyncThunk<DashboardData, {month: number
 
 /* fetch transactions data */
 export const fetchTransactions = createAsyncThunk<TransactionsData, {month: number; year: number}>(
-  'transactions/getTransactions',
+  'dashboard/getTransactions',
   async ({ month, year }) => {
     const transactionsData = await getTransactionsData(month, year);
     return transactionsData;
