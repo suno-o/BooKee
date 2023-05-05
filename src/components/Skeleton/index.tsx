@@ -7,6 +7,7 @@ interface Props {
   center?: boolean;
   mt?: number;
   mr?: number;
+  br?: number;
 }
 
 const wave = keyframes`
@@ -18,7 +19,7 @@ const Skeleton = styled.div<Props>`
   position: relative;
   overflow: hidden;
   ${p => p.inline && `display: inline-block;`}
-  border-radius: 8px;
+  border-radius: ${p => p.br ? p.br : 8}px;
   min-height: 16px;
   ${p => p.width ? `width: ${p.width}px` : '100%'};
   ${p => p.height && `height: ${p.height}px;`}

@@ -1,5 +1,6 @@
 import { useContext, useMemo } from "react"
 import styled, { ThemeContext } from "styled-components"
+import Skeleton from "@/components/Skeleton"
 import { useHorizontalPaddleScroll } from "@/hooks/useHorizontalPaddleScroll"
 import { formatCash } from "@/utils/numbers"
 import { getListItemLightBgColor } from "@/utils/colors"
@@ -7,9 +8,13 @@ import { Account } from "@/state/dashboard/types"
 
 interface Props {
   data: Account[];
+  dataLoaded?: boolean;
 }
 
-export default function BalanceList({data}: Props) {
+export default function BalanceList({
+  data,
+  dataLoaded
+}: Props) {
   const theme = useContext(ThemeContext);
   const { scrollViewRef, leftPaddleVisible, rightPaddleVisible, onScroll } = useHorizontalPaddleScroll(data);
 
@@ -29,7 +34,14 @@ export default function BalanceList({data}: Props) {
       <Wrapper>
         <Paddle visible={leftPaddleVisible} onClick={onScroll(false)}>&#10094;</Paddle>
         <BankBalances ref={scrollViewRef} lVisible={leftPaddleVisible} rVisible={rightPaddleVisible}>
-          {bankBalanceViews}
+          {dataLoaded ? (
+            bankBalanceViews
+          ) : (
+            <Wrapper>
+              <Skeleton height={60} width={80} mr={8} br={20} />
+              <Skeleton height={60} width={80} mr={8} br={20} />
+            </Wrapper>
+          )}
         </BankBalances>
         <Paddle visible={rightPaddleVisible} onClick={onScroll(true)}>&#10095;</Paddle>
       </Wrapper>

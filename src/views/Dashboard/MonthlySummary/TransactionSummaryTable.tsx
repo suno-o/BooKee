@@ -7,6 +7,7 @@ interface TransactionSummaryTableProps {
   theme: string;
   header: string;
   transactions: Transaction[];
+  dataLoaded: boolean;
 }
 
 interface TransactionSummaryData {
@@ -39,7 +40,8 @@ const getTransactionSummaryDataByCategory = (transactions: Transaction[], catego
 export default function TransactionSummaryTable({
   header,
   theme,
-  transactions
+  transactions,
+  dataLoaded
 }: TransactionSummaryTableProps) {
   const tabs = ['Bank', 'Category'];
   const tabData = useMemo(() => ([
@@ -72,6 +74,7 @@ export default function TransactionSummaryTable({
             <TransactionTable
               header={tabs[index]}
               data={data}
+              dataLoaded={dataLoaded}
             />
           </AnimatedWrapper>
         ))}

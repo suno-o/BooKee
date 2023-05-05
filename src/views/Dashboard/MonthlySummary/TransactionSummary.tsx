@@ -10,7 +10,8 @@ export default function TransactionSummary() {
   const {
     earningTransactions,
     spendingTransactions,
-    creditSpendingTransactions
+    creditSpendingTransactions,
+    transactionDataLoaded
   } = useAppSelector(transactionsByTypeSelector);
 
   return (
@@ -20,6 +21,7 @@ export default function TransactionSummary() {
           theme='primary'
           header='Earning'
           transactions={earningTransactions}
+          dataLoaded={transactionDataLoaded}
         />
       </Item>
       <Item>
@@ -27,6 +29,7 @@ export default function TransactionSummary() {
           theme='secondary'
           header='Spending'
           transactions={spendingTransactions}
+          dataLoaded={transactionDataLoaded}
         />
       </Item>
       <Item>
@@ -34,6 +37,7 @@ export default function TransactionSummary() {
           theme='warning'
           header='Credit'
           transactions={creditSpendingTransactions}
+          dataLoaded={transactionDataLoaded}
         />
       </Item>
     </Container>
