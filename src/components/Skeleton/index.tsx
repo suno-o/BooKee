@@ -1,8 +1,12 @@
 import styled, { keyframes } from "styled-components"
 
 interface Props {
+  inline?: boolean;
   width?: number;
   height?: number;
+  center?: boolean;
+  mt?: number;
+  mr?: number;
 }
 
 const wave = keyframes`
@@ -13,11 +17,15 @@ const wave = keyframes`
 const Skeleton = styled.div<Props>`
   position: relative;
   overflow: hidden;
+  ${p => p.inline && `display: inline-block;`}
   border-radius: 8px;
-  min-height: 24px;
+  min-height: 16px;
   ${p => p.width ? `width: ${p.width}px` : '100%'};
   ${p => p.height && `height: ${p.height}px;`}
   background-color: ${p => p.theme.colors.text_grey_lighter}60;
+  align-self: ${p => p.center === false ? 'normal' : 'center'};
+  ${p => p.mt && `margin-top: ${p.mt}px;`}
+  ${p => p.mr && `margin-right: ${p.mr}px;`}
 
   &:before {
     content: "";
