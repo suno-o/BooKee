@@ -2,11 +2,13 @@ import { AccountType, TransactionType } from "@prisma/client";
 
 /* State */
 export interface DashboardState {
+  selectedMonthyear: string;
   accounts: Account[];
   balanceSnapshots: BalanceSnapshot[];
   transactionsData: TransactionsData;
   accountDataLoaded: boolean;
   transactionDataLoaded: boolean;
+  refetchTransactionData: boolean;
 }
 
 export interface TransactionsData {

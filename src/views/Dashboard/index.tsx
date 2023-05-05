@@ -1,24 +1,25 @@
-import { useEffect } from "react"
-import { useAppDispatch } from "@/state"
-import { fetchDashboardData } from "@/state/dashboard"
+import { useEffect, useMemo } from "react"
+import { useAppDispatch, useAppSelector } from "@/state"
+import { fetchDashboardData, updateMonthyear } from "@/state/dashboard"
 import { DashboardHeading, DropDownWrapper } from "./styles"
 import { PageSection } from "@/components/Layout/Page"
 import Accounts from "./Accounts"
 import MonthlySummary from "./MonthlySummary"
 import DropDown from "@/components/DropDown"
-import { useLastNMonthDropdown } from "@/hooks/useLastNMonthDropdown"
+import { getLastNMonthLabelsAndMap } from "@/utils/date"
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
-  const { selectedMonthLabel, setSelectedMonthLabel, labels, getLabelValue } = useLastNMonthDropdown(6);
-
+  const { selectedMonthyear } = useAppSelector(state => state.dashboard);
+  const { labels, labelValueMap } = useMemo(() => getLastNMonthLabelsAndMap(6), []);
+  
   useEffect(() => {
-    /* fetch accounts, monthly balances and transactions data on initial load */
-    dispatch(fetchDashboardData(getLabelValue(selectedMonthLabel)));
+    /* fetch accounts, monthly balances and transactions data on initial page load */
+    dispatch(fetchDashboardData(labelValueMap[selectedMonthyear]));
   }, [])
 
   const handleChange = (newMonthname: string) => {
-    setSelectedMonthLabel(newMonthname);
+    dispatch(updateMonthyear(newMonthname));
   }
 
   return (
@@ -33,13 +34,13 @@ export default function Dashboard() {
         <DropDownWrapper>
           <DropDown
             width={150}
-            selected={selectedMonthLabel}
+            selected={selectedMonthyear}
             onChange={handleChange}
             listItems={labels}
           />
         </DropDownWrapper>
         <MonthlySummary
-          monthValue={getLabelValue(selectedMonthLabel)}
+          monthValue={labelValueMap[selectedMonthyear]}
         />
       </PageSection>
     </>

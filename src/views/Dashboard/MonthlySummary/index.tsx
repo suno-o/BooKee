@@ -15,15 +15,15 @@ export default function MonthlySummary({
   monthValue
 }: Props) {
   const dispatch = useAppDispatch();
-  const { accountDataLoaded } = useAppSelector(state => state.dashboard);
+  const { refetchTransactionData } = useAppSelector(state => state.dashboard);
 
   // fetch new transactions data when month dropdown is updated
-  // Note: accountDataLoaded state is used to make sure transaction data for the current month is not fetched twice on initial page load
+  // Note: refetchTransactionData state is updated in 'updateMonthyear' reducer when the user selects a new monthyear
   useEffect(() => {
-    if (accountDataLoaded) {
+    if (refetchTransactionData) {
       dispatch(fetchTransactions(monthValue));
     }
-  }, [monthValue])
+  }, [monthValue, refetchTransactionData])
 
   return (
     <>

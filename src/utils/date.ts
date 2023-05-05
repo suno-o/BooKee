@@ -30,25 +30,36 @@ export const prettifyDateConcise = (dateStr: string) => {
 
 const monthShorthandNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-interface NMonthyearResult {
-  [key: string]: { month: number; year: number };
+interface Result {
+  labels: string[];
+  labelValueMap: { [key: string]: { month: number; year: number } };
 }
 
-export const getLastNMonthyearAndValue = (n: number) => {
+export const getLastNMonthLabelsAndMap = (n: number) => {
   const date = new Date();
-  const result: NMonthyearResult = {};
+  const result: Result = {
+    labels: [],
+    labelValueMap: {}
+  };
 
   for (let i=0; i<n; i++) {
     const d = new Date(date.getFullYear(), date.getMonth() - i, 1);
     const month = d.getMonth();
     const year = d.getFullYear();
-    result[`${monthShorthandNames[month]} ${year}`] = {
+
+    result.labels.push(`${monthShorthandNames[month]} ${year}`);
+    result.labelValueMap[`${monthShorthandNames[month]} ${year}`] = {
       month,
       year
     }
   }
 
   return result;
+}
+
+export const getCurrentMonthyear = () => {
+  const d = new Date();
+  return `${monthShorthandNames[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 export const monthToMonthName = (index: number) => monthShorthandNames[index%12];

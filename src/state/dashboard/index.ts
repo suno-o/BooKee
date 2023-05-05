@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
-import { DashboardState, DashboardData, AccountsBalances, TransactionsData } from "./types"
+import { DashboardState, DashboardData, TransactionsData } from "./types"
 import { getTransactionsData, getAccountsAndBalances } from "./api"
+import { getCurrentMonthyear } from "@/utils/date"
 
 const initialState: DashboardState = {
+  selectedMonthyear: getCurrentMonthyear(),
   accounts: [],
   balanceSnapshots: [],
   accountDataLoaded: false,
@@ -15,6 +17,7 @@ const initialState: DashboardState = {
     creditSpendingTransactions: []
   },
   transactionDataLoaded: false,
+  refetchTransactionData: false,
 }
 
 /* fetch accounts and transactions data */
@@ -41,10 +44,15 @@ export const fetchTransactions = createAsyncThunk<TransactionsData, {month: numb
 )
 
 /* dashboard slice */
-const dashboadSlice = createSlice({
+const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
-  reducers: {},
+  reducers: {
+    updateMonthyear: (state, action) => {
+      state.selectedMonthyear = action.payload;
+      state.refetchTransactionData = true;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDashboardData.fulfilled, (state, action: PayloadAction<DashboardData>) => {
@@ -61,8 +69,11 @@ const dashboadSlice = createSlice({
       .addCase(fetchTransactions.fulfilled, (state, action: PayloadAction<TransactionsData>) => {
         state.transactionsData = action.payload;
         state.transactionDataLoaded = true;
+        state.refetchTransactionData = false;
       })
   },
 })
 
-export default dashboadSlice.reducer;
+export const { updateMonthyear } = dashboardSlice.actions;
+
+export default dashboardSlice.reducer;
