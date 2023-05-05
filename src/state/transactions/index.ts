@@ -3,7 +3,8 @@ import { TransactionsState, Transaction } from "./types"
 import { getTransactions } from "./api"
 
 const initialState: TransactionsState = {
-  transactions: []
+  transactions: [],
+  transactionsLoaded: false,
 }
 
 export const fetchTransactions = createAsyncThunk<Transaction[], {month: number; year: number}>(
@@ -22,6 +23,7 @@ const transactionsSlice = createSlice({
     builder
       .addCase(fetchTransactions.fulfilled, (state, action: PayloadAction<Transaction[]>) => {
         state.transactions = action.payload;
+        state.transactionsLoaded = true;
       })
 
   },

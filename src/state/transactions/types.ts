@@ -2,6 +2,7 @@ import { TransactionType } from "@prisma/client"
 
 export interface TransactionsState {
   transactions: Transaction[];
+  transactionsLoaded: boolean;
 }
 
 export interface Transaction {
