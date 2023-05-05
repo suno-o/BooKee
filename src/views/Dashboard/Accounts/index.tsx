@@ -22,7 +22,7 @@ export default function Accounts() {
           {accountDataLoaded ? (
             <BalanceCardContent>{formatCash(total)}</BalanceCardContent>
           ) : (
-            <Skeleton width={120} height={36} />
+            <Skeleton width={160} height={36} mt={4} />
           )}
         </BalanceCard>
         {/* account balance by bank */}
