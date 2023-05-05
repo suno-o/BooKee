@@ -3,7 +3,6 @@ import { useAppSelector } from "@/state"
 import { accountsAndBalancesSelector } from "@/state/dashboard/selector"
 import styled, { ThemeContext } from "styled-components"
 import Card from "@/components/Card"
-import Skeleton from "@/components/Skeleton"
 import LoadingIndicator from "@/components/LoadingIndicator"
 import BalanceList from "./BalanceList"
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
@@ -19,11 +18,10 @@ export default function Accounts() {
         {/* account balance total */}
         <BalanceCard styles={{bgTheme:'primary', colorTheme:'white'}}>
           <Card.Header>Total Balance</Card.Header>
-          {accountDataLoaded ? (
-            <BalanceCardContent>{formatCash(total)}</BalanceCardContent>
-          ) : (
-            <Skeleton width={160} height={36} mt={4} />
-          )}
+          <BalanceCardContent
+            dataLoaded={accountDataLoaded}
+            skeletonProps={{ width: 160, height: 30, mt: 4 }}
+          >{formatCash(total)}</BalanceCardContent>
         </BalanceCard>
         {/* account balance by bank */}
         <BalanceList data={accounts} dataLoaded={accountDataLoaded} />

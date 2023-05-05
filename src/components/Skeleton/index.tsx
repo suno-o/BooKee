@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components"
 
-interface Props {
+export interface SkeletonProps {
   inline?: boolean;
   width?: number;
   height?: number;
@@ -15,7 +15,7 @@ const wave = keyframes`
   to   { left: 100%; }
 `
 
-const Skeleton = styled.div<Props>`
+const Skeleton = styled.div<SkeletonProps>`
   position: relative;
   overflow: hidden;
   ${p => p.inline && `display: inline-block;`}

@@ -1,5 +1,7 @@
 import { Container, Header, Content } from "./styles"
-import { CardProps } from "./types";
+import Skeleton from "../Skeleton"
+import { CardProps } from "./types"
+import { SkeletonProps } from "../Skeleton"
 
 const Card = ({
   children,
@@ -13,6 +15,22 @@ const Card = ({
 
 /* Card.Header */
 Card.Header = Header;
-Card.Content = Content;
+
+/* Card.Content */
+interface ContentProps {
+  dataLoaded?: boolean;
+  skeletonProps?: SkeletonProps;
+  children: React.ReactNode;
+}
+Card.Content = ({
+  dataLoaded,
+  skeletonProps,
+  children
+}: ContentProps) => {
+  if (dataLoaded === false) {
+    return <Skeleton {...skeletonProps} />;
+  }
+  return <Content>{children}</Content>;
+};
 
 export default Card;
