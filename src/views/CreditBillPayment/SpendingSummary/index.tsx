@@ -7,20 +7,27 @@ import { formatCash } from "@/utils/numbers"
 const SpendingSummary = () => {
   const { cashSpendingTotal, creditSpendingTotal, creditTransactions, creditTransactionLoaded } = useAppSelector(state => state.creditBillPayment);
 
+  const renderAmountCardContent = (amount: number) => (
+    <Card.Content
+      dataLoaded={creditTransactionLoaded}
+      skeletonProps={{ width: 80, height: 26, mt: 4 }}
+    >{formatCash(amount)}</Card.Content>
+  )
+
   return (
     <Container>
       <CardWrapper>
         <TotalCard styles={{bgTheme:'primary', colorTheme:'white'}}>
           <Card.Header>Total Spending</Card.Header>
-          <Card.Content>{formatCash(cashSpendingTotal + creditSpendingTotal)}</Card.Content>
+          {renderAmountCardContent(cashSpendingTotal + creditSpendingTotal)}
         </TotalCard>
         <SpendingCard styles={{bgTheme:'secondary', colorTheme:'white'}}>
           <Card.Header>Cash Spending</Card.Header>
-          <Card.Content>{formatCash(cashSpendingTotal)}</Card.Content>
+          {renderAmountCardContent(cashSpendingTotal)}
         </SpendingCard>
         <SpendingCard styles={{bgTheme:'warning', colorTheme:'white'}}>
           <Card.Header>Credit Spending</Card.Header>
-          <Card.Content>{formatCash(creditSpendingTotal)}</Card.Content>
+          {renderAmountCardContent(creditSpendingTotal)}
         </SpendingCard>
       </CardWrapper>
 

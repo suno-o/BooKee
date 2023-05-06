@@ -2,9 +2,11 @@ import { useAppSelector } from "@/state"
 import { creditTransactionsByAccountSelector } from "@/state/creditBillPayment/selector"
 import styled from "styled-components"
 import PayingDetail from "./PayingDetail"
+import LoadingIndicator from "@/components/LoadingIndicator"
 
 export default function PayBill() {
   const creditTransactionsByAccount = useAppSelector(creditTransactionsByAccountSelector);
+  const { creditTransactionLoaded } = useAppSelector(state => state.creditBillPayment);
 
   return (
     <>
@@ -12,14 +14,20 @@ export default function PayBill() {
         BooKee strongly recommends you to pay off your credit bills in full end of every month, so that you are paying for the purchase you&apos;ve made in the <b>same month</b> the purchase was made.
         But, we still provide you an option to carry over some transactions to upcoming month in case you are unable to pay off in full. Please note that your credit card issuers may charge fees for any unpaid amount.
       </Note>
-      {Object.keys(creditTransactionsByAccount).map((accountName: string) => (
-        <PayingDetailWrapper key={accountName}>
-          <Account>{accountName}</Account>
-          <PayingDetail
-            transactions={creditTransactionsByAccount[accountName]}
-          />
-        </PayingDetailWrapper>
-      ))}
+      {creditTransactionLoaded ? (
+        Object.keys(creditTransactionsByAccount).map((accountName: string) => (
+          <PayingDetailWrapper key={accountName}>
+            <Account>{accountName}</Account>
+            <PayingDetail
+              transactions={creditTransactionsByAccount[accountName]}
+            />
+          </PayingDetailWrapper>
+        ))
+      ) : (
+        <LoadingWrapper>
+          <LoadingIndicator width={32} height={32} />
+        </LoadingWrapper>
+      )}
     </>
   )
 }
@@ -58,4 +66,9 @@ const Account = styled.p`
     text-align: left;
     font-size: 1.1rem;
   }
+`
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `
