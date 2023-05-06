@@ -22,11 +22,11 @@ interface ContentProps {
   skeletonProps?: SkeletonProps;
   children: React.ReactNode;
 }
-Card.Content = ({
+Card.Content = function CardContent({
   dataLoaded,
   skeletonProps,
   children
-}: ContentProps) => {
+}: ContentProps) {
   if (dataLoaded === false) {
     return <Skeleton {...skeletonProps} />;
   }

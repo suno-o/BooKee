@@ -55,7 +55,7 @@ const TransactionList = ({
           <NoTransactions>No transactions</NoTransactions>
         )
       ) : (
-        [...Array(7)].map(() => <TransactionSkeletonRow />)
+        [...Array(7)].map((_, i) => <TransactionSkeletonRow key={i} />)
       )}
     </>
   )
