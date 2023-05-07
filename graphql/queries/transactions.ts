@@ -33,6 +33,9 @@ export const getTransactions = (_: Transaction, args: TransactionQueryArgs) => {
       },
       ...typeComparision,
     },
+    orderBy: {
+      created: 'desc',
+    },
     include: {
       account: {
         include: {
@@ -40,6 +43,11 @@ export const getTransactions = (_: Transaction, args: TransactionQueryArgs) => {
         }
       },
       category: true,
+      creditPurchase: {
+        select: {
+          paymentTransactionId: true,
+        }
+      },
     }
   });
 }

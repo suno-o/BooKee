@@ -75,6 +75,7 @@ export const categories = [
   { userId: 1, name: 'Subscription' },
   { userId: 1, name: 'Kijiji sales'},
   { userId: 1, name: 'Home Office'},
+  { userId: 1, name: 'Credit Bill Payment'},
 ];
 
 export const accounts = [
@@ -138,6 +139,15 @@ export const accounts = [
 
 export const transactions = [
   // May dummy transactions
+  {
+    transactionType: TransactionType.CREDIT_BILL_PAYMENT,
+    userId: 1,
+    accountId: 5,
+    categoryId: 7,
+    description: 'Scotia Momentum Visa bill paid on 2023-05-31',
+    amount: -1999.99,
+    created: new Date('2023-05-31 20:00:00.550000-04'),
+  },
   {
     transactionType: TransactionType.CASH_SPENDING,
     userId: 1,
@@ -273,8 +283,26 @@ export const transactions = [
     amount: 2500,
     created: new Date('2023-05-01 20:00:00.550000-04'),
   },
+  {
+    transactionType: TransactionType.CREDIT_SPENDING,
+    userId: 1,
+    accountId: 8,
+    categoryId: 6,
+    description: 'Monitor',
+    amount: -500,
+    created: new Date('2023-05-01 00:00:00.550000-04'),
+  },
 
   // April dummy transactions
+  {
+    transactionType: TransactionType.CREDIT_BILL_PAYMENT,
+    userId: 1,
+    accountId: 1,
+    categoryId: 7,
+    description: 'TD Aeroplan Visa bill paid on 2023-04-31',
+    amount: -55.5,
+    created: new Date('2023-04-30 20:00:00.550000-04'),
+  },
   {
     transactionType: TransactionType.CASH_SPENDING,
     userId: 1,
@@ -294,7 +322,7 @@ export const transactions = [
     created: new Date('2023-04-17 20:00:00.550000-04'),
   },
   {
-    transactionType: TransactionType.CREDIT_SPENDING,
+    transactionType: TransactionType.CREDIT_CARRYOVER,
     userId: 1,
     accountId: 8,
     categoryId: 6,
@@ -325,6 +353,15 @@ export const transactions = [
     userId: 1,
     accountId: 5,
     categoryId: 4,
+    description: 'Unpaid Testing',
+    amount: -30,
+    created: new Date('2023-04-11 22:00:00.550000-04'),
+  },
+  {
+    transactionType: TransactionType.CASH_SPENDING,
+    userId: 1,
+    accountId: 5,
+    categoryId: 4,
     description: 'Amazon prime',
     amount: -10.5,
     created: new Date('2023-04-11 20:00:00.550000-04'),
@@ -337,33 +374,6 @@ export const transactions = [
     description: 'Internet bill',
     amount: -55.5,
     created: new Date('2023-04-09 20:00:00.550000-04'),
-  },
-  {
-    transactionType: TransactionType.CREDIT_SPENDING,
-    userId: 1,
-    accountId: 7,
-    categoryId: 3,
-    description: 'Hydro bill',
-    amount: -63.13,
-    created: new Date('2023-04-08 20:00:00.550000-04'),
-  },
-  {
-    transactionType: TransactionType.CREDIT_SPENDING,
-    userId: 1,
-    accountId: 8,
-    categoryId: 2,
-    description: 'Food basics',
-    amount: -120.11,
-    created: new Date('2023-04-05 20:00:00.550000-04'),
-  },
-  {
-    transactionType: TransactionType.CREDIT_SPENDING,
-    userId: 1,
-    accountId: 8,
-    categoryId: 2,
-    description: 'Walmart',
-    amount: -130.23,
-    created: new Date('2023-04-02 20:00:00.550000-04'),
   },
   {
     transactionType: TransactionType.CASH_EARNING,
@@ -395,3 +405,10 @@ export const transactions = [
     created: new Date('2023-03-01 20:00:00.550000-04'),
   },
 ];
+
+export const creditPayments = [
+  {
+    purchaseTransactionId: 25,
+    paymentTransactionId: 18
+  }
+]

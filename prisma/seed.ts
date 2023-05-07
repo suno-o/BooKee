@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import { banks, userBalanceSnapshot, categories, accounts, transactions } from './seedData'
+import { banks, userBalanceSnapshot, categories, accounts, transactions, creditPayments } from './seedData'
 
 const prisma = new PrismaClient();
 
@@ -31,6 +31,10 @@ async function main() {
 
   await prisma.transaction.createMany({
     data: transactions,
+  })
+
+  await prisma.creditPayment.createMany({
+    data: creditPayments,
   })
 }
 

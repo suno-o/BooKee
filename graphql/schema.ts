@@ -12,11 +12,16 @@ export const typeDefs = `
     created: Date
     account: Account
     category: Category
+    creditPurchase: CreditPurchase
   }
 
   type TransactionSum {
     type: TransactionType
     total: Float
+  }
+
+  type CreditPurchase {
+    paymentTransactionId: ID
   }
 
   type Account {
@@ -57,7 +62,8 @@ export const typeDefs = `
     CASH_EARNING,
     CASH_SPENDING,
     CREDIT_SPENDING,
-    CREDIT_BILL_PAYMENT
+    CREDIT_BILL_PAYMENT,
+    CREDIT_CARRYOVER
   }
 
   type Query {

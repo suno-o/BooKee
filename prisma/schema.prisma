@@ -68,16 +68,15 @@ model Transaction {
   user                User @relation(fields: [userId], references: [id])
   account             Account @relation(fields: [accountId], references: [id])
   category            Category @relation(fields: [categoryId], references: [id])
-  purchaseTransaction CreditPayment? @relation("purchaseTransaction")
-  paymentTransaction  CreditPayment? @relation("paymentTransaction")
+  creditPurchase      CreditPayment? @relation("purchaseTransaction")
+  creditPayment       CreditPayment? @relation("paymentTransaction")
 }
 
 model CreditPayment {
   purchaseTransactionId Int @unique
-  paymentTransactionId  Int? @unique
-  carryoverDate         DateTime?  @db.Timestamptz
+  paymentTransactionId  Int @unique
   purchaseTransaction   Transaction @relation("purchaseTransaction", fields: [purchaseTransactionId], references: [id])
-  paymentTransaction    Transaction? @relation("paymentTransaction", fields: [paymentTransactionId], references: [id])
+  paymentTransaction    Transaction @relation("paymentTransaction", fields: [paymentTransactionId], references: [id])
   
   @@id([purchaseTransactionId])
 }
@@ -87,6 +86,7 @@ enum TransactionType {
   CASH_SPENDING
   CREDIT_SPENDING
   CREDIT_BILL_PAYMENT
+  CREDIT_CARRYOVER
 }
 
 enum AccountType {
