@@ -12,6 +12,17 @@ export const getTransactionsData = async (month: number, year: number) => {
           total
         }
         creditTransactions: transactions(month: $month, year: $year, type: CREDIT_SPENDING) {
+          ...filteredTransaction,
+          creditPurchase, {
+            paymentTransactionId
+          }
+        }
+        carryoverCreditTransactions: transactions(month: $month, year: $year, type: CREDIT_CARRYOVER) {
+          ...filteredTransaction,
+        }
+      }
+
+      fragment filteredTransaction on Transaction {
           id,
           transactionType,
           created,
@@ -29,15 +40,15 @@ export const getTransactionsData = async (month: number, year: number) => {
           description,
           amount,
         }
-      }
     `,
     { month, year }
   )
 
-  const { sums, creditTransactions } = res;
+  const { sums, creditTransactions, carryoverCreditTransactions } = res;
  
   return {
     ...mapTransactionSums(sums),
-    creditTransactions: creditTransactions.map(mapTransactions)
+    creditTransactions: creditTransactions.map(mapTransactions),
+    carryoverCreditTransactions: carryoverCreditTransactions.map(mapTransactions)
   };
 }

@@ -3,14 +3,18 @@ import { TransactionType } from "@prisma/client"
 export interface CreditBillPaymentState {
   cashSpendingTotal: number;
   creditSpendingTotal: number;
+  creditCarryoverTotal: number;
   creditTransactions: Transaction[];
+  carryoverCreditTransactions: Transaction[];
   creditTransactionLoaded: boolean;
 }
 
 export interface CreditBillPaymentData {
   cashSpendingTotal: number;
   creditSpendingTotal: number;
+  creditCarryoverTotal: number;
   creditTransactions: Transaction[];
+  carryoverCreditTransactions: Transaction[];
 }
 
 export interface Transaction {
@@ -24,11 +28,13 @@ export interface Transaction {
   categoryName: string;
   description: string;
   amount: number;
+  paymentTransactionId?: string;
 }
 
 export interface Response {
   sums: TransactionsSum[];
   creditTransactions: TransactionResponse[];
+  carryoverCreditTransactions: TransactionResponse[];
 }
 
 export interface TransactionResponse {
@@ -39,6 +45,7 @@ export interface TransactionResponse {
   category: Category;
   description: string;
   amount: number;
+  creditPurchase?: CreditPurchase;
 }
 
 export interface TransactionsSum {
@@ -59,4 +66,8 @@ interface Bank {
 interface Category {
   id: string;
   name: string;
+}
+
+interface CreditPurchase {
+  paymentTransactionId: string;
 }

@@ -5,7 +5,9 @@ import { getTransactionsData } from "./api"
 const initialState: CreditBillPaymentState = {
   cashSpendingTotal: 0,
   creditSpendingTotal: 0,
+  creditCarryoverTotal: 0,
   creditTransactions: [],
+  carryoverCreditTransactions: [],
   creditTransactionLoaded: false,
 }
 
@@ -24,10 +26,12 @@ const billPaymentSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTransactions.fulfilled, (state, action: PayloadAction<CreditBillPaymentData>) => {
-        const { cashSpendingTotal, creditSpendingTotal, creditTransactions } = action.payload;
+        const { cashSpendingTotal, creditSpendingTotal, creditCarryoverTotal, creditTransactions, carryoverCreditTransactions } = action.payload;
         state.cashSpendingTotal = cashSpendingTotal;
         state.creditSpendingTotal = creditSpendingTotal;
+        state.creditCarryoverTotal = creditCarryoverTotal;
         state.creditTransactions = creditTransactions;
+        state.carryoverCreditTransactions = carryoverCreditTransactions;
         state.creditTransactionLoaded = true;
       })
 
