@@ -7,11 +7,11 @@ const selectTransactions = (state: RootState) => state.creditBillPayment;
 /* paid and unpaid credit transactions, and carried over transactions */
 export const creditTransactionsSelector = createSelector(
   selectTransactions,
-  ({ creditTransactions, carryoverCreditTransactions }) => {console.log('runrun'); return ({
+  ({ creditTransactions, carryoverCreditTransactions }) => ({
     unPaidTransactions: creditTransactions.filter(transaction => transaction?.paymentTransactionId === undefined),
     paidTransactions: creditTransactions.filter(transaction => transaction?.paymentTransactionId !== undefined),
     carryoverTransactions: carryoverCreditTransactions
-  })}
+  })
 )
 
 /* paid transactions total */
