@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { Transaction } from "@/state/creditBillPayment/types"
 import { prettifyDateConcise } from "@/utils/date"
 import { formatCash } from "@/utils/numbers"
+import Tooltip from "@/components/Tooltip"
 
 interface Props {
   transactions: Transaction[];
@@ -12,13 +13,6 @@ export default function PayingTransactionSelect({
   transactions,
   transactionSelectHandler
 }: Props) {
-  
-  /* show transaction description when hovering tooltip */
-  const onTransactionRowHoverHandler = (id: string, show?: boolean) => () => {
-    const elem = document.getElementById(`transaction-description-${id}`);
-    if (!elem) return;
-    elem.style.display = show ? 'block' : 'none';
-  }
   
   return (
     <Container>
@@ -40,13 +34,12 @@ export default function PayingTransactionSelect({
               <Td>{transaction.categoryName}</Td>
               <Td>{formatCash(transaction.amount)}</Td>
               <Td>
-                <TooltipWrapper
-                  onMouseEnter={onTransactionRowHoverHandler(transaction.id, true)}
-                  onMouseLeave={onTransactionRowHoverHandler(transaction.id)}
-                >
-                  <Tooltip>?</Tooltip>
-                  <Description id={`transaction-description-${transaction.id}`}>{transaction.description}</Description>
-                </TooltipWrapper>
+                <Tooltip
+                  id={`transaction-description-${transaction.id}`}
+                  description={transaction.description}
+                  width={200}
+                  position='left'
+                ><b>?</b></Tooltip>
               </Td>
             </tr>
           ))}
@@ -86,28 +79,4 @@ const Td = styled.td`
 const Checkbox = styled.input`
   cursor: pointer;
   accent-color: ${p => p.theme.colors.primary};
-`
-
-const TooltipWrapper = styled.div`
-  position: relative;
-`
-
-const Tooltip = styled.div`
-  cursor: pointer;
-  border-radius: 50%;
-  font-weight: bold;
-  color: ${p => p.theme.colors.primary};
-`
-
-const Description = styled.div`
-  pointer-events: none;
-  display: none;
-  position: absolute;
-  bottom: 32px;
-  right: 0;
-  border-radius: 8px;
-  background-color: ${p => p.theme.colors.white};
-  box-shadow: ${p => p.theme.shadows.grey_blurry};
-  width: 200px;
-  padding: 8px 24px;
 `
