@@ -21,13 +21,15 @@ interface EmptyRowProps {
   children: React.ReactNode;
 }
 
-Table.EmptyRow = ({
+Table.EmptyRow = function EmptyRow({
   colSpan,
   children
-}: EmptyRowProps) => (
-  <Tr>
-    <EmptyTd colSpan={colSpan}>{children}</EmptyTd>
-  </Tr>
-)
+}: EmptyRowProps) {
+  return (
+    <Tr>
+      <EmptyTd colSpan={colSpan}>{children}</EmptyTd>
+    </Tr>
+  )
+}
 
 export default Table;

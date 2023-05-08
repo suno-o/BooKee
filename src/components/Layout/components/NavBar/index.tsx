@@ -24,7 +24,7 @@ const NavBar = () => {
             <Link href='/transactions'>Transactions</Link>
             <Link href='/credit-bill-payment'>Credit bill payment</Link>
           </Links>
-          <p>// style these soon</p>
+          <p>&#47;&#47; style these soon</p>
         </>
       )}
 

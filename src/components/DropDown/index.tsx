@@ -13,7 +13,7 @@ interface Props {
   selected?: string;
   onChange: (selected: any) => void;
   listItems: string[]; // use label as a key for now
-  customStyles: CustomStyles;
+  customStyles?: CustomStyles;
 }
 
 const DropDown = ({
