@@ -6,6 +6,7 @@ import styled, { css } from "styled-components"
 import Card from "@/components/Card"
 import DropDown from "@/components/DropDown"
 import Button, { ButtonWrapper } from "@/components/Button"
+import Skeleton from "@/components/Skeleton"
 
 const typeFilterData = [
   { label: 'all', value: '', theme: 'failure' },
@@ -20,14 +21,14 @@ interface Props {
   resetCategoryFilter: () => void;
 }
 
-const longestLength = (strArr: string[]) => Math.max(...strArr.map(str => str.length));
+const longestLength = (strArr: string[]) => Math.max(...strArr.map(str => str.length), 8); // min 8
 
 const Filter = ({
   filters,
   handleFilterChange,
   resetCategoryFilter
 }: Props) => {
-  const { banks, categories } = useAppSelector(bankAndCategorySelector);
+  const { banks, categories, transactionsLoaded } = useAppSelector(bankAndCategorySelector);
   const longestBankChars = longestLength(banks);
   const longestCategoryChars = longestLength(categories);
   
@@ -47,22 +48,31 @@ const Filter = ({
       {/* category: bank and transaction category */}
       <CategoryFilterWrapper>
         <DropDownWrapper longestLength={longestBankChars}>
-          <DropDown
-            selected={filters.bank}
-            onChange={handleFilterChange('bank')}
-            label={'Bank'}
-            listItems={banks}
-            customStyles={{ align: 'left', p: '8px 16px' }}
-          />
+          {transactionsLoaded ? (
+            <DropDown
+              selected={filters.bank}
+              onChange={handleFilterChange('bank')}
+              label={'Bank'}
+              listItems={banks}
+              customStyles={{ align: 'left', p: '8px 16px' }}
+            />
+          ) : (
+            <Skeleton br={24} style={{ width: '100%', height: '100%' }} />
+          )}
         </DropDownWrapper>
+
         <DropDownWrapper longestLength={longestCategoryChars}>
-          <DropDown
-            selected={filters.category}
-            onChange={handleFilterChange('category')}
-            label={'Category'}
-            listItems={categories}
-            customStyles={{ align: 'left', p: '8px 16px'  }}
-          />
+          {transactionsLoaded ? (
+            <DropDown
+              selected={filters.category}
+              onChange={handleFilterChange('category')}
+              label={'Category'}
+              listItems={categories}
+              customStyles={{ align: 'left', p: '8px 16px'  }}
+            />
+          ) : (
+            <Skeleton br={24} style={{ width: '100%', height: '100%' }} />
+          )}
         </DropDownWrapper>
         <Btn bgTheme='text_grey' onClick={resetCategoryFilter}>Reset</Btn>
       </CategoryFilterWrapper>
@@ -148,6 +158,6 @@ const DropDownWrapper = styled.div<{longestLength: number}>`
 const Btn = styled(Button)`
   width: auto;
   border-radius: 24px;
-  padding: 8px 12px;
+  padding: 12px;
   font-weight: normal;
 `
