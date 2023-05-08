@@ -1,10 +1,14 @@
 import styled from "styled-components"
 
-export const Table = styled.table`
+export const Table = styled.table<{layout?: string}>`
   width: 100%;
-  table-layout: fixed;
+  table-layout: ${p => p.layout ? p.layout : 'fixed'};
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+
+  ${p => p.theme.mediaQueries.sm} {
+    font-size: 0.8rem;
+  }
 `
 
 export const Head = styled.thead``

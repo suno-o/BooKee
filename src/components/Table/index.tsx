@@ -1,26 +1,27 @@
 import React from "react"
-import { Table, Head, Body, Tr, Th, Td, EmptyTd } from "./styles"
+import { Table as StyledTable, Head, Body, Tr, Th, Td, EmptyTd } from "./styles"
 
 interface TableProps {
+  layout?: string;
   children: React.ReactNode;
 }
 
-const TableComponent = ({ children }: TableProps)  => (
-  <Table>{children}</Table>
+const Table = ({ layout, children }: TableProps)  => (
+  <StyledTable layout={layout}>{children}</StyledTable>
 )
 
-TableComponent.Head = Head;
-TableComponent.Body = Body;
-TableComponent.Tr = Tr;
-TableComponent.Th = Th;
-TableComponent.Td = Td;
+Table.Head = Head;
+Table.Body = Body;
+Table.Tr = Tr;
+Table.Th = Th;
+Table.Td = Td;
 
 interface EmptyRowProps {
   colSpan: number;
   children: React.ReactNode;
 }
 
-TableComponent.EmptyRow = ({
+Table.EmptyRow = ({
   colSpan,
   children
 }: EmptyRowProps) => (
@@ -29,4 +30,4 @@ TableComponent.EmptyRow = ({
   </Tr>
 )
 
-export default TableComponent;
+export default Table;
