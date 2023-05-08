@@ -10,7 +10,7 @@ export default function PayBill() {
     <>
       <Note>
         BooKee strongly recommends you to pay off your credit bills in full end of each month, so that you are paying for the purchase you&apos;ve made in the <b>same month</b> the purchase was made.
-        But, we still provide you an option to carry over some transactions to upcoming month in case you are unable to pay off in full. Please note that your credit card issuers may charge fees for any unpaid amount.`
+        But, we still provide you an option to carry over some transactions to upcoming month in case you are unable to pay off in full. Please note that your credit card issuers may charge fees for any unpaid amount.
       </Note>
       {Object.keys(transactionsByAccount).map((accountName: string) => (
         <PayingDetailWrapper key={accountName}>

@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import { CreditBillPaymentState, CreditBillPaymentData } from "./types"
 import { getTransactionsData } from "./api"
+import { getCurrentMonthyear } from "@/utils/date"
 
 const initialState: CreditBillPaymentState = {
+  selectedMonthyear: getCurrentMonthyear(),
   cashSpendingTotal: 0,
   creditSpendingTotal: 0,
   creditCarryoverTotal: 0,
@@ -22,7 +24,11 @@ export const fetchTransactions = createAsyncThunk<CreditBillPaymentData, {month:
 const billPaymentSlice = createSlice({
   name: 'billPayment',
   initialState,
-  reducers: {},
+  reducers: {
+    updateMonthyear: (state, action) => {
+      state.selectedMonthyear = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTransactions.fulfilled, (state, action: PayloadAction<CreditBillPaymentData>) => {
@@ -37,5 +43,7 @@ const billPaymentSlice = createSlice({
 
   },
 })
+
+export const { updateMonthyear } = billPaymentSlice.actions;
 
 export default billPaymentSlice.reducer;

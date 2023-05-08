@@ -1,6 +1,7 @@
 import { TransactionType } from "@prisma/client"
 
 export interface CreditBillPaymentState {
+  selectedMonthyear: string;
   cashSpendingTotal: number;
   creditSpendingTotal: number;
   creditCarryoverTotal: number;

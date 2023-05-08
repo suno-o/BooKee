@@ -30,3 +30,7 @@ export const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;
 `
+
+export const DropDownWrapper = styled.div`
+  text-align: right;
+`

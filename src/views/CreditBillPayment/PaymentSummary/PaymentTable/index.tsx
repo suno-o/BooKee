@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import Table from "@/components/Table"
 import Tooltip from "@/components/Tooltip"
+import Skeleton from "@/components/Skeleton"
 import { getMonthDate } from "@/utils/date"
 import { formatCash } from "@/utils/numbers"
 import { Transaction } from "@/state/creditBillPayment/types"
@@ -10,13 +11,15 @@ interface Props {
   theme?: string;
   header: string;
   transactions: Transaction[];
+  dataLoaded?: boolean;
 }
 
 const PaymentTable = ({
   className,
   theme,
   header,
-  transactions
+  transactions,
+  dataLoaded
 }: Props) => (
   <Container className={className}>
     <Header colorTheme={theme}>{header}</Header>
@@ -31,29 +34,45 @@ const PaymentTable = ({
         </Table.Tr>
       </Table.Head>
       <Table.Body>
-        {transactions.length > 0 ? (
-          transactions.map((transaction: Transaction) => (
-            <Table.Tr key={transaction.id}>
-              <Table.Td>{getMonthDate(transaction.created)}</Table.Td>
-              <Table.Td>{transaction.bankName}</Table.Td>
-              <Table.Td>{transaction.categoryName}</Table.Td>
-              <StyledTd bold>{formatCash(Math.abs(transaction.amount))}</StyledTd>
-              <Table.Td>
-                <Tooltip
-                  id={`transaction-${header.split(' ').join('-')}-${transaction.id}`}
-                  description={transaction.description}
-                  width={200}
-                  position='left'
-                ><b>?</b></Tooltip>
-              </Table.Td>
-            </Table.Tr>
-          ))
+        {(dataLoaded === false) ? (
+          <>
+            <SkeletonRow />
+            <SkeletonRow />
+          </>
         ) : (
-          <Table.EmptyRow colSpan={5}>No item</Table.EmptyRow>
+          transactions.length > 0 ? (
+            transactions.map((transaction: Transaction) => (
+              <Table.Tr key={transaction.id}>
+                <Table.Td>{getMonthDate(transaction.created)}</Table.Td>
+                <Table.Td>{transaction.bankName}</Table.Td>
+                <Table.Td>{transaction.categoryName}</Table.Td>
+                <StyledTd bold>{formatCash(Math.abs(transaction.amount))}</StyledTd>
+                <Table.Td>
+                  <Tooltip
+                    id={`transaction-${header.split(' ').join('-')}-${transaction.id}`}
+                    description={transaction.description}
+                    width={200}
+                    position='left'
+                  ><b>?</b></Tooltip>
+                </Table.Td>
+              </Table.Tr>
+            ))
+          ) : (
+            <Table.EmptyRow colSpan={5}>No item</Table.EmptyRow>
+          )
         )}
       </Table.Body>
     </Table>
   </Container>
+)
+
+const SkeletonRow = () => (
+  <Table.Tr>
+    <Table.Td><Skeleton width={50} height={18} inline /></Table.Td>
+    <Table.Td><Skeleton width={40} height={18} inline /></Table.Td>
+    <Table.Td><Skeleton width={70} height={18} inline /></Table.Td>
+    <Table.Td><Skeleton width={40} height={18} inline /></Table.Td>
+  </Table.Tr>
 )
 
 export default PaymentTable;

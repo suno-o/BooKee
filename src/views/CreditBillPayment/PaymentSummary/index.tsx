@@ -21,13 +21,14 @@ const PaymentSummary = () => {
     <Container>
       <Item>
         <Card styles={{bgTheme:'success', colorTheme:'white'}}>
-          <Card.Header>Credit Payment Total</Card.Header>
+          <Card.Header>Payment Total</Card.Header>
           {renderAmountCardContent(Math.abs(creditPaymentTotal))}
         </Card>
         <StyledPaymentTable
           theme='success'
           header='Paid'
           transactions={paidTransactions}
+          dataLoaded={creditTransactionLoaded}
         />
       </Item>
 
@@ -40,6 +41,7 @@ const PaymentSummary = () => {
           theme='failure'
           header='Carried Over'
           transactions={carryoverTransactions}
+          dataLoaded={creditTransactionLoaded}
         />
       </Item>
     </Container>
