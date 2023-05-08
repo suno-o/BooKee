@@ -5,7 +5,7 @@ import Button from "@/components/Button"
 
 const TryNow: React.FC = () => (
   <ButtonWrapper>
-    <Link href="/register">
+    <Link href="/dashboard">
       <TryButton>Create account</TryButton>
     </Link>
   </ButtonWrapper>

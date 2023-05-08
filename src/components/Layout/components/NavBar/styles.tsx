@@ -11,6 +11,11 @@ export const NavBarContainer = styled.nav`
 
 export const Links = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 32px;
+
+  ${p => p.theme.mediaQueries.md} {
+    flex-direction: row;
+    gap: 32px;
+  }
 `

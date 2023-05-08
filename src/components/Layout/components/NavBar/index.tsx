@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useRouter } from "next/router"
 import Link from "next/link"
 import Button from "@/components/Button"
 import {
@@ -6,43 +6,34 @@ import {
   Links,
 } from "./styles"
 
-/* ===== DUMMY: remove later ===== */
-const login = () => {
-  localStorage.setItem('dummy-bookee-user', 'something');
-}
-const logout = () => {
-  localStorage.removeItem('dummy-bookee-user');
-}
-/* ================================= */
-
 const NavBar = () => {
-  /* ===== REMOVE later: just temporarily mimicking login and logout ===== */
-  const [user, setUser] = useState('');
-
-  useEffect(() => {
-    const u = localStorage.getItem('dummy-bookee-user') || '';
-    if (u) setUser(u);
-  }, [])
-  /* ===================================================================== */
-
+  const router = useRouter();
+  const currentPath = router.pathname;
+  const homePaths = ['/', '/article/choosing-banking-products', '/articles/paying-bills', '/privacy-policy'];
+  
   return (
     <NavBarContainer>
       <h2>Logo</h2>
-      {user && (
-        <Links>
-          Style these later:
-          <Link href='/dashboard'>Dashboard</Link>
-          <Link href='/transactions'>Transactions</Link>
-          <Link href='/credit-bill-payment'>Credit bill payment</Link>
-        </Links>
-      )}
+
+      {homePaths.includes(currentPath) ? (
         <p style={{textAlign: 'center', fontWeight: 'bold'}}>BooKee is currently under development</p>
-      <Links>
-      {!user ? (
-        <Link href='/login' onClick={login}><Button bgTheme='primary'>Log in</Button></Link>
       ) : (
-        <Link href='/' onClick={logout}><Button bgTheme='primary'>Log out</Button></Link>
+        <>
+          <Links>
+            <Link href='/dashboard'>Dashboard</Link>
+            <Link href='/transactions'>Transactions</Link>
+            <Link href='/credit-bill-payment'>Credit bill payment</Link>
+          </Links>
+          <p>// style these soon</p>
+        </>
       )}
+
+      <Links>
+        {homePaths.includes(currentPath) ? (
+          <Link href='/dashboard'><Button bgTheme='primary'>Log in</Button></Link>
+        ) : (
+          <Link href='/'><Button bgTheme='primary'>Log out</Button></Link>
+        )}
       </Links>
     </NavBarContainer>
   )
