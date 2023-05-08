@@ -4,6 +4,23 @@ import { Transaction } from "./types";
 
 const selectTransactions = (state: RootState) => state.creditBillPayment;
 
+/* paid and unpaid credit transactions, and carried over transactions */
+export const creditTransactionsSelector = createSelector(
+  selectTransactions,
+  ({ creditTransactions, carryoverCreditTransactions }) => {console.log('runrun'); return ({
+    unPaidTransactions: creditTransactions.filter(transaction => transaction?.paymentTransactionId === undefined),
+    paidTransactions: creditTransactions.filter(transaction => transaction?.paymentTransactionId !== undefined),
+    carryoverTransactions: carryoverCreditTransactions
+  })}
+)
+
+/* paid transactions total */
+export const creditPaymentTotalSelector = createSelector(
+  creditTransactionsSelector,
+  ({ paidTransactions }) => paidTransactions.reduce((sum, transaction) => sum + transaction.amount, 0)
+)
+
+/* unpaid transactions by account */
 interface TransactionsByCreditAccount {
   [key: string]: Transaction[];
 }
@@ -23,7 +40,7 @@ const getCreditTransactionsByAccount = (creditTransactions: Transaction[]) => {
   return result;
 }
 
-export const creditTransactionsByAccountSelector = createSelector(
-  selectTransactions,
-  ({ creditTransactions }) => getCreditTransactionsByAccount(creditTransactions)
+export const unpaidCreditTransactionsByAccountSelector = createSelector(
+  creditTransactionsSelector,
+  ({ unPaidTransactions }) => getCreditTransactionsByAccount(unPaidTransactions)
 )
