@@ -1,6 +1,6 @@
 import React from "react"
-import { Table, Th, Td, NoItem } from "./styles"
-import Skeleton from "../Skeleton"
+import Table from "@/components/Table"
+import Skeleton from "@/components/Skeleton"
 import { formatCash } from "@/utils/numbers"
 
 interface Props {
@@ -18,25 +18,23 @@ const TransactionTable = ({
   
   return (
     <Table>
-      <thead>
-        <tr>
-          <Th>{header}</Th>
-          <Th>Amounts</Th>
-        </tr>
-      </thead>
-      <tbody>
+      <Table.Head>
+        <Table.Tr>
+          <Table.Th>{header}</Table.Th>
+          <Table.Th>Amounts</Table.Th>
+        </Table.Tr>
+      </Table.Head>
+      <Table.Body>
         {dataLoaded ? (
           dataKeys.length > 0 ? (
             dataKeys.map((key: string) => (
               <tr key={key}>
-                <Td>{key}</Td>
-                <Td>{formatCash(data[key])}</Td>
+                <Table.Td>{key}</Table.Td>
+                <Table.Td>{formatCash(data[key])}</Table.Td>
               </tr>
             ))
           ) : (
-            <tr>
-              <NoItem colSpan={2}>No item</NoItem>
-            </tr>
+            <Table.EmptyRow colSpan={2}>No item</Table.EmptyRow>
           )
         ) : (
           <>
@@ -44,16 +42,16 @@ const TransactionTable = ({
             <SkeletonRow />
           </>
         )}
-      </tbody>
+      </Table.Body>
     </Table>
   )
 }
 
 const SkeletonRow = () => (
-  <tr>
-    <Td><Skeleton width={50} height={18} inline /></Td>
-    <Td><Skeleton width={50} height={18} inline /></Td>
-  </tr>
+  <Table.Tr>
+    <Table.Td><Skeleton width={50} height={18} inline /></Table.Td>
+    <Table.Td><Skeleton width={50} height={18} inline /></Table.Td>
+  </Table.Tr>
 )
 
 export default React.memo(TransactionTable);

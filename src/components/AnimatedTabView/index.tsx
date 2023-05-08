@@ -1,65 +1,34 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import styled, { css } from "styled-components"
-import TransactionTable from "@/components/TransactionTable"
-import { Transaction } from "@/state/dashboard/types"
 
-interface TransactionSummaryTableProps {
+interface AnimatedTabViewProps<TabDataType> {
   theme: string;
-  header: string;
-  transactions: Transaction[];
-  dataLoaded: boolean;
-}
-
-interface TransactionSummaryData {
-  [key: string]: number;
-}
-
-/* 
- * helper: calculate transaction amount total by category
- * (ex. if the category is 'bank_name', it will calculate total transaction amounts by each bank - TD: $1000, RBC: $2000, etc..)
- */
-const getTransactionSummaryDataByCategory = (transactions: Transaction[], category: string) => {
-  const categoryKey = category as keyof Transaction;
-
-  return transactions.reduce((summaryData: TransactionSummaryData, transaction: Transaction) => {
-    const categoryValue = transaction[categoryKey];
-    
-    if (summaryData[categoryValue]) {
-      summaryData[categoryValue] += transaction.amount;
-    } else {
-      summaryData[categoryValue] = transaction.amount;
-    }
-    
-    return summaryData;
-  }, Object.create(null))
+  title: string;
+  tabHeaders: string[];
+  tabData: TabDataType[];
+  renderTab: (currentTab: string, data: TabDataType) => JSX.Element;
 }
 
 /**
- * TransactionSummaryTable Component
+ * AnimatedTabView Component
  */
-export default function TransactionSummaryTable({
-  header,
+export default function AnimatedTabView<TabDataType>({
   theme,
-  transactions,
-  dataLoaded
-}: TransactionSummaryTableProps) {
-  const tabs = ['Bank', 'Category'];
-  const tabData = useMemo(() => ([
-    getTransactionSummaryDataByCategory(transactions, 'bankName'),
-    getTransactionSummaryDataByCategory(transactions, 'categoryName')
-  ]), [transactions]);
-  
-  const [currentTab, setCurrentTab] = useState(tabs[0]);
-
+  title,
+  tabHeaders,
+  tabData,
+  renderTab
+}: AnimatedTabViewProps<TabDataType>) {
+  const [currentTab, setCurrentTab] = useState(tabHeaders[0]);
   const onTabChange = (tabName: string) => () => setCurrentTab(tabName);
   
   return (
     <>
       <Header>
-        <ItemHeader colorTheme={theme}>{header}</ItemHeader>
+        <Title colorTheme={theme}>{title}</Title>
         <Tab>
           <TabItemsWrapper>
-            {tabs.map((tab: string) => {
+            {tabHeaders.map((tab: string) => {
               if (tab === currentTab)
                 return <ActiveTab key={tab} bgTheme={theme} onClick={onTabChange(tab)}>{tab}</ActiveTab>
 
@@ -69,13 +38,10 @@ export default function TransactionSummaryTable({
         </Tab>
       </Header>
       <Content scrollTheme={theme}>
-        {tabData.map((data: TransactionSummaryData, index: number) => (
-          <AnimatedWrapper key={tabs[index]} index={index} visible={currentTab === tabs[index]}>
-            <TransactionTable
-              header={tabs[index]}
-              data={data}
-              dataLoaded={dataLoaded}
-            />
+        {tabData.map((data, index: number) => (
+          <AnimatedWrapper key={tabHeaders[index]} index={index} visible={currentTab === tabHeaders[index]}>
+            {/* NOTE: pass tabHeaders[index] instead of currentTab to prevent unnecessary re-render if memoized component is used in renderTab */}
+            {renderTab(tabHeaders[index], data)}
           </AnimatedWrapper>
         ))}
       </Content>
@@ -90,7 +56,7 @@ const Header = styled.div`
   padding: 16px;
 `
 
-const ItemHeader = styled.div<{colorTheme?: string}>`
+const Title = styled.div<{colorTheme?: string}>`
   font-weight: 500;
   color: ${p => p.theme.colors[p.colorTheme ? p.colorTheme : 'text_grey_dark']};
 `

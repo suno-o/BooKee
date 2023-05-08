@@ -7,6 +7,12 @@ export const Table = styled.table`
   font-size: 0.8rem;
 `
 
+export const Head = styled.thead``
+
+export const Body = styled.tbody``
+
+export const Tr = styled.tr``
+
 export const Th = styled.th`
   font-weight: 600;
   border-bottom: 1px solid ${p => p.theme.colors.text_grey_lighter};
@@ -18,7 +24,7 @@ export const Td = styled.td`
   padding: 4px 0;
 `
 
-export const NoItem = styled.td`
+export const EmptyTd = styled.td`
   height: 40px;
   text-align: center;
   color: ${p => p.theme.colors.text_grey_lighter};

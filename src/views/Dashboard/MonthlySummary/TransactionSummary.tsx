@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/state"
 import { transactionsByTypeSelector } from "@/state/dashboard/selector"
 import styled from "styled-components"
-import TransactionSummaryTable from "./TransactionSummaryTable";
+import TransactionSummaryTable from "@/components/BooKeeTable/TransactionSummaryTable";
 
 /**
  * TransactionSummary Component

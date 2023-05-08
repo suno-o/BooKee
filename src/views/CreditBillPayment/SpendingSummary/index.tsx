@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/state"
 import styled from "styled-components"
 import Card from "@/components/Card"
-import TransactionSummaryTable from "@/views/Dashboard/MonthlySummary/TransactionSummaryTable" // move this to components folder later
+import TransactionSummaryTable from "@/components/BooKeeTable/TransactionSummaryTable";
 import { formatCash } from "@/utils/numbers"
 
 const SpendingSummary = () => {
