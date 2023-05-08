@@ -38,6 +38,7 @@ const colors: Colors = {
 const gradients: Gradients = {
   primary: generateGradient(colors.primary),
   secondary: generateGradient(colors.secondary),
+  success: generateGradient(colors.success),
   warning: generateGradient(colors.warning),
   failure: generateGradient(colors.failure),
   sky: `linear-gradient(60deg, ${colors.sky_blue} 0%, ${colors.sky_purple} 100%)`,

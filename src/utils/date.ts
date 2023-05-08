@@ -28,6 +28,13 @@ export const prettifyDateConcise = (dateStr: string) => {
   return `${m < 10 ? `0${m}`: m}/${d < 10 ? `0${d}`: d}/${date.getFullYear()}`;
 }
 
+export const getMonthDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  const m = date.getMonth()+1;
+  const d = date.getDate();
+  return `${m < 10 ? `0${m}`: m}/${d < 10 ? `0${d}`: d}`;
+}
+
 const monthShorthandNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 interface Result {
