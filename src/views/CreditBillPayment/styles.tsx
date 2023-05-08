@@ -9,13 +9,24 @@ export const Heading = styled(Heading3)`
   ${headingCSS};
 `
 
-export const PayBillHeading = styled(Heading3)`
+export const CenteredHeading = styled(Heading3)`
   ${headingCSS};
   text-align: center;
+`
+
+export const Note = styled.p`
+  margin: 16px 0;
+  font-size: 0.8rem;
+  color: ${p => p.theme.colors.text_grey_light};
 `
 
 export const Hr = styled.hr`
   border: 0;
   height: 1px;
   background-color: ${p => p.theme.colors.text_grey_lighter};
+`
+
+export const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `
