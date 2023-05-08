@@ -20,13 +20,17 @@ interface Props {
   resetCategoryFilter: () => void;
 }
 
+const longestLength = (strArr: string[]) => Math.max(...strArr.map(str => str.length));
+
 const Filter = ({
   filters,
   handleFilterChange,
   resetCategoryFilter
 }: Props) => {
   const { banks, categories } = useAppSelector(bankAndCategorySelector);
-
+  const longestBankChars = longestLength(banks);
+  const longestCategoryChars = longestLength(categories);
+  
   return (
     <Container>
       {/* transaction type: all, earning, spending, credit */}
@@ -42,20 +46,24 @@ const Filter = ({
 
       {/* category: bank and transaction category */}
       <CategoryFilterWrapper>
-        <DropDown
-          width={150}
-          selected={filters.bank}
-          onChange={handleFilterChange('bank')}
-          label={'Bank'}
-          listItems={banks}
-        />
-         <DropDown
-          width={150}
-          selected={filters.category}
-          onChange={handleFilterChange('category')}
-          label={'Category'}
-          listItems={categories}
-        />
+        <DropDownWrapper longestLength={longestBankChars}>
+          <DropDown
+            selected={filters.bank}
+            onChange={handleFilterChange('bank')}
+            label={'Bank'}
+            listItems={banks}
+            customStyles={{ align: 'left', p: '8px 16px' }}
+          />
+        </DropDownWrapper>
+        <DropDownWrapper longestLength={longestCategoryChars}>
+          <DropDown
+            selected={filters.category}
+            onChange={handleFilterChange('category')}
+            label={'Category'}
+            listItems={categories}
+            customStyles={{ align: 'left', p: '8px 16px'  }}
+          />
+        </DropDownWrapper>
         <Btn bgTheme='text_grey' onClick={resetCategoryFilter}>Reset</Btn>
       </CategoryFilterWrapper>
     </Container>
@@ -70,12 +78,8 @@ const Container = styled.div`
 
 const TypeFilterWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 24px;
-
-  ${p => p.theme.mediaQueries.md} {
-    justify-content: flex-start;
-  }
 `
 
 const BtnWrapper = styled(ButtonWrapper)<{disabled?: boolean}>`
@@ -102,8 +106,8 @@ const BtnWrapper = styled(ButtonWrapper)<{disabled?: boolean}>`
 `
 
 const FilterCard = styled(Card)`
-  padding: 8px 24px;
-  ${p => p.theme.mediaQueries.sm} { padding: 10px 28px; }
+  padding: 10px 18px;
+  ${p => p.theme.mediaQueries.sm} { padding: 10px 26px; }
   ${p => p.theme.mediaQueries.md} { padding: 12px 32px; }
 `
 
@@ -118,17 +122,32 @@ const FilterHeader = styled(Card.Header)`
 
 const CategoryFilterWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   gap: 8px;
+
+  ${p => p.theme.mediaQueries.sm} {
+    flex-direction: row;
+    justify-content: center;
+  }
 
   ${p => p.theme.mediaQueries.md} {
     justify-content: flex-end;
   }
 `
 
+const DropDownWrapper = styled.div<{longestLength: number}>`
+  ${p => p.theme.mediaQueries.sm} {
+    width: 100%;
+  }
+
+  ${p => p.theme.mediaQueries.md} {
+    width: ${p => p.longestLength * 8 + 48}px;
+  }
+`
+
 const Btn = styled(Button)`
   width: auto;
   border-radius: 24px;
-  padding: 4px 12px;
+  padding: 8px 12px;
   font-weight: normal;
 `

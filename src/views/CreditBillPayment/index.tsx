@@ -31,10 +31,10 @@ export default function CreditBillPayment() {
       <PageSection>
         <DropDownWrapper>
           <DropDown
-            width={150}
             selected={selectedMonthyear}
             onChange={handleChange}
             listItems={labels}
+            customStyles={{ width: '150px' }}
           />
         </DropDownWrapper>
         <Heading>Spending Summary </Heading>

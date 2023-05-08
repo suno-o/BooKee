@@ -33,10 +33,10 @@ export default function Dashboard() {
         <DashboardHeading>Monthly Summary</DashboardHeading>
         <DropDownWrapper>
           <DropDown
-            width={150}
             selected={selectedMonthyear}
             onChange={handleChange}
             listItems={labels}
+            customStyles={{ width: '150px' }}
           />
         </DropDownWrapper>
         <MonthlySummary
