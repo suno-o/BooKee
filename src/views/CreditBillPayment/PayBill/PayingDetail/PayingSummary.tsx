@@ -41,7 +41,7 @@ export default function PayingDetail({
         <p>{formatCash(totalBalance)}</p>
       </AmountWrapper>
       <AmountWrapper>
-        <p>Amount carrying over to May</p>
+        <p>Amount carrying over to next month</p>
         <p>{formatCash(totalCarryover)}</p>
       </AmountWrapper>
       <TotalAmountWrapper>
