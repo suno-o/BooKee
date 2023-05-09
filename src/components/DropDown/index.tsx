@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Select, Options, Option } from "./styles"
 import { useOutsideClickAlert } from "@/hooks/useOutsideClickAlert"
 
@@ -23,8 +23,7 @@ const DropDown = ({
   listItems,
   customStyles,
 }: Props) => {
-  const selectRef = useRef<HTMLDivElement>(null);
-  const [outsideClicked, reset] = useOutsideClickAlert(selectRef);
+  const [ref, outsideClicked, reset] = useOutsideClickAlert();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -36,9 +35,9 @@ const DropDown = ({
   }, [outsideClicked])
 
   return (
-    <Select ref={selectRef} optionsVisible={open} onClick={() => setOpen(st => !st)} {...customStyles} >
+    <Select ref={ref} optionsVisible={open} onClick={() => setOpen(st => !st)} {...customStyles} >
       {selected ? selected : label}
-      <Options visible={open} top={selectRef?.current?.clientHeight}>
+      <Options visible={open} top={ref?.current?.clientHeight}>
         {listItems.map(item => (item !== selected) && (
           <Option key={item} onClick={() => onChange(item)} {...customStyles} >{item}</Option>
         ))}

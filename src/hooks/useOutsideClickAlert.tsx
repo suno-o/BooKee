@@ -1,13 +1,14 @@
-import { useEffect, useState, RefObject } from "react"
+import { useRef, useEffect, useState, RefObject } from "react"
 
-export const useOutsideClickAlert = (ref: RefObject<HTMLDivElement>): [boolean, () => void] => {
+export const useOutsideClickAlert = (): [RefObject<HTMLDivElement>, boolean, () => void] => {
+  const elementRef = useRef<HTMLDivElement>(null);
   const [outsideClicked, setOutsideClicked] = useState(false);
 
   useEffect(() => {
-    if (ref && ref.current) {
+    if (elementRef && elementRef.current) {
       /* Alert if outside of ref element is clicked */
       const handleClickOutside = (e: Event) => {
-        if (ref.current && !ref.current.contains(e.target as Node)) {
+        if (elementRef.current && !elementRef.current.contains(e.target as Node)) {
           setOutsideClicked(true);
         }
       }
@@ -15,10 +16,10 @@ export const useOutsideClickAlert = (ref: RefObject<HTMLDivElement>): [boolean, 
       document.addEventListener("mousedown", handleClickOutside);
       return () => document.removeEventListener("mousedown", handleClickOutside);
     }
-  }, [ref])
+  }, [elementRef])
 
   /* reset outside clicked */
   const reset = () => setOutsideClicked(false);
 
-  return [outsideClicked, reset];
+  return [elementRef, outsideClicked, reset];
 }
