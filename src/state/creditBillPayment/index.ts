@@ -31,6 +31,9 @@ const billPaymentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchTransactions.pending, (state) => {
+        state.creditTransactionLoaded = false;
+      })
       .addCase(fetchTransactions.fulfilled, (state, action: PayloadAction<CreditBillPaymentData>) => {
         const { cashSpendingTotal, creditSpendingTotal, creditCarryoverTotal, creditTransactions, carryoverCreditTransactions } = action.payload;
         state.cashSpendingTotal = cashSpendingTotal;
