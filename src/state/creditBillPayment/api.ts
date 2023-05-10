@@ -1,45 +1,23 @@
 import { request, gql } from "graphql-request"
+import { TransactionType } from "@prisma/client"
 import { Response } from "./types"
 import { mapTransactionSums, mapTransactions } from "./helper"
+import {
+  transactionsSumQuery,
+  transactionsQueryByType,
+  creditTransactionFragment,
+  detailedTransactionsFragment
+} from "../helper/transactionsGraphQuery"
 
 export const getTransactionsData = async (month: number, year: number) => {
   const res = await request<Response>(
     '/api/graphql',
     gql`
       query getTransactions($month: Int!, $year: Int!) {
-        sums: transactions_total(month: $month, year: $year) {
-          type,
-          total
-        }
-        creditTransactions: transactions(month: $month, year: $year, type: CREDIT_SPENDING) {
-          ...filteredTransaction,
-          creditPurchase, {
-            paymentTransactionId
-          }
-        }
-        carryoverCreditTransactions: transactions(month: $month, year: $year, type: CREDIT_CARRYOVER) {
-          ...filteredTransaction,
-        }
+        ${transactionsSumQuery}
+        ${transactionsQueryByType('creditTransactions', TransactionType.CREDIT_SPENDING, creditTransactionFragment)}
+        ${transactionsQueryByType('carryoverCreditTransactions', TransactionType.CREDIT_CARRYOVER, detailedTransactionsFragment)}
       }
-
-      fragment filteredTransaction on Transaction {
-          id,
-          transactionType,
-          created,
-          account {
-            name,
-            bank {
-              id,
-              name
-            }
-          }
-          category {
-            id,
-            name
-          }
-          description,
-          amount,
-        }
     `,
     { month, year }
   )

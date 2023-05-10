@@ -5,6 +5,7 @@ import { monthToMonthName } from "@/utils/date"
 export const mapAccount = (account: AccountResponse) => ({
   accountType: account.accountType,
   accountName: account.name,
+  bankId: account.bank.id,
   bankName: account.bank.name,
   balance: account.balance,
 })
@@ -32,6 +33,8 @@ export const mapTransactionSums = (sums: TransactionsSum[]) => {
 export const mapTransaction = (transaction: TransactionResponse) => ({
   id: transaction.id,
   amount: transaction.amount,
+  categoryId: transaction.category.id,
   categoryName: transaction.category.name,
+  bankId: transaction.account.bank.id,
   bankName: transaction.account.bank.name,
 })

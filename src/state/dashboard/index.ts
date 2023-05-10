@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import { DashboardState, DashboardData, TransactionsData } from "./types"
-import { getTransactionsData, getAccountsAndBalances } from "./api"
+import { getDashboardData, getTransactionsData } from "./api"
 import { getCurrentMonthyear } from "@/utils/date"
 
+/* NOTE: move some states to user reducer later */
 const initialState: DashboardState = {
   selectedMonthyear: getCurrentMonthyear(),
   accounts: [],
@@ -24,13 +25,8 @@ const initialState: DashboardState = {
 export const fetchDashboardData = createAsyncThunk<DashboardData, {month: number; year: number}>(
   'dashboard/getAllData',
   async ({ month, year }) => {
-    const [{accounts, balanceSnapshots}, transactionsData] = await Promise.all([getAccountsAndBalances(), getTransactionsData(month, year)]);
-
-    return {
-      accounts,
-      balanceSnapshots,
-      transactionsData
-    }
+    const dashboardData = await getDashboardData(month, year);
+    return dashboardData;
   }
 )
 

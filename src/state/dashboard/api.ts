@@ -1,12 +1,34 @@
 import { request, gql } from "graphql-request"
 import { mapAccount, mapBalanceSnapshot, mapTransactionSums, mapTransaction } from "./helper"
-import { AccountsBalancesResponse, TransactionsResponse } from "./types";
+import { TransactionType } from "@prisma/client";
+import { DashboardDataResponse, TransactionsResponse } from "./types";
+import {
+  dashboardTransactionsFragment,
+  transactionsSumQuery,
+  transactionsQueryByType
+} from '../helper/transactionsGraphQuery'
 
-export const getAccountsAndBalances = async () => {
-  const res = await request<AccountsBalancesResponse>(
+/* Helpers */
+const transactionsQueryHelper = `
+  ${transactionsSumQuery}
+  ${transactionsQueryByType('earningTransactions', TransactionType.CASH_EARNING, dashboardTransactionsFragment)}
+  ${transactionsQueryByType('spendingTransactions', TransactionType.CASH_SPENDING, dashboardTransactionsFragment)}
+  ${transactionsQueryByType('creditSpendingTransactions', TransactionType.CREDIT_SPENDING, dashboardTransactionsFragment)}
+`
+
+const mapTransactionsResponse = (transactionsData: TransactionsResponse) => ({
+  ...mapTransactionSums(transactionsData.sums),
+  earningTransactions: transactionsData.earningTransactions.map(mapTransaction),
+  spendingTransactions: transactionsData.spendingTransactions.map(mapTransaction),
+  creditSpendingTransactions: transactionsData.creditSpendingTransactions.map(mapTransaction),
+})
+
+/* dashboard query */
+export const getDashboardData = async (month: number, year: number) => {
+  const res = await request<DashboardDataResponse>(
     'api/graphql',
     gql`
-      {
+      query getDashboardData($month: Int!, $year: Int!) {
         accounts {
           accountType,
           name,
@@ -19,60 +41,31 @@ export const getAccountsAndBalances = async () => {
           month,
           balance
         }
-      }
-    `
-  )
-  
-  const { accounts, balanceSnapshots } = res;
-
-  return {
-    accounts: accounts.map(mapAccount),
-    balanceSnapshots: balanceSnapshots.map(mapBalanceSnapshot).reverse(), // reverse for recharts graph - data comes in desc order
-  }
-}
-
-export const getTransactionsData = async (month: number, year: number) => {
-  const res = await request<TransactionsResponse>(
-    '/api/graphql',
-    gql`
-      query getTransactions($month: Int!, $year: Int!) {
-        sums: transactions_total(month: $month, year: $year) {
-          type,
-          total
-        }
-        earningTransactions: transactions(month: $month, year: $year, type: CASH_EARNING) {
-          ...filteredTransaction
-        }
-        spendingTransactions: transactions(month: $month, year: $year, type: CASH_SPENDING) {
-          ...filteredTransaction
-        }
-        creditSpendingTransactions: transactions(month: $month, year: $year, type: CREDIT_SPENDING) {
-          ...filteredTransaction
-        }
-      }
-
-      fragment filteredTransaction on Transaction {
-        id,
-        amount,
-        account {
-          bank {
-            name
-          }
-        }
-        category {
-          name
-        }
+        ${transactionsQueryHelper}
       }
     `,
     { month, year }
   )
   
-  const { sums, earningTransactions, spendingTransactions, creditSpendingTransactions } = res;
- 
+  const { accounts, balanceSnapshots, ...transactionsData } = res;
   return {
-    ...mapTransactionSums(sums),
-    earningTransactions: earningTransactions.map(mapTransaction),
-    spendingTransactions: spendingTransactions.map(mapTransaction),
-    creditSpendingTransactions: creditSpendingTransactions.map(mapTransaction),
+    accounts: accounts.map(mapAccount),
+    balanceSnapshots: balanceSnapshots.map(mapBalanceSnapshot).reverse(), // reverse for recharts graph - data comes in desc order
+    transactionsData: mapTransactionsResponse(transactionsData),
   }
+}
+
+/* transactions query */
+export const getTransactionsData = async (month: number, year: number) => {
+  const res = await request<TransactionsResponse>(
+    '/api/graphql',
+    gql`
+      query getDashboardData($month: Int!, $year: Int!) {
+        ${transactionsQueryHelper}
+      }
+    `,
+    { month, year }
+  )
+ 
+  return mapTransactionsResponse(res);
 }

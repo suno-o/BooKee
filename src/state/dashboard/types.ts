@@ -26,21 +26,16 @@ export interface DashboardData {
   transactionsData: TransactionsData;
 }
 
-export interface AccountsBalances {
-  accounts: Account[];
-  balanceSnapshots: BalanceSnapshot[];
-}
-
-export interface AccountsBalancesResponse {
+export type DashboardDataResponse = {
   accounts: AccountResponse[];
   balanceSnapshots: BalanceSnapshotResponse[];
-}
+} & TransactionsResponse;
 
 /* Account */
 export interface Account {
-  // total: number;
   accountType: AccountType;
   accountName: string;
+  bankId: string;
   bankName: string;
   balance: number;
 }
@@ -67,7 +62,9 @@ export interface BalanceSnapshotResponse {
 export interface Transaction {
   id: string;
   amount: number;
+  categoryId: string;
   categoryName: string;
+  bankId: string;
   bankName: string;
 }
 
@@ -90,11 +87,14 @@ export interface TransactionResponse {
   category: Category;
 }
 
-/* Etc */
+/* Bank */
 interface Bank {
+  id: string;
   name: string;
 }
 
+/* Category */
 interface Category {
+  id: string;
   name: string;
 }
