@@ -67,6 +67,8 @@ export const typeDefs = `
   }
 
   type Query {
+    banks: [Bank]!
+    categories: [Category]!
     accounts: [Account]!
     balance_snapshots: [UserBalanceSnapshot]!
     transactions_total(month: Int!, year: Int!): [TransactionSum]!

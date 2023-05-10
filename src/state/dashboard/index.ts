@@ -6,6 +6,8 @@ import { getCurrentMonthyear } from "@/utils/date"
 /* NOTE: move some states to user reducer later */
 const initialState: DashboardState = {
   selectedMonthyear: getCurrentMonthyear(),
+  banks: [],
+  categories: [],
   accounts: [],
   balanceSnapshots: [],
   accountDataLoaded: false,
@@ -52,6 +54,8 @@ const dashboardSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchDashboardData.fulfilled, (state, action: PayloadAction<DashboardData>) => {
+        state.banks = action.payload.banks;
+        state.categories = action.payload.categories;
         state.accounts = action.payload.accounts;
         state.balanceSnapshots = action.payload.balanceSnapshots;
         state.transactionsData = action.payload.transactionsData;
