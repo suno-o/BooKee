@@ -68,7 +68,7 @@ const ModalContent = styled.div<{maxWidth: number}>`
   background-color: white;
   margin-left: auto;
   margin-right: auto;
-  ${({maxWidth}) => maxWidth ? `${maxWidth}px` : 'width: 100%;'}
+  ${({maxWidth}) => maxWidth ? `${maxWidth}px` : 'width: 100%'};
   height: 100%;
   overflow-y: auto;
   animation: load-content-side 200ms ease-out;
