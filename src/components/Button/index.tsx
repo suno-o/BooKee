@@ -12,7 +12,7 @@ const buttonCSS = css<ButtonCSSProps>`
   outline: none;
   -webkit-tap-highlight-color: transparent;
   
-  ${props => !props.disabled && css`
+  ${p => !p.disabled && css`
     cursor: pointer;
 
     &:hover {
@@ -28,11 +28,12 @@ interface ButtonProps {
   bgTheme?: string;
   width?: number;
   height?: number;
+  br?: number;
 }
 const StyledButton = styled.button<ButtonProps>`
   box-shadow: ${p => p.theme.shadows.grey};
   border: 0;
-  border-radius: 8px;
+  border-radius: ${p => p.br ? p.br : 8}px;
   background-color: ${p => p.theme.colors[p.bgTheme ? p.bgTheme : 'primary']};
   width: ${p => p.width ? `${p.width}px` : '100%'};
   height: ${p => p.height ? `${p.height}px` : 'auto'};
