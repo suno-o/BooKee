@@ -1,8 +1,10 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "..";
 import { Account } from "./types";
+import { AccountType } from "@prisma/client";
 
 const dashboardSelector = (state: RootState) => state.dashboard;
+const accountSelector = (state: RootState) => state.dashboard.accounts;
 
 /* calculate total balance */
 const selectAccountsSum = createSelector(
@@ -10,13 +12,23 @@ const selectAccountsSum = createSelector(
   ({ accounts }) => accounts.reduce((total: number, account: Account) => account.balance + total, 0)
 )
 
+/* cash and credit accounts */
+export const selectAccountsByType = createSelector(
+  accountSelector,
+  (accounts) => ({
+    cashAccounts: accounts.filter(account => account.accountType !== AccountType.CREDIT),
+    creditAccounts: accounts.filter(account => account.accountType === AccountType.CREDIT),
+  })
+)
+
 /* select accounts and month-end balances data */
 export const accountsAndBalancesSelector = createSelector(
   dashboardSelector,
+  selectAccountsByType,
   selectAccountsSum,
-  ({ accounts, balanceSnapshots, accountDataLoaded }, total) => ({
+  ({ balanceSnapshots, accountDataLoaded }, { cashAccounts }, total) => ({
     total,
-    accounts,
+    accounts: cashAccounts,
     balanceSnapshots,
     accountDataLoaded
   })
