@@ -11,23 +11,33 @@ interface TransactionSummaryTableProps {
 }
 
 interface TransactionSummaryData {
-  [key: string]: number;
+  [key: string]: {label: string | number; amount: number};
 }
 
 /* 
- * helper: calculate transaction amount total by category
- * (ex. if the category is 'bank_name', it will calculate total transaction amounts by each bank - TD: $1000, RBC: $2000, etc..)
+ * helper: Calculate transactions total amount by provided idKey
+ * 
+ * ex. Provided groupSumBy='categoryId' and labelForGroup='categoryName', it will return the object in the following format:
+ * {
+ *   [categoryId-1]: { 
+ *     name: {categoryName for categoryId-1},
+ *     amount: {sum of transactions in categoryId-1}
+ *   }, 
+ *   ...
+ * }
  */
-const getTransactionSummaryDataByCategory = (transactions: Transaction[], category: string) => {
-  const categoryKey = category as keyof Transaction;
-
+const getTransactionsTotalAmount = (transactions: Transaction[], groupSumBy: keyof Transaction, labelForGroup: keyof Transaction) => {
   return transactions.reduce((summaryData: TransactionSummaryData, transaction: Transaction) => {
-    const categoryValue = transaction[categoryKey];
+    const id = transaction[groupSumBy];
+    const label = transaction[labelForGroup];
     
-    if (summaryData[categoryValue]) {
-      summaryData[categoryValue] += transaction.amount;
+    if (summaryData[id]) {
+      summaryData[id].amount += transaction.amount;
     } else {
-      summaryData[categoryValue] = transaction.amount;
+      summaryData[id] = {
+        label,
+        amount: transaction.amount
+      }
     }
     
     return summaryData;
@@ -45,8 +55,8 @@ export default function TransactionSummaryTable({
 }: TransactionSummaryTableProps) {
   const tabHeaders = ['Bank', 'Category'];
   const tabData = useMemo(() => ([
-    getTransactionSummaryDataByCategory(transactions, 'bankName'),
-    getTransactionSummaryDataByCategory(transactions, 'categoryName')
+    getTransactionsTotalAmount(transactions, 'bankId', 'bankName'),
+    getTransactionsTotalAmount(transactions, 'categoryId', 'categoryName')
   ]), [transactions]);
 
   const renderTab = (currentTab: string, tabData: TransactionSummaryData) => (

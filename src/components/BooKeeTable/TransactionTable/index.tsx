@@ -5,7 +5,7 @@ import { formatCash } from "@/utils/numbers"
 
 interface Props {
   header: string;
-  data: { [key: string]: number };
+  data: { [key: string]: {label: string | number; amount: number} };
   dataLoaded?: boolean;
 }
 
@@ -29,8 +29,8 @@ const TransactionTable = ({
           dataKeys.length > 0 ? (
             dataKeys.map((key: string) => (
               <tr key={key}>
-                <Table.Td>{key}</Table.Td>
-                <Table.Td>{formatCash(data[key])}</Table.Td>
+                <Table.Td>{data[key].label}</Table.Td>
+                <Table.Td>{formatCash(data[key].amount)}</Table.Td>
               </tr>
             ))
           ) : (
