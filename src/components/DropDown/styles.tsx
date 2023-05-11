@@ -20,8 +20,7 @@ export const Select = styled.div<SelectStyles>`
   padding: ${p => p.p ? p.p : '6px 8px'};
   font-size: 0.8rem;
   color: ${p => p.theme.colors.text_grey};
-
-  transition: border-radius 30ms ease-out;
+  transition: border-radius ${p => p.optionsVisible ? '100ms' : '100ms 100ms'};
 
   &::after {
     content: ${p => p.optionsVisible ? '"\\25B2"' : '"\\25BC"'};
@@ -36,11 +35,11 @@ export const Select = styled.div<SelectStyles>`
   }
 `
 
-export const Options = styled.div<{visible?: boolean; top?: number}>`
+export const OptionsWrapper = styled.div<{visible?: boolean; top?: number; maxWidth?: number}>`
   z-index: 900;
-  display: ${p => p.visible ? 'block' : 'none'};
+  display: block;
   position: absolute;
-  ${p => p.top && `top: ${p.top}px;`}
+  ${p => p.top && `top: ${p.top + 1}px;`}
   left: -1px; // parent border size
   right: -1px; // parent border size
   border-bottom-left-radius: 24px;
@@ -50,23 +49,18 @@ export const Options = styled.div<{visible?: boolean; top?: number}>`
   border-top: 0;
   text-align: left;
   font-size: 0.7rem;
-
-  animation: options-load 1s linear;
-  
-  @keyframes options-load {
-    from {
-      max-height: 30px;
-      overflow-y: hidden;
-    };
-    to {
-      max-height: 1000px;
-      overflow-y: auto
-    };
-  }
-
+  opacity: ${p => p.visible ? 1 : 0};
+  max-height: ${p => p.visible ? (p.maxWidth ? p.maxWidth : 200) : 0}px;
+  transition: opacity ${p => p.visible ? '100ms 100ms' : '100ms'}, max-height ${p => p.visible ? '100ms 100ms' : '100ms'};
+  overflow-y: hidden;
   ${p => p.theme.mediaQueries.sm} {
     font-size: 0.8rem;
   }
+`
+
+export const Options = styled.div<{maxWidth?: number}>`
+  max-height: ${p => p.maxWidth ? p.maxWidth : 200}px;
+  overflow-y: auto;
 `
 
 export const Option = styled.div<CustomStyles>`
