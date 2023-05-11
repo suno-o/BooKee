@@ -29,19 +29,17 @@ export const getDashboardData = async (month: number, year: number) => {
     'api/graphql',
     gql`
       query getDashboardData($month: Int!, $year: Int!) {
-        banks {
-          id,
-          name
-        }
         categories {
           id,
           name
         }
         accounts {
+          id,
           accountType,
           name,
           balance,
           bank {
+            id
             name
           }
         }
@@ -55,9 +53,8 @@ export const getDashboardData = async (month: number, year: number) => {
     { month, year }
   )
   
-  const { banks, categories, accounts, balanceSnapshots, ...transactionsData } = res;
+  const { categories, accounts, balanceSnapshots, ...transactionsData } = res;
   return {
-    banks,
     categories,
     accounts: accounts.map(mapAccount),
     balanceSnapshots: balanceSnapshots.map(mapBalanceSnapshot).reverse(), // reverse for recharts graph - data comes in desc order

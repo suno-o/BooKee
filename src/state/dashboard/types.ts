@@ -3,7 +3,6 @@ import { AccountType, TransactionType } from "@prisma/client";
 /* State */
 export interface DashboardState {
   selectedMonthyear: string;
-  banks: Bank[];
   categories: Category[];
   accounts: Account[];
   balanceSnapshots: BalanceSnapshot[];
@@ -23,7 +22,6 @@ export interface TransactionsData {
 }
 
 export interface DashboardData {
-  banks: Bank[];
   categories: Category[];
   accounts: Account[];
   balanceSnapshots: BalanceSnapshot[];
@@ -31,7 +29,6 @@ export interface DashboardData {
 }
 
 export type DashboardDataResponse = {
-  banks: Bank[];
   categories: Category[];
   accounts: AccountResponse[];
   balanceSnapshots: BalanceSnapshotResponse[];
@@ -39,6 +36,7 @@ export type DashboardDataResponse = {
 
 /* Account */
 export interface Account {
+  id: string;
   accountType: AccountType;
   accountName: string;
   bankId: string;
@@ -47,6 +45,7 @@ export interface Account {
 }
 
 export interface AccountResponse {
+  id: string;
   accountType: AccountType;
   name: string;
   balance: number;
