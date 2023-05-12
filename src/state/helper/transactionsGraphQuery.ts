@@ -5,6 +5,7 @@ export const dashboardTransactionsFragment = `
   id,
   amount,
   account {
+    name,
     bank {
       id
       name
