@@ -74,4 +74,17 @@ export const typeDefs = `
     transactions_total(month: Int!, year: Int!): [TransactionSum]!
     transactions(month: Int!, year: Int!, type: TransactionType): [Transaction]!
   }
+  
+  input TransactionInput {
+    transactionType: TransactionType!
+    userId: ID!
+    accountId: ID!
+    categoryId: ID!
+    description: String!
+    amount: Float!
+  }
+
+  type Mutation {
+    addTransaction(input: TransactionInput!): Transaction
+  }
 `

@@ -12,6 +12,15 @@ export interface Transaction {
   account: Account;
 }
 
+export interface TransactionInput {
+  transactionType: TransactionType;
+  userId: string;
+  accountId: string;
+  categoryId: string;
+  description: string;
+  amount: number;
+}
+
 export interface Account {
   id: number;
   accountType: AccountType;

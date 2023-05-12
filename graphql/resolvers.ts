@@ -3,6 +3,7 @@ import { getCategories } from "./queries/categories"
 import { getAccounts } from "./queries/accounts"
 import { getBalanceSnapshots } from "./queries/balanceSnapshots"
 import { getTransactionsTotal, getTransactions } from "./queries/transactions"
+import { addTransaction } from "./mutations/transactions"
 
 export const resolvers = {
   Query: {
@@ -12,5 +13,8 @@ export const resolvers = {
     balance_snapshots: getBalanceSnapshots,
     transactions_total: getTransactionsTotal,
     transactions: getTransactions,
+  },
+  Mutation: {
+    addTransaction,
   }
 }
