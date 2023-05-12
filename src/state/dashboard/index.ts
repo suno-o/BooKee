@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
-import { DashboardState, DashboardData, TransactionsData } from "./types"
-import { getDashboardData, getTransactionsData } from "./api"
+import { DashboardState, DashboardData, TransactionsData, Transaction, TransactionInput } from "./types"
+import { getDashboardData, getTransactionsData, postTransaction } from "./api"
 import { getCurrentMonthyear } from "@/utils/date"
 
 /* NOTE: move some states to user reducer later */
@@ -20,6 +20,7 @@ const initialState: DashboardState = {
   },
   transactionDataLoaded: false,
   refetchTransactionData: false,
+  postTransactionLoading: false,
 }
 
 /* fetch accounts and transactions data */
@@ -37,6 +38,16 @@ export const fetchTransactions = createAsyncThunk<TransactionsData, {month: numb
   async ({ month, year }) => {
     const transactionsData = await getTransactionsData(month, year);
     return transactionsData;
+  }
+)
+
+/* post transaction */
+export const addTransaction = createAsyncThunk<{}, {transactionInput: TransactionInput}>(
+  'dashboard/addTransaction',
+  async ({ transactionInput }) => {
+    await postTransaction(transactionInput);
+    // handle later
+    return {};
   }
 )
 
@@ -68,6 +79,13 @@ const dashboardSlice = createSlice({
         state.transactionsData = action.payload;
         state.transactionDataLoaded = true;
         state.refetchTransactionData = false;
+      })
+
+      .addCase(addTransaction.pending, (state) => {
+        state.postTransactionLoading = true;
+      })
+      .addCase(addTransaction.fulfilled, (state, action) => {
+        state.postTransactionLoading = false;
       })
   },
 })

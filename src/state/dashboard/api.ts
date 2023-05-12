@@ -1,7 +1,7 @@
 import { request, gql } from "graphql-request"
 import { mapAccount, mapBalanceSnapshot, mapTransactionSums, mapTransaction } from "./helper"
 import { TransactionType } from "@prisma/client";
-import { DashboardDataResponse, TransactionsResponse } from "./types";
+import { DashboardDataResponse, TransactionsResponse, TransactionResponse, TransactionInput } from "./types";
 import {
   dashboardTransactionsFragment,
   transactionsSumQuery,
@@ -75,4 +75,23 @@ export const getTransactionsData = async (month: number, year: number) => {
   )
  
   return mapTransactionsResponse(res);
+}
+
+/* transaction mutation */
+interface AddTransactionResponse {
+  newTransaction: TransactionResponse;
+}
+
+export const postTransaction = (transactionInput: TransactionInput) => {
+  return request<AddTransactionResponse>(
+    '/api/graphql',
+    gql`
+      mutation addTransaction($transactionInput: TransactionInput!) {
+        newTransaction: addTransaction(input: $transactionInput) {
+          id
+        }
+      }
+    `,
+    { transactionInput }
+  )
 }

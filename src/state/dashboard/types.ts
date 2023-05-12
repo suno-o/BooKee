@@ -10,6 +10,7 @@ export interface DashboardState {
   accountDataLoaded: boolean;
   transactionDataLoaded: boolean;
   refetchTransactionData: boolean;
+  postTransactionLoading: boolean;
 }
 
 export interface TransactionsData {
@@ -90,6 +91,15 @@ export interface TransactionResponse {
   amount: number;
   account: AccountResponse;
   category: Category;
+}
+
+export interface TransactionInput {
+  transactionType: TransactionType;
+  userId: string;
+  accountId: string;
+  categoryId: string;
+  description: string;
+  amount: number;
 }
 
 /* Bank */
