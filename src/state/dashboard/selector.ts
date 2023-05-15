@@ -6,12 +6,6 @@ import { AccountType } from "@prisma/client";
 const dashboardSelector = (state: RootState) => state.dashboard;
 const accountSelector = (state: RootState) => state.dashboard.accounts;
 
-/* calculate total balance */
-const selectAccountsSum = createSelector(
-  dashboardSelector,
-  ({ accounts }) => accounts.reduce((total: number, account: Account) => account.balance + total, 0)
-)
-
 /* cash and credit accounts */
 export const selectAccountsByType = createSelector(
   accountSelector,
@@ -25,13 +19,16 @@ export const selectAccountsByType = createSelector(
 export const accountsAndBalancesSelector = createSelector(
   dashboardSelector,
   selectAccountsByType,
-  selectAccountsSum,
-  ({ balanceSnapshots, dashboardDataLoaded }, { cashAccounts }, total) => ({
-    total,
-    accounts: cashAccounts,
-    balanceSnapshots,
-    dashboardDataLoaded
-  })
+  ({ balanceSnapshots, dashboardDataLoaded }, { cashAccounts }) => {
+    const total = cashAccounts.reduce((total: number, account: Account) => account.balance + total, 0);
+
+    return {
+      total,
+      accounts: cashAccounts,
+      balanceSnapshots,
+      dashboardDataLoaded
+    }
+  }
 )
 
 /* select transaction total by transaction type */
