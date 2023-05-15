@@ -1,27 +1,35 @@
-import { useState, useEffect, FormEventHandler } from "react"
-import { useAppSelector } from "@/state"
+import { useState, useEffect, useContext } from "react"
+import { ModalContext, ModalContextType } from "../.."
+import { useAppDispatch, useAppSelector } from "@/state"
+import { addTransaction } from "@/state/dashboard"
 import { selectAccountsByType } from "@/state/dashboard/selector"
 import styled from "styled-components"
 import DropDown from "@/components/DropDown"
 import { Wrapper, Label, TextInput, StyledButton } from './styles'
 import { Option } from "@/components/DropDown"
 import { Account } from "@/state/dashboard/types"
+import { TransactionType } from "@prisma/client"
 
 const FORM_ANIMATION_DURATION_MS = 800;
 
 interface TransactionData {
   accountId: string;
   categoryId: string;
+  description: string;
   amount: number;
 }
 
 const initialTransactionData = {
   accountId: '',
   categoryId: '',
+  description: '',
   amount: 0,
 }
 
 const SpendingForm = () => {
+  const dispatch = useAppDispatch();
+  const { closeModal } = useContext(ModalContext) as ModalContextType;
+
   const [spendingType, setSpendingType] = useState('');
   const [showForm, setShowForm] = useState(spendingType !== '');
   const [delayedShow, setDS] = useState(showForm);
@@ -35,7 +43,7 @@ const SpendingForm = () => {
   
   /* dropdown data */
   const { cashAccounts, creditAccounts } = useAppSelector(selectAccountsByType);
-  const { categories } = useAppSelector(state => state.dashboard);
+  const { categories, postTransactionLoading } = useAppSelector(state => state.dashboard);
 
   let accountsToUse: Account[] = [];
   if (spendingType === 'Cash')
@@ -72,18 +80,32 @@ const SpendingForm = () => {
     setData(data => ({...data, accountId: initialTransactionData.accountId})); // reset accountId on changing spending type
   }
 
-  /* check if any empty fields */
-  const allFormDataProvided = () => {
-    if (data.amount !== 0 && data.accountId !== '' && data.categoryId !== '')
+  const validateInput = () => {
+    if (data.amount !== 0 && data.description.length <= 50 && data.accountId !== '' && data.categoryId !== '')
       return true;
     return false;
   }
 
   const submit = (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
-    if (allFormDataProvided()) {
-      alert('submit')
+    if (!validateInput()) {
+      alert('Please provide ...');
+      return;
     }
+
+    dispatch(addTransaction({
+      transactionInput: {
+        ...data,
+        transactionType: (spendingType === 'Cash') ? TransactionType.CASH_SPENDING : TransactionType.CREDIT_SPENDING,
+        userId: '1', // hard code for now fix later
+        amount: Math.abs(data.amount) * -1,
+      }
+    }))
+      // close modal on post complete
+      .then(res => {
+        const status = res?.meta?.requestStatus;
+        if (status === 'fulfilled') closeModal();
+      })
   }
   
   return (
@@ -128,12 +150,17 @@ const SpendingForm = () => {
         </Wrapper>
         <Wrapper>
           <Label>
-            Amount: <TextInput type='number' placeholder="100" onChange={inputChangeHandler('amount')} />
+            Description: <TextInput type='text' maxLength={50} onChange={inputChangeHandler('description')} />
+          </Label>
+        </Wrapper>
+        <Wrapper>
+          <Label>
+            Amount: <TextInput type='number' placeholder="10.50" onChange={inputChangeHandler('amount')} />
           </Label>
         </Wrapper>
       </Form>
       
-      <StyledButton onClick={submit} bgTheme='secondary' disabled={!allFormDataProvided()} br={24}>Submit</StyledButton>
+      <StyledButton loading={postTransactionLoading} onClick={submit} bgTheme='secondary' br={24}>Submit</StyledButton>
     </div>
   )
 }

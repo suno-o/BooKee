@@ -16,9 +16,12 @@ export const TextInput = styled.input`
   border: 1px solid ${p => p.theme.colors.text_grey_light};
   border-radius: 16px;
   padding: 8px 16px;
+  font-size: 0.9rem;
 `
 
-export const StyledButton = styled(Button)<{disabled: boolean}>`
+export const StyledButton = styled(Button)<{disabled?: boolean}>`
+  display: inline-flex;
+  justify-content: center;
   margin: 16px 0;
   ${p => p.disabled && `background-color: ${p.theme.colors.text_grey_lighter};`}
 `

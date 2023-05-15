@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components';
+import LoadingIndicator from '../LoadingIndicator';
 
 interface ButtonCSSProps {
   color?: string;
@@ -43,11 +44,13 @@ const StyledButton = styled.button<ButtonProps>`
 
 /* Button */
 interface Props extends ButtonProps, ButtonCSSProps {
+  loading?: boolean;
   onClick?: () => void;
   children: React.ReactNode;
 }
 
 const Button = ({
+  loading,
   onClick,
   children,
   ...rest
@@ -57,7 +60,9 @@ const Button = ({
       onClick={onClick}
       {...rest}
     >
-      {children}
+      {loading ? (
+        <LoadingIndicator thickness={2} width={15} height={15} />
+      ) : children}
     </StyledButton>
   );
 }

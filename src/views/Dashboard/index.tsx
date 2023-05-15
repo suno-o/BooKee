@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, createContext } from "react"
 import { useAppDispatch, useAppSelector } from "@/state"
 import { fetchDashboardData, updateMonthyear } from "@/state/dashboard"
 import Image from "next/image"
@@ -14,6 +14,11 @@ import Modal from "@/components/Modal"
 import { getLastNMonthLabelsAndMap } from "@/utils/date"
 import Button from "@/components/Button"
 
+/* Add Transaction Modal context */
+export type ModalContextType = { closeModal: () => void }
+export const ModalContext = createContext<ModalContextType | null>(null);
+
+/* Dashboard */
 export default function Dashboard() {
   const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState(false);
@@ -28,6 +33,8 @@ export default function Dashboard() {
   const handleChange = (newMonthname: string) => {
     dispatch(updateMonthyear(newMonthname));
   }
+
+  const closeModal = () => setShowModal(false);
 
   return (
     <>
@@ -57,9 +64,13 @@ export default function Dashboard() {
 
       <Modal
         isShowing={showModal}
-        close={() => setShowModal(false)}
+        close={closeModal}
         maxWidth={500}
-      ><AddTransaction /></Modal>
+      >
+        <ModalContext.Provider value={{ closeModal }}>
+          <AddTransaction />
+        </ModalContext.Provider>
+      </Modal>
     </>
   )
 }
