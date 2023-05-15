@@ -9,7 +9,8 @@ const initialState: DashboardState = {
   categories: [],
   accounts: [],
   balanceSnapshots: [],
-  accountDataLoaded: false,
+  dashboardDataLoaded: false,
+  dashboardDataFetchNeeded: true,
   transactionsData: {
     earningTotal: 0,
     spendingTotal: 0,
@@ -63,12 +64,16 @@ const dashboardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchDashboardData.pending, (state) => {
+        state.dashboardDataLoaded = false;
+      })
       .addCase(fetchDashboardData.fulfilled, (state, action: PayloadAction<DashboardData>) => {
         state.categories = action.payload.categories;
         state.accounts = action.payload.accounts;
         state.balanceSnapshots = action.payload.balanceSnapshots;
         state.transactionsData = action.payload.transactionsData;
-        state.accountDataLoaded = true;
+        state.dashboardDataLoaded = true;
+        state.dashboardDataFetchNeeded = false;
         state.transactionDataLoaded = true;
       })
 
@@ -86,6 +91,7 @@ const dashboardSlice = createSlice({
       })
       .addCase(addTransaction.fulfilled, (state, action) => {
         state.postTransactionLoading = false;
+        state.dashboardDataFetchNeeded = true;
       })
   },
 })

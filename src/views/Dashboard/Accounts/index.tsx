@@ -10,7 +10,7 @@ import { formatCash } from "@/utils/numbers"
 
 export default function Accounts() {
   const theme = useContext(ThemeContext);
-  const { accounts, total, balanceSnapshots, accountDataLoaded } = useAppSelector(accountsAndBalancesSelector);
+  const { accounts, total, balanceSnapshots, dashboardDataLoaded } = useAppSelector(accountsAndBalancesSelector);
 
   return (
     <Container>
@@ -19,15 +19,15 @@ export default function Accounts() {
         <BalanceCard styles={{bgTheme:'primary', colorTheme:'white'}}>
           <Card.Header>Total Balance</Card.Header>
           <BalanceCardContent
-            dataLoaded={accountDataLoaded}
+            dataLoaded={dashboardDataLoaded}
             skeletonProps={{ width: 160, height: 30, mt: 4 }}
           >{formatCash(total)}</BalanceCardContent>
         </BalanceCard>
         {/* account balance by bank */}
-        <BalanceList data={accounts} dataLoaded={accountDataLoaded} />
+        <BalanceList data={accounts} dataLoaded={dashboardDataLoaded} />
       </Account>
       <GraphContainer>
-        {accountDataLoaded ? (
+        {dashboardDataLoaded ? (
           <GraphWrapper>
             <ResponsiveContainer width='99%' height={220}>
               <LineChart

@@ -22,13 +22,17 @@ export const ModalContext = createContext<ModalContextType | null>(null);
 export default function Dashboard() {
   const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState(false);
-  const { selectedMonthyear } = useAppSelector(state => state.dashboard);
+  const { dashboardDataFetchNeeded, selectedMonthyear } = useAppSelector(state => state.dashboard);
   const { labels, labelValueMap } = useMemo(() => getLastNMonthLabelsAndMap(6), []);
+
+  console.log(dashboardDataFetchNeeded)
   
   useEffect(() => {
     /* fetch accounts, monthly balances and transactions data on initial page load */
-    dispatch(fetchDashboardData(labelValueMap[selectedMonthyear]));
-  }, [])
+    if (dashboardDataFetchNeeded === true) {
+      dispatch(fetchDashboardData(labelValueMap[selectedMonthyear]));
+    }
+  }, [dashboardDataFetchNeeded])
 
   const handleChange = (newMonthname: string) => {
     dispatch(updateMonthyear(newMonthname));

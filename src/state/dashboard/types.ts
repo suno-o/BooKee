@@ -7,7 +7,8 @@ export interface DashboardState {
   accounts: Account[];
   balanceSnapshots: BalanceSnapshot[];
   transactionsData: TransactionsData;
-  accountDataLoaded: boolean;
+  dashboardDataLoaded: boolean;
+  dashboardDataFetchNeeded: boolean;
   transactionDataLoaded: boolean;
   refetchTransactionData: boolean;
   postTransactionLoading: boolean;

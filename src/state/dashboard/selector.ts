@@ -26,11 +26,11 @@ export const accountsAndBalancesSelector = createSelector(
   dashboardSelector,
   selectAccountsByType,
   selectAccountsSum,
-  ({ balanceSnapshots, accountDataLoaded }, { cashAccounts }, total) => ({
+  ({ balanceSnapshots, dashboardDataLoaded }, { cashAccounts }, total) => ({
     total,
     accounts: cashAccounts,
     balanceSnapshots,
-    accountDataLoaded
+    dashboardDataLoaded
   })
 )
 
