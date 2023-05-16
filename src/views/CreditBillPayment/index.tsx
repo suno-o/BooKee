@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react"
 import { useAppDispatch, useAppSelector } from "@/state"
 import { creditTransactionsSelector } from "@/state/creditBillPayment/selector"
 import { fetchTransactions, updateMonthyear } from "@/state/creditBillPayment"
+import { useFetchAccounts } from "@/state/user/hooks"
 import SpendingSummary from "./SpendingSummary"
 import PaymentSummary from "./PaymentSummary"
 import PayBill from "./PayBill"
@@ -13,6 +14,9 @@ import { getLastNMonthLabelsAndMap } from "@/utils/date"
 
 export default function CreditBillPayment() {
   const dispatch = useAppDispatch();
+  
+  useFetchAccounts();
+
   const { unPaidTransactions } = useAppSelector(creditTransactionsSelector);
   const { selectedMonthyear, creditTransactionLoaded } = useAppSelector(state => state.creditBillPayment);
   const { labels, labelValueMap } = useMemo(() => getLastNMonthLabelsAndMap(6), []);

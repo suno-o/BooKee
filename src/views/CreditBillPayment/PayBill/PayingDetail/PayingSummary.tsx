@@ -1,27 +1,45 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
+import { useAppDispatch } from "@/state"
+import { useCashAccounts } from "@/state/user/hooks"
+import { payBill } from "@/state/creditBillPayment"
 import styled from "styled-components"
 import DropDown from "@/components/DropDown"
 import Button from "@/components/Button"
 import { formatCash } from "@/utils/numbers"
 import { Transaction } from "@/state/creditBillPayment/types"
-import { CarryOverTransactionIDs } from "."
+import { CarryOverTransactions } from "."
+import { Option } from "@/components/DropDown"
 
 interface Props {
   transactions: Transaction[];
-  carryoverTransactionIds: CarryOverTransactionIDs;
+  carryoverTransactions: CarryOverTransactions;
 }
 
 export default function PayingDetail({
   transactions,
-  carryoverTransactionIds
+  carryoverTransactions
 }: Props) {
-  const [payingBank, setPayingBank] = useState('');
-  const bankSelectHandler = (selected: string) => setPayingBank(selected);
-  
-  // focusing on UI for now, optimize these later
-  const totalBalance = transactions.reduce((sum: number, transaction: Transaction) => (sum + transaction.amount), 0);
-  const totalCarryover = Object.keys(carryoverTransactionIds).reduce((sum: number, id: string) => {
-    if (carryoverTransactionIds[id] === true) {
+  const dispatch = useAppDispatch();
+
+  /* payable accounts */
+  const accounts = useCashAccounts();
+
+  const accountOptions: Option[] = [];
+  accounts.forEach(account => {
+    accountOptions.push({
+      label: `${account.bankName} ${account.accountName}`,
+      value: account.id,
+    })
+  })
+
+  /* selected paying account */
+  const [payingAccountId, setPayingAccountId] = useState('');
+  const accountSelectHandler = (selected: string) => setPayingAccountId(selected);
+
+  /* balances */
+  const totalBalance = useMemo(() => transactions.reduce((sum: number, transaction: Transaction) => (sum + transaction.amount), 0), [transactions]); // cache total
+  const totalCarryover = Object.keys(carryoverTransactions).reduce((sum: number, id: string) => {
+    if (carryoverTransactions[id] === true) {
       const trans = transactions.find((transaction: Transaction) => transaction.id === id);
       return sum + (trans ? trans.amount : 0);
     }
@@ -31,7 +49,19 @@ export default function PayingDetail({
 
   /* record transaction after credit bill payment */
   const onSubmit = () => {
-    alert('submit');
+    if (payingAccountId === '') {
+      alert('select account');
+      return;
+    }
+
+    const userId = '1'; // hardcode for testing fix later
+    const accountId = payingAccountId;
+    const payTransactionIds = transactions
+                                .filter(({id}) => (carryoverTransactions[id] === undefined || carryoverTransactions[id] === false))
+                                .map(transaction => transaction.id);
+    const carryoverTransactionIds = Object.keys(carryoverTransactions).filter(id => carryoverTransactions[id] === true);
+    
+    dispatch(payBill({ userId, accountId, payTransactionIds, carryoverTransactionIds }));
   }
   
   return (
@@ -58,15 +88,15 @@ export default function PayingDetail({
       </Note>
 
       {(totalBalance - totalCarryover < 0) && (
-        <PayingBank>
-          <p>Bank:</p>
-          <BankDropDown
-            selected={payingBank}
-            onChange={bankSelectHandler}
-            label={'Bank'}
-            listItems={['TD', 'CIBC', 'BMO', 'RBC', 'Scotia', 'Tangerine']}
+        <PayingAccount>
+          <p>Account:</p>
+          <AccountDropDown
+            selected={payingAccountId}
+            onChange={accountSelectHandler}
+            label={'Choose account'}
+            options={accountOptions}
           />  
-        </PayingBank>
+        </PayingAccount>
       )}
 
       <Button onClick={onSubmit}>Complete</Button>
@@ -107,13 +137,13 @@ const Note = styled.p`
   color: ${p => p.theme.colors.text_grey};
 `
 
-const PayingBank = styled.div`
+const PayingAccount = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
   margin: 8px 0;
 `
 
-const BankDropDown = styled(DropDown)`
+const AccountDropDown = styled(DropDown)`
   display: inline-block;
 `
