@@ -21,6 +21,13 @@ export interface TransactionInput {
   amount: number;
 }
 
+export interface PayBillInput {
+  userId: string;
+  accountId: string;
+  payTransactionIds: string[];
+  carryoverTransactionIds: string[];
+}
+
 export interface Account {
   id: number;
   accountType: AccountType;

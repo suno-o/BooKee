@@ -62,7 +62,6 @@ export const typeDefs = `
     CASH_EARNING,
     CASH_SPENDING,
     CREDIT_SPENDING,
-    CREDIT_BILL_PAYMENT,
     CREDIT_CARRYOVER
   }
 
@@ -84,7 +83,15 @@ export const typeDefs = `
     amount: Float!
   }
 
+  input PayBillInput {
+    userId: ID!
+    accountId: ID!
+    payTransactionIds: [ID]!
+    carryoverTransactionIds: [ID]!
+  }
+
   type Mutation {
-    addTransaction(input: TransactionInput!): Transaction
+    addTransaction(input: TransactionInput!): Transaction!
+    payBill(input: PayBillInput!): Transaction
   }
 `

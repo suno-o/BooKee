@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "TransactionType" AS ENUM ('CASH_EARNING', 'CASH_SPENDING', 'CREDIT_SPENDING', 'CREDIT_BILL_PAYMENT');
+CREATE TYPE "TransactionType" AS ENUM ('CASH_EARNING', 'CASH_SPENDING', 'CREDIT_SPENDING', 'CREDIT_CARRYOVER');
 
 -- CreateEnum
 CREATE TYPE "AccountType" AS ENUM ('CHEQUING', 'SAVINGS', 'CREDIT');
@@ -72,8 +72,7 @@ CREATE TABLE "Transaction" (
 -- CreateTable
 CREATE TABLE "CreditPayment" (
     "purchaseTransactionId" INTEGER NOT NULL,
-    "paymentTransactionId" INTEGER,
-    "carryoverDate" TIMESTAMPTZ,
+    "paymentTransactionId" INTEGER NOT NULL,
 
     CONSTRAINT "CreditPayment_pkey" PRIMARY KEY ("purchaseTransactionId")
 );
@@ -112,4 +111,4 @@ ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_categoryId_fkey" FOREIGN K
 ALTER TABLE "CreditPayment" ADD CONSTRAINT "CreditPayment_purchaseTransactionId_fkey" FOREIGN KEY ("purchaseTransactionId") REFERENCES "Transaction"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "CreditPayment" ADD CONSTRAINT "CreditPayment_paymentTransactionId_fkey" FOREIGN KEY ("paymentTransactionId") REFERENCES "Transaction"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "CreditPayment" ADD CONSTRAINT "CreditPayment_paymentTransactionId_fkey" FOREIGN KEY ("paymentTransactionId") REFERENCES "Transaction"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
