@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux"
+import user from "./user"
 import dashboard from "./dashboard"
 import transactions from './transactions'
 import creditBillPayment from './creditBillPayment'
 
 export const store = configureStore({
   reducer: {
+    user,
     dashboard,
     transactions,
     creditBillPayment
