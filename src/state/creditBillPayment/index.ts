@@ -12,6 +12,7 @@ const initialState: CreditBillPaymentState = {
   creditTransactions: [],
   carryoverCreditTransactions: [],
   creditTransactionLoaded: false,
+  transactionDataFetchNeeded: true,
 }
 
 export const fetchTransactions = createAsyncThunk<CreditBillPaymentData, {month: number; year: number}>(
@@ -51,8 +52,12 @@ const billPaymentSlice = createSlice({
         state.creditTransactions = creditTransactions;
         state.carryoverCreditTransactions = carryoverCreditTransactions;
         state.creditTransactionLoaded = true;
+        state.transactionDataFetchNeeded = false;
       })
 
+      .addCase(payBill.fulfilled, (state) => {
+        state.transactionDataFetchNeeded = true;
+      })
   },
 })
 

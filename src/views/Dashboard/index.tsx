@@ -24,8 +24,6 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const { dashboardDataFetchNeeded, selectedMonthyear } = useAppSelector(state => state.dashboard);
   const { labels, labelValueMap } = useMemo(() => getLastNMonthLabelsAndMap(6), []);
-
-  console.log(dashboardDataFetchNeeded)
   
   useEffect(() => {
     /* fetch accounts, monthly balances and transactions data on initial page load */

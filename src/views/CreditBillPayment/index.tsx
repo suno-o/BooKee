@@ -18,12 +18,14 @@ export default function CreditBillPayment() {
   useFetchAccounts();
 
   const { unPaidTransactions } = useAppSelector(creditTransactionsSelector);
-  const { selectedMonthyear, creditTransactionLoaded } = useAppSelector(state => state.creditBillPayment);
+  const { selectedMonthyear, creditTransactionLoaded, transactionDataFetchNeeded } = useAppSelector(state => state.creditBillPayment);
   const { labels, labelValueMap } = useMemo(() => getLastNMonthLabelsAndMap(6), []);
 
   useEffect(() => {
-    dispatch(fetchTransactions(labelValueMap[selectedMonthyear]));
-  }, [selectedMonthyear])
+    if (transactionDataFetchNeeded === true) {
+      dispatch(fetchTransactions(labelValueMap[selectedMonthyear]));
+    }
+  }, [selectedMonthyear, transactionDataFetchNeeded])
 
   const handleChange = (newMonthname: string) => {
     dispatch(updateMonthyear(newMonthname));
