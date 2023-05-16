@@ -28,7 +28,7 @@ export const addTransaction = async (input: ParsedTransactionInput) => {
   // update account balance
   const transactionType = input.transactionType;
 
-  if (transactionType === TransactionType.CASH_EARNING  || transactionType === TransactionType.CASH_SPENDING) {
+  if (transactionType === TransactionType.CASH_EARNING  || transactionType === TransactionType.CASH_SPENDING  || transactionType === TransactionType.CREDIT_BILL_PAYMENT) {
     await updateAccountBalance(input.accountId, input.amount);
   }
 

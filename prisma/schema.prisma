@@ -69,12 +69,12 @@ model Transaction {
   account             Account @relation(fields: [accountId], references: [id])
   category            Category @relation(fields: [categoryId], references: [id])
   creditPurchase      CreditPayment? @relation("purchaseTransaction")
-  creditPayment       CreditPayment? @relation("paymentTransaction")
+  creditPayment       CreditPayment[] @relation("paymentTransaction")
 }
 
 model CreditPayment {
   purchaseTransactionId Int @unique
-  paymentTransactionId  Int @unique
+  paymentTransactionId  Int
   purchaseTransaction   Transaction @relation("purchaseTransaction", fields: [purchaseTransactionId], references: [id])
   paymentTransaction    Transaction @relation("paymentTransaction", fields: [paymentTransactionId], references: [id])
   
@@ -85,6 +85,7 @@ enum TransactionType {
   CASH_EARNING
   CASH_SPENDING
   CREDIT_SPENDING
+  CREDIT_BILL_PAYMENT
   CREDIT_CARRYOVER
 }
 

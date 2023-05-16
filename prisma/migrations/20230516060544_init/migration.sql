@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "TransactionType" AS ENUM ('CASH_EARNING', 'CASH_SPENDING', 'CREDIT_SPENDING', 'CREDIT_CARRYOVER');
+CREATE TYPE "TransactionType" AS ENUM ('CASH_EARNING', 'CASH_SPENDING', 'CREDIT_SPENDING', 'CREDIT_BILL_PAYMENT', 'CREDIT_CARRYOVER');
 
 -- CreateEnum
 CREATE TYPE "AccountType" AS ENUM ('CHEQUING', 'SAVINGS', 'CREDIT');
@@ -82,9 +82,6 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "CreditPayment_purchaseTransactionId_key" ON "CreditPayment"("purchaseTransactionId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "CreditPayment_paymentTransactionId_key" ON "CreditPayment"("paymentTransactionId");
 
 -- AddForeignKey
 ALTER TABLE "UserBalanceSnapshot" ADD CONSTRAINT "UserBalanceSnapshot_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

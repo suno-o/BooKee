@@ -44,7 +44,7 @@ export const payBill = async (_: PayBillInput[], args: PayBillArgs) => {
         // create bill payment transaction (type=CASH_SPENDING)
         const billPaymentTransaction = await addTransaction({
           userId,
-          transactionType: TransactionType.CASH_SPENDING,
+          transactionType: TransactionType.CREDIT_BILL_PAYMENT,
           accountId,
           categoryId: 1,
           description: 'Credit Bill Payment',

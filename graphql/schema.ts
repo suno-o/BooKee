@@ -62,6 +62,7 @@ export const typeDefs = `
     CASH_EARNING,
     CASH_SPENDING,
     CREDIT_SPENDING,
+    CREDIT_BILL_PAYMENT,
     CREDIT_CARRYOVER
   }
 
