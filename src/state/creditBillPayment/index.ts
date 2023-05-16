@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import { CreditBillPaymentState, CreditBillPaymentData } from "./types"
-import { getTransactionsData } from "./api"
+import { getTransactionsData, payBillRequest } from "./api"
 import { getCurrentMonthyear } from "@/utils/date"
+import { PayBillInput } from "@/../graphql/types"
 
 const initialState: CreditBillPaymentState = {
   selectedMonthyear: getCurrentMonthyear(),
@@ -18,6 +19,14 @@ export const fetchTransactions = createAsyncThunk<CreditBillPaymentData, {month:
   async ({ month, year }) => {
     const transactionsData = await getTransactionsData(month, year);
     return transactionsData;
+  }
+)
+
+export const payBill = createAsyncThunk<{}, PayBillInput>(
+  'billPayment/payBill',
+  async (args) => {
+    await payBillRequest(args);
+    return;
   }
 )
 

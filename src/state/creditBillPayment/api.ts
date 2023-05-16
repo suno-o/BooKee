@@ -1,6 +1,7 @@
 import { request, gql } from "graphql-request"
 import { TransactionType } from "@prisma/client"
 import { Response } from "./types"
+import { PayBillInput } from "../../../graphql/types"
 import { mapTransactionSums, mapTransactions } from "./helper"
 import {
   transactionsSumQuery,
@@ -29,4 +30,18 @@ export const getTransactionsData = async (month: number, year: number) => {
     creditTransactions: creditTransactions.map(mapTransactions),
     carryoverCreditTransactions: carryoverCreditTransactions.map(mapTransactions)
   };
+}
+
+export const payBillRequest = (input: PayBillInput) => {
+  return request<Response>(
+    '/api/graphql',
+    gql`
+      mutation payBill($input: PayBillInput!) {
+        payBill(input: $input) {
+          id
+        }
+      }
+    `,
+    { input }
+  )
 }
