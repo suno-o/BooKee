@@ -6,7 +6,7 @@ export interface CustomStyles {
   width?: string;
   align?: string;
   p?: string;
-  maxWidth?: number;
+  maxHeight?: number;
 }
 
 export interface Option {
@@ -46,8 +46,8 @@ const DropDown = ({
   return (
     <Select ref={ref} optionsVisible={open} onClick={() => setOpen(st => !st)} {...customStyles} >
       {selected ? selectedLabel : label}
-      <OptionsWrapper visible={open} top={ref?.current?.clientHeight} maxWidth={customStyles?.maxWidth}>
-        <Options maxWidth={customStyles?.maxWidth}>
+      <OptionsWrapper visible={open} top={ref?.current?.clientHeight} maxHeight={customStyles?.maxHeight}>
+        <Options maxHeight={customStyles?.maxHeight}>
           {options !== undefined && (
             options.map(({label, value}) => (value !== selected) && (
               <Option key={value} onClick={() => onChange(value)} {...customStyles} >{label}</Option>

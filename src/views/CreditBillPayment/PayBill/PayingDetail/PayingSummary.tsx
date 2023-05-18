@@ -95,6 +95,7 @@ export default function PayingDetail({
             onChange={accountSelectHandler}
             label={'Choose account'}
             options={accountOptions}
+            customStyles={{ maxHeight: 120 }}
           />  
         </PayingAccount>
       )}

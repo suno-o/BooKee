@@ -35,7 +35,7 @@ export const Select = styled.div<SelectStyles>`
   }
 `
 
-export const OptionsWrapper = styled.div<{visible?: boolean; top?: number; maxWidth?: number}>`
+export const OptionsWrapper = styled.div<{visible?: boolean; top?: number; maxHeight?: number}>`
   z-index: 900;
   display: block;
   position: absolute;
@@ -50,7 +50,7 @@ export const OptionsWrapper = styled.div<{visible?: boolean; top?: number; maxWi
   text-align: left;
   font-size: 0.7rem;
   opacity: ${p => p.visible ? 1 : 0};
-  max-height: ${p => p.visible ? (p.maxWidth ? p.maxWidth : 200) : 0}px;
+  max-height: ${p => p.visible ? (p.maxHeight ? p.maxHeight : 200) : 0}px;
   transition: opacity ${p => p.visible ? '100ms 100ms' : '100ms'}, max-height ${p => p.visible ? '100ms 100ms' : '100ms'};
   overflow-y: hidden;
   ${p => p.theme.mediaQueries.sm} {
@@ -58,8 +58,8 @@ export const OptionsWrapper = styled.div<{visible?: boolean; top?: number; maxWi
   }
 `
 
-export const Options = styled.div<{maxWidth?: number}>`
-  max-height: ${p => p.maxWidth ? p.maxWidth : 200}px;
+export const Options = styled.div<{maxHeight?: number}>`
+  max-height: ${p => p.maxHeight ? p.maxHeight : 200}px;
   overflow-y: auto;
 `
 

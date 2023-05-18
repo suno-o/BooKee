@@ -132,7 +132,7 @@ const SpendingForm = () => {
               selected={data.accountId}
               onChange={dataChangeHandler('accountId')}
               options={accountOptions}
-              customStyles={{ align: 'left', p: '8px 16px', maxWidth: 160 }}
+              customStyles={{ align: 'left', p: '8px 16px', maxHeight: 160 }}
             />
           </Label>
         </Wrapper>
@@ -144,7 +144,7 @@ const SpendingForm = () => {
               selected={data.categoryId}
               onChange={dataChangeHandler('categoryId')}
               options={categoryOptions}
-              customStyles={{ align: 'left', p: '8px 16px', maxWidth: 160 }}
+              customStyles={{ align: 'left', p: '8px 16px', maxHeight: 160 }}
             />
           </Label>
         </Wrapper>
