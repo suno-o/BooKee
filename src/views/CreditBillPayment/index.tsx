@@ -7,7 +7,7 @@ import SpendingSummary from "./SpendingSummary"
 import PaymentSummary from "./PaymentSummary"
 import PayBill from "./PayBill"
 import DropDown from "@/components/DropDown"
-import { PageSection } from "@/components/Layout/Page"
+import { PageSection, PageSafeBottomArea } from "@/components/Layout/Page"
 import { Heading, CenteredHeading, Note, Hr, LoadingWrapper, DropDownWrapper } from "./styles"
 import LoadingIndicator from "@/components/LoadingIndicator"
 import { getLastNMonthLabelsAndMap } from "@/utils/date"
@@ -73,6 +73,8 @@ export default function CreditBillPayment() {
           <LoadingIndicator width={32} height={32} />
         </LoadingWrapper>
       )}
+
+      <PageSafeBottomArea />
     </>
   )
 }

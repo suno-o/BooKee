@@ -11,6 +11,13 @@ export const PageSection = styled.div<{bigMargin?: boolean}>`
   }
 `
 
+export const PageSafeBottomArea = styled.div`
+  height: 50px;
+  ${p => p.theme.mediaQueries.md} {
+    height: 0;
+  }
+`
+
 export const PaddedInner = styled.div`
   position: relative;
   padding: 0;
