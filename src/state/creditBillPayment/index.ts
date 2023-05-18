@@ -37,6 +37,7 @@ const billPaymentSlice = createSlice({
   reducers: {
     updateMonthyear: (state, action) => {
       state.selectedMonthyear = action.payload;
+      state.transactionDataFetchNeeded = true;
     }
   },
   extraReducers: (builder) => {
