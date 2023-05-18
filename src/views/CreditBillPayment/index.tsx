@@ -33,8 +33,7 @@ export default function CreditBillPayment() {
   
   return (
     <>
-      {/* Spending Summary */}
-      <PageSection>
+      <PageSection smallMargin>
         <DropDownWrapper>
           <DropDown
             selected={selectedMonthyear}
@@ -43,6 +42,10 @@ export default function CreditBillPayment() {
             customStyles={{ width: '150px' }}
           />
         </DropDownWrapper>
+      </PageSection>
+
+      {/* Spending Summary */}
+      <PageSection smallMargin>
         <Heading>Spending Summary </Heading>
         <SpendingSummary />
         <Note>* Credit spending does not include carried over amounts</Note>

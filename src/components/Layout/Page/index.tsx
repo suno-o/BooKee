@@ -1,13 +1,13 @@
 import styled from "styled-components"
 
-export const PageSection = styled.div<{bigMargin?: boolean}>`
+export const PageSection = styled.div<{smallMargin? : boolean; bigMargin?: boolean}>`
   width: 100%;
   max-width: ${p => p.theme.layout.max_width};
-  margin: ${p => p.bigMargin ? '88px auto' : '56px auto'};
+  margin: ${p => p.smallMargin ? '32px auto' : p.bigMargin ? '88px auto' : '56px auto'};
   padding: 0 16px;
 
   ${p => p.theme.mediaQueries.sm} {
-    margin: ${p => p.bigMargin ? '128px auto' : '64px auto'};
+    margin: ${p => p.smallMargin ? '32px auto' : p.bigMargin ? '128px auto' : '64px auto'};
   }
 `
 
