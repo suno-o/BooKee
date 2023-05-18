@@ -4,11 +4,19 @@ import Button from "@/components/Button"
 import {
   NavBarContainer,
   Links,
+  StyledLink,
 } from "./styles"
 
 const NavBar = () => {
   const router = useRouter();
   const currentPath = router.pathname;
+  const navLinks = [
+    { path: '/dashboard', name: 'Dashboard' },
+    { path: '/transactions', name: 'Transactions' },
+    { path: '/credit-bill-payment', name: 'Credit Payment' },
+  ];
+
+  /* Note: update when the auth service is implemented */
   const homePaths = ['/', '/article/choosing-banking-products', '/articles/paying-bills', '/privacy-policy'];
   
   return (
@@ -18,23 +26,21 @@ const NavBar = () => {
       {homePaths.includes(currentPath) ? (
         <p style={{textAlign: 'center', fontWeight: 'bold'}}>BooKee is currently under development</p>
       ) : (
-        <>
-          <Links>
-            <Link href='/dashboard'>Dashboard</Link>
-            <Link href='/transactions'>Transactions</Link>
-            <Link href='/credit-bill-payment'>Credit bill payment</Link>
-          </Links>
-          <p>&#47;&#47; style these soon</p>
-        </>
+        <Links>
+          {navLinks.map(({path, name}) => (
+            <StyledLink
+              href={path}
+              selected={currentPath === path}
+            >{name}</StyledLink>
+          ))}
+        </Links>
       )}
 
-      <Links>
-        {homePaths.includes(currentPath) ? (
-          <Link href='/dashboard'><Button bgTheme='primary'>Log in</Button></Link>
-        ) : (
-          <Link href='/'><Button bgTheme='primary'>Log out</Button></Link>
-        )}
-      </Links>
+      {homePaths.includes(currentPath) ? (
+        <Link href='/dashboard'><Button bgTheme='primary'>Log in</Button></Link>
+      ) : (
+        <Link href='/'><Button bgTheme='primary'>Log out</Button></Link>
+      )}
     </NavBarContainer>
   )
 }
