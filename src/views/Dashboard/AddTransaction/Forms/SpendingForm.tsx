@@ -160,7 +160,7 @@ const SpendingForm = () => {
         </Wrapper>
       </Form>
       
-      <StyledButton loading={postTransactionLoading} onClick={submit} bgTheme='secondary' br={24}>Submit</StyledButton>
+      <StyledButton loading={postTransactionLoading} disabled={postTransactionLoading} bgTheme='secondary' onClick={submit} customStyles={{ br: 24 }}>Submit</StyledButton>
     </div>
   )
 }

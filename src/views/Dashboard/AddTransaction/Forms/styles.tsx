@@ -19,9 +19,8 @@ export const TextInput = styled.input`
   font-size: 0.9rem;
 `
 
-export const StyledButton = styled(Button)<{disabled?: boolean}>`
+export const StyledButton = styled(Button)`
   display: inline-flex;
   justify-content: center;
   margin: 16px 0;
-  ${p => p.disabled && `background-color: ${p.theme.colors.text_grey_lighter};`}
 `

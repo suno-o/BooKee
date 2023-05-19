@@ -118,7 +118,7 @@ const EarningForm = () => {
           Amount: <TextInput type='number' step="0.01" onChange={inputChangeHandler('amount')} />
         </Label>
       </Wrapper>
-      <StyledButton loading={postTransactionLoading} br={24} onClick={submit}>Submit</StyledButton>
+      <StyledButton loading={postTransactionLoading} disabled={postTransactionLoading} customStyles={{ br: 24 }} onClick={submit}>Submit</StyledButton>
     </form>
   )
 }

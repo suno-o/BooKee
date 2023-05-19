@@ -39,7 +39,7 @@ export default function Dashboard() {
   return (
     <>
       {/* Move this later */}
-      <AddTransactionButton onClick={() => setShowModal(true)} bgTheme='secondary' br={8}>
+      <AddTransactionButton onClick={() => setShowModal(true)} bgTheme='secondary' customStyles={{ width: 'auto', br: 8 }}>
         + Add Transaction
       </AddTransactionButton>
 
@@ -83,7 +83,6 @@ const AddTransactionButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: initial;
 
   ${p => p.theme.mediaQueries.lg} {
     right: 32px;
