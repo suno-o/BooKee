@@ -32,6 +32,8 @@ export default AddTransaction;
 const Container = styled.div`
   padding: 32px;
   width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 /* tabs */
