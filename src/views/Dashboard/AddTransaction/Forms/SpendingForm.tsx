@@ -155,7 +155,7 @@ const SpendingForm = () => {
         </Wrapper>
         <Wrapper>
           <Label>
-            Amount: <TextInput type='number' placeholder="10.50" onChange={inputChangeHandler('amount')} />
+            Amount: <TextInput type='number' onChange={inputChangeHandler('amount')} />
           </Label>
         </Wrapper>
       </Form>
