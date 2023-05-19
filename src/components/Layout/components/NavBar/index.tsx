@@ -29,6 +29,7 @@ const NavBar = () => {
         <Links>
           {navLinks.map(({path, name}) => (
             <StyledLink
+              key={path}
               href={path}
               selected={currentPath === path}
             >{name}</StyledLink>
