@@ -36,6 +36,7 @@ export const Links = styled.div`
 
 export const StyledLink = styled(Link)<{selected: boolean}>`
   text-decoration: none;
+  color: ${p => p.theme.colors.primary_dark};
   border-radius: 16px;
   margin: 8px 0;
   padding: 8px 12px;
@@ -51,7 +52,7 @@ export const StyledLink = styled(Link)<{selected: boolean}>`
     
     ${p.theme.mediaQueries.md} {
       background-color: transparent;
-      color: ${p => p.theme.colors.primary};
+      color: ${p => p.theme.colors.primary_dark};
     }
   `}
 `

@@ -19,6 +19,7 @@ const mediaQueries: MediaQueries = {
 }
 
 const colors: Colors = {
+  primary_dark: '#502090',
   primary: '#7040d0',
   primary_light: '#7040d060',
   secondary: '#1ecccc',

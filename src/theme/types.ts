@@ -15,6 +15,7 @@ export type MediaQueries = {
 }
 
 export type Colors = {
+  primary_dark: string;
   primary: string;
   primary_light: string;
   secondary: string;
