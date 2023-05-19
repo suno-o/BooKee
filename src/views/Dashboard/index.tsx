@@ -1,8 +1,6 @@
 import { useState, useEffect, useMemo, createContext } from "react"
 import { useAppDispatch, useAppSelector } from "@/state"
 import { fetchDashboardData, updateMonthyear } from "@/state/dashboard"
-import Image from "next/image"
-import addIcon from "@/assets/icons/add.png"
 import styled from "styled-components"
 import { DashboardHeading, DropDownWrapper } from "./styles"
 import { PageSection } from "@/components/Layout/Page"
@@ -40,8 +38,9 @@ export default function Dashboard() {
 
   return (
     <>
-      <AddTransactionButton onClick={() => setShowModal(true)} width={50} height={50} br={25}>
-        <Image src={addIcon} width={28} height={28} alt='Record transaction' />
+      {/* Move this later */}
+      <AddTransactionButton onClick={() => setShowModal(true)} bgTheme='secondary' br={8}>
+        + Add Transaction
       </AddTransactionButton>
 
       <PageSection>
@@ -84,4 +83,9 @@ const AddTransactionButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: initial;
+
+  ${p => p.theme.mediaQueries.lg} {
+    right: 32px;
+  }
 `
