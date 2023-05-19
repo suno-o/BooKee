@@ -22,11 +22,13 @@ export const Links = styled.div`
   right: 0px;
   display: flex;
   justify-content: space-evenly;
+  box-shadow: ${p => p.theme.shadows.grey};
   background-color: ${p => p.theme.colors.sky_purple};
   font-size: 0.8rem;
 
   ${p => p.theme.mediaQueries.md} {
     position: static;
+    box-shadow: none;
     background-color: transparent;
     font-size: 1rem;
   }
