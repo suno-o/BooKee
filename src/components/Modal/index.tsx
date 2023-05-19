@@ -38,7 +38,7 @@ const ModalContainer = styled.div`
   background-color: rgba(0,0,0,0.5);
   animation: load-modal 200ms;
 
-  ${props => props.theme.mediaQueries.md} {
+  ${props => props.theme.mediaQueries.sm} {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +73,7 @@ const ModalContent = styled.div<{maxWidth: number}>`
   overflow-y: auto;
   animation: load-content-side 200ms ease-out;
 
-  ${props => props.theme.mediaQueries.md} {
+  ${props => props.theme.mediaQueries.sm} {
     border-radius: 16px;
     ${({maxWidth}) => maxWidth && `max-width: ${maxWidth}px;`}
     height: auto;
