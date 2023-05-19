@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react"
-import { useAppDispatch } from "@/state"
+import { useAppDispatch, useAppSelector } from "@/state"
 import { useCashAccounts } from "@/state/user/hooks"
 import { payBill } from "@/state/creditBillPayment"
 import styled from "styled-components"
@@ -20,6 +20,7 @@ export default function PayingDetail({
   carryoverTransactions
 }: Props) {
   const dispatch = useAppDispatch();
+  const { payBillReqLoading } = useAppSelector(state => state.creditBillPayment);
 
   /* payable accounts */
   const accounts = useCashAccounts();
@@ -100,7 +101,7 @@ export default function PayingDetail({
         </PayingAccount>
       )}
 
-      <Button onClick={onSubmit}>Complete</Button>
+      <Button loading={payBillReqLoading} onClick={onSubmit}>Complete</Button>
     </PayingDetailContainer>
   )
 }

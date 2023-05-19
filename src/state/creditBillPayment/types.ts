@@ -9,6 +9,7 @@ export interface CreditBillPaymentState {
   carryoverCreditTransactions: Transaction[];
   creditTransactionLoaded: boolean;
   transactionDataFetchNeeded: boolean;
+  payBillReqLoading: boolean;
 }
 
 export interface CreditBillPaymentData {
