@@ -1,3 +1,4 @@
+import prisma from "../../lib/prisma"
 import { Prisma } from "@prisma/client";
 import { addTransaction } from "./transactions"
 import { PayBillInput } from "../types"
@@ -41,7 +42,7 @@ export const payBill = async (_: PayBillInput[], args: PayBillArgs) => {
         const total = calculateResult._sum.amount;
         if (!total || total.equals(0)) throw Error();
 
-        // create bill payment transaction (type=CASH_SPENDING)
+        // create bill payment transaction (type=CREDIT_BILL_PAYMENT)
         const billPaymentTransaction = await addTransaction({
           userId,
           transactionType: TransactionType.CREDIT_BILL_PAYMENT,

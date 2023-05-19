@@ -1,5 +1,5 @@
-import { TransactionType } from "@prisma/client"
 import prisma from "../../lib/prisma"
+import { TransactionType } from "@prisma/client"
 import { updateAccountBalance } from "../mutations/accounts"
 import { TransactionInput } from "../types"
 
