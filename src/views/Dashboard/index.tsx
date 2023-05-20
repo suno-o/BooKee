@@ -1,15 +1,12 @@
-import { useState, useEffect, useMemo, createContext } from "react"
-import { useAppDispatch, useAppSelector } from "@/state"
-import { fetchDashboardData, updateMonthyear } from "@/state/dashboard"
+import { useState, createContext } from "react"
+import { useFetchUserData } from "@/state/user/hooks"
 import styled from "styled-components"
-import { DashboardHeading, DropDownWrapper } from "./styles"
+import { DashboardHeading } from "./styles"
 import { PageSection } from "@/components/Layout/Page"
 import Accounts from "./Accounts"
 import AddTransaction from "./AddTransaction"
 import MonthlySummary from "./MonthlySummary"
-import DropDown from "@/components/DropDown"
 import Modal from "@/components/Modal"
-import { getLastNMonthLabelsAndMap } from "@/utils/date"
 import Button from "@/components/Button"
 
 /* Add Transaction Modal context */
@@ -18,22 +15,9 @@ export const ModalContext = createContext<ModalContextType | null>(null);
 
 /* Dashboard */
 export default function Dashboard() {
-  const dispatch = useAppDispatch();
+  useFetchUserData();
+
   const [showModal, setShowModal] = useState(false);
-  const { dashboardDataFetchNeeded, selectedMonthyear } = useAppSelector(state => state.dashboard);
-  const { labels, labelValueMap } = useMemo(() => getLastNMonthLabelsAndMap(6), []);
-  
-  useEffect(() => {
-    /* fetch accounts, monthly balances and transactions data on initial page load */
-    if (dashboardDataFetchNeeded === true) {
-      dispatch(fetchDashboardData(labelValueMap[selectedMonthyear]));
-    }
-  }, [dashboardDataFetchNeeded])
-
-  const handleChange = (newMonthname: string) => {
-    dispatch(updateMonthyear(newMonthname));
-  }
-
   const closeModal = () => setShowModal(false);
 
   return (
@@ -50,17 +34,7 @@ export default function Dashboard() {
 
       <PageSection>
         <DashboardHeading>Monthly Summary</DashboardHeading>
-        <DropDownWrapper>
-          <DropDown
-            selected={selectedMonthyear}
-            onChange={handleChange}
-            listItems={labels}
-            customStyles={{ width: '150px' }}
-          />
-        </DropDownWrapper>
-        <MonthlySummary
-          monthValue={labelValueMap[selectedMonthyear]}
-        />
+        <MonthlySummary />
       </PageSection>
 
       <Modal

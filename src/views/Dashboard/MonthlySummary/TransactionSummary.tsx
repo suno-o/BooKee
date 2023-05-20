@@ -1,18 +1,17 @@
-import { useAppSelector } from "@/state"
-import { transactionsByTypeSelector } from "@/state/dashboard/selector"
+import { useAllTransactionsByType } from "@/state/transactionsV2/hooks"
 import styled from "styled-components"
-import TransactionSummaryTable from "@/components/BooKeeTable/TransactionSummaryTable";
+import TransactionSummaryTable from "@/components/BooKeeTable/TransactionSummaryTable"
 
 /**
  * TransactionSummary Component
  */
 export default function TransactionSummary() {
   const {
-    earningTransactions,
-    spendingTransactions,
-    creditSpendingTransactions,
-    transactionDataLoaded
-  } = useAppSelector(transactionsByTypeSelector);
+    cashEarnings,
+    cashSpendings,
+    creditSpendings,
+    transactionsLoaded
+  } = useAllTransactionsByType();
 
   return (
     <Container>
@@ -20,24 +19,24 @@ export default function TransactionSummary() {
         <TransactionSummaryTable
           theme='primary'
           header='Earning'
-          transactions={earningTransactions}
-          dataLoaded={transactionDataLoaded}
+          transactions={cashEarnings}
+          dataLoaded={transactionsLoaded}
         />
       </Item>
       <Item>
         <TransactionSummaryTable
           theme='secondary'
           header='Spending'
-          transactions={spendingTransactions}
-          dataLoaded={transactionDataLoaded}
+          transactions={cashSpendings}
+          dataLoaded={transactionsLoaded}
         />
       </Item>
       <Item>
         <TransactionSummaryTable
           theme='warning'
           header='Credit'
-          transactions={creditSpendingTransactions}
-          dataLoaded={transactionDataLoaded}
+          transactions={creditSpendings}
+          dataLoaded={transactionsLoaded}
         />
       </Item>
     </Container>

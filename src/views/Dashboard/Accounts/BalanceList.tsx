@@ -4,7 +4,7 @@ import Skeleton from "@/components/Skeleton"
 import { useHorizontalPaddleScroll } from "@/hooks/useHorizontalPaddleScroll"
 import { formatCash } from "@/utils/numbers"
 import { getListItemLightBgColor } from "@/utils/colors"
-import { Account } from "@/state/dashboard/types"
+import { Account } from "@/state/user/types"
 
 interface Props {
   data: Account[];

@@ -1,15 +1,15 @@
-import { useAppSelector } from "@/state"
+import { useSpendingSummaryData } from "@/state/transactionsV2/hooks";
 import styled from "styled-components"
 import Card from "@/components/Card"
 import TransactionSummaryTable from "@/components/BooKeeTable/TransactionSummaryTable";
 import { formatCash } from "@/utils/numbers"
 
 const SpendingSummary = () => {
-  const { cashSpendingTotal, creditSpendingTotal, creditTransactions, creditTransactionLoaded } = useAppSelector(state => state.creditBillPayment);
+  const { cashSpendingTotal, creditSpendingTotal, creditSpendings, transactionsLoaded } = useSpendingSummaryData();
 
   const renderAmountCardContent = (amount: number) => (
     <Card.Content
-      dataLoaded={creditTransactionLoaded}
+      dataLoaded={transactionsLoaded}
       skeletonProps={{ width: 80, height: 26, mt: 4 }}
     >{formatCash(amount)}</Card.Content>
   )
@@ -35,8 +35,8 @@ const SpendingSummary = () => {
         <TransactionSummaryTable
           theme='warning'
           header='Credit Spending'
-          transactions={creditTransactions}
-          dataLoaded={creditTransactionLoaded}
+          transactions={creditSpendings}
+          dataLoaded={transactionsLoaded}
         />
       </TableWrapper>
     </Container>

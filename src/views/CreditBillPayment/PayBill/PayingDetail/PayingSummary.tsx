@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react"
-import { useAppDispatch, useAppSelector } from "@/state"
+import { useAppDispatch } from "@/state"
 import { useCashAccounts } from "@/state/user/hooks"
-import { payBill } from "@/state/creditBillPayment"
+import { payBill } from "@/state/transactionsV2"
+import { refetchUserData } from "@/state/user"
 import styled from "styled-components"
 import DropDown from "@/components/DropDown"
 import Button from "@/components/Button"
@@ -20,7 +21,6 @@ export default function PayingDetail({
   carryoverTransactions
 }: Props) {
   const dispatch = useAppDispatch();
-  const { payBillReqLoading } = useAppSelector(state => state.creditBillPayment);
 
   /* payable accounts */
   const accounts = useCashAccounts();
@@ -48,10 +48,16 @@ export default function PayingDetail({
     return sum;
   }, 0);
 
-  /* record transaction after credit bill payment */
+  /* pay bill req status */
+  const [payBillReqLoading, setPayBillReqLoading] = useState(false);
+
+  /* pay bill */
   const onSubmit = () => {
+    setPayBillReqLoading(true);
+
     if (payingAccountId === '') {
       alert('select account');
+      setPayBillReqLoading(false);
       return;
     }
 
@@ -62,7 +68,11 @@ export default function PayingDetail({
                                 .map(transaction => transaction.id);
     const carryoverTransactionIds = Object.keys(carryoverTransactions).filter(id => carryoverTransactions[id] === true);
     
-    dispatch(payBill({ userId, accountId, payTransactionIds, carryoverTransactionIds }));
+    dispatch(payBill({ userId, accountId, payTransactionIds, carryoverTransactionIds }))
+      .finally(() => {
+        dispatch(refetchUserData());
+        setPayBillReqLoading(false);
+      })
   }
   
   return (
@@ -101,7 +111,7 @@ export default function PayingDetail({
         </PayingAccount>
       )}
 
-      <Button loading={payBillReqLoading} onClick={onSubmit}>Complete</Button>
+      <Button loading={payBillReqLoading} disabled={payBillReqLoading} onClick={onSubmit}>Complete</Button>
     </PayingDetailContainer>
   )
 }

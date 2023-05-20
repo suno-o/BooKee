@@ -1,6 +1,5 @@
 import { useContext } from "react"
-import { useAppSelector } from "@/state"
-import { accountsAndBalancesSelector } from "@/state/dashboard/selector"
+import { useBalancesByAccounts, useYearlyBalances } from "@/state/user/hooks"
 import styled, { ThemeContext } from "styled-components"
 import Card from "@/components/Card"
 import LoadingIndicator from "@/components/LoadingIndicator"
@@ -10,7 +9,8 @@ import { formatCash } from "@/utils/numbers"
 
 export default function Accounts() {
   const theme = useContext(ThemeContext);
-  const { accounts, total, balanceSnapshots, dashboardDataLoaded } = useAppSelector(accountsAndBalancesSelector);
+  const { total, accounts, dataLoaded } = useBalancesByAccounts();
+  const yearlyBalances = useYearlyBalances();
 
   return (
     <Container>
@@ -19,19 +19,19 @@ export default function Accounts() {
         <BalanceCard styles={{bgTheme:'primary', colorTheme:'white'}}>
           <Card.Header>Total Balance</Card.Header>
           <BalanceCardContent
-            dataLoaded={dashboardDataLoaded}
+            dataLoaded={dataLoaded}
             skeletonProps={{ width: 160, height: 30, mt: 4 }}
           >{formatCash(total)}</BalanceCardContent>
         </BalanceCard>
         {/* account balance by bank */}
-        <BalanceList data={accounts} dataLoaded={dashboardDataLoaded} />
+        <BalanceList data={accounts} dataLoaded={dataLoaded} />
       </Account>
       <GraphContainer>
-        {dashboardDataLoaded ? (
+        {dataLoaded ? (
           <GraphWrapper>
             <ResponsiveContainer width='99%' height={220}>
               <LineChart
-                data={balanceSnapshots}
+                data={yearlyBalances}
               >
                 <CartesianGrid strokeWidth={0.3} />
                 <XAxis dataKey="month" stroke={theme.colors.text_grey_light} strokeWidth={0.7} tickSize={5} tick={{fontSize: 10}} />

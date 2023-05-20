@@ -1,15 +1,14 @@
-import { useAppSelector } from "@/state"
-import { transactionTotalSummarySelector } from "@/state/dashboard/selector"
+import { useAllTransactionsTotalsByType } from "@/state/transactionsV2/hooks"
 import styled from "styled-components"
 import Card from "@/components/Card"
 import { formatCash } from "@/utils/numbers"
 
 export default function SummaryCards() {
-  const { earningTotal, spendingTotal, creditSpendingTotal, total, transactionDataLoaded } = useAppSelector(transactionTotalSummarySelector);
+  const { cashEarningsTotal, cashSpendingsTotal, creditSpendingsTotal, total, transactionsLoaded } = useAllTransactionsTotalsByType();
 
   const renderAmountCardContent = (amount: number) => (
     <Card.Content
-      dataLoaded={transactionDataLoaded}
+      dataLoaded={transactionsLoaded}
       skeletonProps={{ width: 80, height: 26, mt: 4 }}
     >{formatCash(amount)}</Card.Content>
   )
@@ -18,15 +17,15 @@ export default function SummaryCards() {
     <CardSection>
       <MonthlySummaryCard styles={{bgTheme:'primary', colorTheme:'white'}}>
         <Card.Header>Earning</Card.Header>
-        {renderAmountCardContent(earningTotal)}
+        {renderAmountCardContent(cashEarningsTotal)}
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'secondary', colorTheme:'white'}}>
         <Card.Header>Cash Spending</Card.Header>
-        {renderAmountCardContent(spendingTotal)}
+        {renderAmountCardContent(cashSpendingsTotal)}
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'warning', colorTheme:'white'}}>
         <Card.Header>Credit Spending</Card.Header>
-        {renderAmountCardContent(creditSpendingTotal)}
+        {renderAmountCardContent(creditSpendingsTotal)}
       </MonthlySummaryCard>
       <MonthlySummaryCard styles={{bgTheme:'failure', colorTheme:'white'}}>
         <Card.Header>{total > 0 ? 'Net Income' : 'Net Loss'}</Card.Header>

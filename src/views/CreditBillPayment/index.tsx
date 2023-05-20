@@ -1,7 +1,4 @@
-import { useEffect, useMemo } from "react"
-import { useAppDispatch, useAppSelector } from "@/state"
-import { creditTransactionsSelector } from "@/state/creditBillPayment/selector"
-import { fetchTransactions, updateMonthyear } from "@/state/creditBillPayment"
+import { useFetchMonthlyTransactions, useCreditTransactionsByPayingStatus } from "@/state/transactionsV2/hooks"
 import { useFetchAccounts } from "@/state/user/hooks"
 import SpendingSummary from "./SpendingSummary"
 import PaymentSummary from "./PaymentSummary"
@@ -10,26 +7,11 @@ import DropDown from "@/components/DropDown"
 import { PageSection, PageSafeBottomArea } from "@/components/Layout/Page"
 import { Heading, CenteredHeading, Note, Hr, LoadingWrapper, DropDownWrapper } from "./styles"
 import LoadingIndicator from "@/components/LoadingIndicator"
-import { getLastNMonthLabelsAndMap } from "@/utils/date"
 
 export default function CreditBillPayment() {
-  const dispatch = useAppDispatch();
-  
   useFetchAccounts();
-
-  const { unPaidTransactions } = useAppSelector(creditTransactionsSelector);
-  const { selectedMonthyear, creditTransactionLoaded, transactionDataFetchNeeded } = useAppSelector(state => state.creditBillPayment);
-  const { labels, labelValueMap } = useMemo(() => getLastNMonthLabelsAndMap(6), []);
-
-  useEffect(() => {
-    if (transactionDataFetchNeeded === true) {
-      dispatch(fetchTransactions(labelValueMap[selectedMonthyear]));
-    }
-  }, [selectedMonthyear, transactionDataFetchNeeded])
-
-  const handleChange = (newMonthname: string) => {
-    dispatch(updateMonthyear(newMonthname));
-  }
+  const { selectedMonthyear, monthyears, setMonthyear } = useFetchMonthlyTransactions();
+  const { unPaidTransactions, transactionsLoaded } = useCreditTransactionsByPayingStatus();
   
   return (
     <>
@@ -37,8 +19,8 @@ export default function CreditBillPayment() {
         <DropDownWrapper>
           <DropDown
             selected={selectedMonthyear}
-            onChange={handleChange}
-            listItems={labels}
+            onChange={setMonthyear}
+            listItems={monthyears}
             customStyles={{ width: '150px' }}
           />
         </DropDownWrapper>
@@ -58,7 +40,7 @@ export default function CreditBillPayment() {
       </PageSection>
 
       {/* Pay Credit Bills */}
-      {creditTransactionLoaded ? (
+      {transactionsLoaded ? (
         unPaidTransactions.length > 0 && (
           <>
             <PageSection>

@@ -1,18 +1,19 @@
-import { useAppSelector } from "@/state"
-import { creditPaymentTotalSelector, creditTransactionsSelector } from "@/state/creditBillPayment/selector"
+import {
+  useCreditTransactionsTotalsByPayingStatus,
+  useCreditTransactionsByPayingStatus
+} from "@/state/transactionsV2/hooks"
 import styled from "styled-components"
 import Card from "@/components/Card"
 import PaymentTable from "./PaymentTable"
 import { formatCash } from "@/utils/numbers"
 
 const PaymentSummary = () => {
-  const creditPaymentTotal = useAppSelector(creditPaymentTotalSelector);
-  const { creditCarryoverTotal, creditTransactionLoaded } = useAppSelector(state => state.creditBillPayment);
-  const { paidTransactions, carryoverTransactions} = useAppSelector(creditTransactionsSelector);
+  const { paidCreditTotal, carryoverCreditTotal, transactionsLoaded } = useCreditTransactionsTotalsByPayingStatus();
+  const { paidTransactions, carryoverTransactions } = useCreditTransactionsByPayingStatus();
 
   const renderAmountCardContent = (amount: number) => (
     <Card.Content
-      dataLoaded={creditTransactionLoaded}
+      dataLoaded={transactionsLoaded}
       skeletonProps={{ width: 80, height: 26, mt: 4 }}
     >{formatCash(amount)}</Card.Content>
   )
@@ -22,26 +23,26 @@ const PaymentSummary = () => {
       <Item>
         <Card styles={{bgTheme:'success', colorTheme:'white'}}>
           <Card.Header>Payment Total</Card.Header>
-          {renderAmountCardContent(Math.abs(creditPaymentTotal))}
+          {renderAmountCardContent(Math.abs(paidCreditTotal))}
         </Card>
         <StyledPaymentTable
           theme='success'
           header='Paid'
           transactions={paidTransactions}
-          dataLoaded={creditTransactionLoaded}
+          dataLoaded={transactionsLoaded}
         />
       </Item>
 
       <Item>
         <Card styles={{bgTheme:'failure', colorTheme:'white'}}>
           <Card.Header>Carryover Total</Card.Header>
-          {renderAmountCardContent(Math.abs(creditCarryoverTotal))}
+          {renderAmountCardContent(Math.abs(carryoverCreditTotal))}
         </Card>
         <StyledPaymentTable
           theme='failure'
           header='Carried Over'
           transactions={carryoverTransactions}
-          dataLoaded={creditTransactionLoaded}
+          dataLoaded={transactionsLoaded}
         />
       </Item>
     </Container>

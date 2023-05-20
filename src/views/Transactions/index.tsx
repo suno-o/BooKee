@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "@/state"
-import { fetchTransactions } from "@/state/transactions"
+import { useState } from "react"
+import { useFetchMonthlyTransactions, useAllTransactions } from "@/state/transactionsV2/hooks"
 import { TransactionType } from "@prisma/client"
 import styled from "styled-components"
 import { PageSection } from "@/components/Layout/Page"
@@ -23,22 +22,19 @@ const initialFilter = {
 
 /* Transactions Component */
 export default function Transactions() {
-  const dispatch = useAppDispatch();
-  const { transactions, transactionsLoaded } = useAppSelector(state => state.transactions);
+  const {} = useFetchMonthlyTransactions();
+  const { data, transactionsLoaded } = useAllTransactions();
+  
   const [filters, setFilters] = useState(initialFilter);
 
   /* filter transactions */
-  let filteredTransactions = transactions;
+  let filteredTransactions = data;
   if (filters.transactionType)
     filteredTransactions = filteredTransactions.filter(transaction => transaction.transactionType === filters.transactionType);
   if (filters.bank)
     filteredTransactions = filteredTransactions.filter(transaction => transaction.bankName === filters.bank);
   if (filters.category)
     filteredTransactions = filteredTransactions.filter(transaction => transaction.categoryName === filters.category);
-  
-  useEffect(() => {
-    dispatch(fetchTransactions({month: 3, year: 2023})); // hard code for now - change later
-  }, [])
 
   const handleFilterChange = (key: string) => (value: TransactionTypeFilter) => {
     setFilters(state => ({ ...state, [key]: value }));

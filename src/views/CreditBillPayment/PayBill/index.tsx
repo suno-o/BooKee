@@ -1,10 +1,9 @@
-import { useAppSelector } from "@/state"
-import { unpaidCreditTransactionsByAccountSelector } from "@/state/creditBillPayment/selector"
+import { useUnpaidTransactionsByAccount} from "@/state/transactionsV2/hooks"
 import styled from "styled-components"
 import PayingDetail from "./PayingDetail"
 
 export default function PayBill() {
-  const transactionsByAccount = useAppSelector(unpaidCreditTransactionsByAccountSelector);
+  const unpaidTransactionsByAccount = useUnpaidTransactionsByAccount();
 
   return (
     <>
@@ -12,11 +11,11 @@ export default function PayBill() {
         BooKee strongly recommends you to pay off your credit bills in full end of each month, so that you are paying for the purchase you&apos;ve made in the <b>same month</b> the purchase was made.
         But, we still provide you an option to carry over some transactions to upcoming month in case you are unable to pay off in full. Please note that your credit card issuers may charge fees for any unpaid amount.
       </Note>
-      {Object.keys(transactionsByAccount).map((accountName: string) => (
+      {Object.keys(unpaidTransactionsByAccount).map((accountName: string) => (
         <PayingDetailWrapper key={accountName}>
           <Account>{accountName}</Account>
           <PayingDetail
-            transactions={transactionsByAccount[accountName]}
+            transactions={unpaidTransactionsByAccount[accountName]}
           />
         </PayingDetailWrapper>
       ))}

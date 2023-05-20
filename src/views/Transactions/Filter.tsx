@@ -1,11 +1,10 @@
-import { useAppSelector } from "@/state"
-import { bankAndCategorySelector } from "@/state/transactions/selector"
+import { useBankAndCategory } from "@/state/transactionsV2/hooks"
 import { TransactionType } from "@prisma/client"
 import { Filters, TransactionTypeFilter } from "."
 import styled, { css } from "styled-components"
 import Card from "@/components/Card"
 import DropDown from "@/components/DropDown"
-import Button, { ButtonWrapper } from "@/components/Button"
+import Button from "@/components/Button"
 import Skeleton from "@/components/Skeleton"
 
 const typeFilterData = [
@@ -28,7 +27,7 @@ const Filter = ({
   handleFilterChange,
   resetCategoryFilter
 }: Props) => {
-  const { banks, categories, transactionsLoaded } = useAppSelector(bankAndCategorySelector);
+  const { banks, categories, transactionsLoaded } = useBankAndCategory();
   const longestBankChars = longestLength(banks);
   const longestCategoryChars = longestLength(categories);
   
@@ -37,11 +36,17 @@ const Filter = ({
       {/* transaction type: all, earning, spending, credit */}
       <TypeFilterWrapper>
         {typeFilterData.map((filter) => (
-          <BtnWrapper key={filter.value} disabled={filter.value === filters.transactionType} onClick={() => handleFilterChange('transactionType')(filter.value)}>
+          <CardButton
+            key={filter.value}
+            bgTheme='none'
+            inactive={filter.value === filters.transactionType}
+            customStyles={{ width: 'auto', p: 0 }}
+            onClick={() => handleFilterChange('transactionType')(filter.value)}
+          >
             <FilterCard styles={{bgTheme: filter.theme, colorTheme: 'white'}}>
               <FilterHeader>{filter.label}</FilterHeader>
             </FilterCard>
-          </BtnWrapper>
+          </CardButton>
         ))}
       </TypeFilterWrapper>
 
@@ -74,7 +79,7 @@ const Filter = ({
             <Skeleton br={24} style={{ width: '100%', height: '100%' }} />
           )}
         </DropDownWrapper>
-        <Btn bgTheme='text_grey' onClick={resetCategoryFilter}>Reset</Btn>
+        <Button bgTheme='text_grey' customStyles={{ width: 'auto', br: 24, p: 12 }} onClick={resetCategoryFilter}>Reset</Button>
       </CategoryFilterWrapper>
     </Container>
   );
@@ -92,16 +97,16 @@ const TypeFilterWrapper = styled.div`
   margin-bottom: 24px;
 `
 
-const BtnWrapper = styled(ButtonWrapper)<{disabled?: boolean}>`
+const CardButton = styled(Button)<{inactive?: boolean}>`
   position: relative;
   margin-right: 8px;
   transition: transform 300ms ease-in-out;
 
   &:hover {
-    ${p => !p.disabled && `transform: translateY(-4px);`}
+    ${p => !p.inactive && `transform: translateY(-4px);`}
   }
 
-  ${p => p.disabled && css`
+  ${p => p.inactive && css`
     &::after {
       content: '';
       position: absolute;
@@ -153,11 +158,4 @@ const DropDownWrapper = styled.div<{longestLength: number}>`
   ${p => p.theme.mediaQueries.md} {
     width: ${p => p.longestLength * 8 + 48}px;
   }
-`
-
-const Btn = styled(Button)`
-  width: auto;
-  border-radius: 24px;
-  padding: 12px;
-  font-weight: normal;
 `

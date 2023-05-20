@@ -1,13 +1,14 @@
 import { useState, useEffect, useContext } from "react"
 import { ModalContext, ModalContextType } from "../.."
-import { useAppDispatch, useAppSelector } from "@/state"
-import { addTransaction } from "@/state/dashboard"
-import { selectAccountsByType } from "@/state/dashboard/selector"
+import { useAppDispatch } from "@/state"
+import { useAccountsByType, useCategories } from "@/state/user/hooks"
+import { addTransaction } from "@/state/transactionsV2"
+import { refetchUserData } from "@/state/user"
 import styled from "styled-components"
 import DropDown from "@/components/DropDown"
 import { Wrapper, Label, TextInput, StyledButton } from './styles'
 import { Option } from "@/components/DropDown"
-import { Account } from "@/state/dashboard/types"
+import { Account } from "@/state/user/types"
 import { TransactionType } from "@prisma/client"
 
 const FORM_ANIMATION_DURATION_MS = 800;
@@ -42,9 +43,7 @@ const SpendingForm = () => {
   }, [spendingType])
   
   /* dropdown data */
-  const { cashAccounts, creditAccounts } = useAppSelector(selectAccountsByType);
-  const { categories, postTransactionLoading } = useAppSelector(state => state.dashboard);
-
+  const { cashAccounts, creditAccounts } = useAccountsByType();
   let accountsToUse: Account[] = [];
   if (spendingType === 'Cash')
     accountsToUse = cashAccounts;
@@ -59,6 +58,7 @@ const SpendingForm = () => {
     })
   })
 
+  const categories = useCategories();
   const categoryOptions: Option[] = [];
   categories.forEach(cat => {
     categoryOptions.push({
@@ -69,6 +69,7 @@ const SpendingForm = () => {
   
   /* form data */
   const [data, setData] = useState<TransactionData>(initialTransactionData);
+  const [postReqLoading, setPostReqLoading] = useState(false);
 
   const dataChangeHandler = (key: string) => (value: string) => setData(data => ({...data, [key]: value}));
   const inputChangeHandler = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,6 +94,7 @@ const SpendingForm = () => {
       return;
     }
 
+    setPostReqLoading(true);
     dispatch(addTransaction({
       transactionInput: {
         ...data,
@@ -101,10 +103,10 @@ const SpendingForm = () => {
         amount: Math.abs(data.amount) * -1,
       }
     }))
-      // close modal on post complete
-      .then(res => {
-        const status = res?.meta?.requestStatus;
-        if (status === 'fulfilled') closeModal();
+      .then(() => {
+        setPostReqLoading(false);
+        dispatch(refetchUserData());
+        closeModal();
       })
   }
   
@@ -160,7 +162,7 @@ const SpendingForm = () => {
         </Wrapper>
       </Form>
       
-      <StyledButton loading={postTransactionLoading} disabled={postTransactionLoading} bgTheme='secondary' onClick={submit} customStyles={{ br: 24 }}>Submit</StyledButton>
+      <StyledButton loading={postReqLoading} disabled={postReqLoading} bgTheme='secondary' onClick={submit} customStyles={{ br: 24 }}>Submit</StyledButton>
     </div>
   )
 }

@@ -1,8 +1,9 @@
 import { useState, useContext } from "react"
 import { ModalContext, ModalContextType } from "../.."
-import { useAppDispatch, useAppSelector } from "@/state"
-import { addTransaction } from "@/state/dashboard"
-import { selectAccountsByType } from "@/state/dashboard/selector"
+import { useAppDispatch } from "@/state"
+import { useCashAccounts, useCategories } from "@/state/user/hooks"
+import { addTransaction } from "@/state/transactionsV2"
+import { refetchUserData } from "@/state/user"
 import DropDown from "@/components/DropDown"
 import { Wrapper, Label, TextInput, StyledButton } from './styles'
 import { Option } from "@/components/DropDown"
@@ -27,9 +28,7 @@ const EarningForm = () => {
   const { closeModal } = useContext(ModalContext) as ModalContextType;
   
   /* dropdown data */
-  const { cashAccounts } = useAppSelector(selectAccountsByType);
-  const { categories, postTransactionLoading } = useAppSelector(state => state.dashboard);
-
+  const cashAccounts = useCashAccounts();
   const accountOptions: Option[] = [];
   cashAccounts.forEach(account => {
     accountOptions.push({
@@ -37,7 +36,8 @@ const EarningForm = () => {
       value: account.id,
     })
   })
-
+  
+  const categories = useCategories();
   const categoryOptions: Option[] = [];
   categories.forEach(cat => {
     categoryOptions.push({
@@ -48,6 +48,7 @@ const EarningForm = () => {
   
   /* form data */
   const [data, setData] = useState<TransactionData>(initialTransactionData);
+  const [postReqLoading, setPostReqLoading] = useState(false);
 
   const dataChangeHandler = (key: string) => (value: string) => setData(data => ({...data, [key]: value}));
   const inputChangeHandler = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +69,7 @@ const EarningForm = () => {
       return;
     }
 
+    setPostReqLoading(true);
     dispatch(addTransaction({
       transactionInput: {
         transactionType: TransactionType.CASH_EARNING,
@@ -75,10 +77,10 @@ const EarningForm = () => {
         ...data,
       }
     }))
-      // close modal on post complete
-      .then(res => {
-        const status = res?.meta?.requestStatus;
-        if (status === 'fulfilled') closeModal();
+      .then(() => {
+        setPostReqLoading(false);
+        dispatch(refetchUserData());
+        closeModal();
       })
   }
   
@@ -118,7 +120,7 @@ const EarningForm = () => {
           Amount: <TextInput type='number' step="0.01" onChange={inputChangeHandler('amount')} />
         </Label>
       </Wrapper>
-      <StyledButton loading={postTransactionLoading} disabled={postTransactionLoading} customStyles={{ br: 24 }} onClick={submit}>Submit</StyledButton>
+      <StyledButton loading={postReqLoading} disabled={postReqLoading} customStyles={{ br: 24 }} onClick={submit}>Submit</StyledButton>
     </form>
   )
 }
