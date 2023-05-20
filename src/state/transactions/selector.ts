@@ -3,10 +3,10 @@ import { createSelector } from "@reduxjs/toolkit"
 import { getUniqueValues, getTransactionsByAccount } from "./helper";
 import { TransactionType } from "@prisma/client";
 
-const selectTransactionsData = (state: RootState) => state.transactionsV2.data;
-const selectTransactionsDataLoaded = (state: RootState) => state.transactionsV2.transactionsLoaded;
+const selectTransactionsData = (state: RootState) => state.transactions.data;
+const selectTransactionsDataLoaded = (state: RootState) => state.transactions.transactionsLoaded;
 
-export const selectMonthFilter = (state: RootState) => state.transactionsV2.selectedMonthyear;
+export const selectMonthFilter = (state: RootState) => state.transactions.selectedMonthyear;
 
 /* select all transactions */
 export const selectAllTransactions = createSelector(

@@ -10,7 +10,7 @@ export const useFetchMonthlyTransactions = () => {
   const selectedMonthyear = useAppSelector(transactionsSelector.selectMonthFilter);
   const { labels, labelValueMap } = useMemo(() => getLastNMonthLabelsAndMap(6), []); // note: using last 6 months for now fix later
 
-  const refetchTransactions = useAppSelector(state => state.transactionsV2.refetchTransactions);
+  const refetchTransactions = useAppSelector(state => state.transactions.refetchTransactions);
 
   useEffect(() => {
     if (refetchTransactions === true)

@@ -1,4 +1,4 @@
-import { useFetchMonthlyTransactions, useCreditTransactionsByPayingStatus } from "@/state/transactionsV2/hooks"
+import { useFetchMonthlyTransactions, useCreditTransactionsByPayingStatus } from "@/state/transactions/hooks"
 import { useFetchAccounts } from "@/state/user/hooks"
 import SpendingSummary from "./SpendingSummary"
 import PaymentSummary from "./PaymentSummary"

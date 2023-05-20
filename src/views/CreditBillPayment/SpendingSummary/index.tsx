@@ -1,4 +1,4 @@
-import { useSpendingSummaryData } from "@/state/transactionsV2/hooks";
+import { useSpendingSummaryData } from "@/state/transactions/hooks";
 import styled from "styled-components"
 import Card from "@/components/Card"
 import TransactionSummaryTable from "@/components/BooKeeTable/TransactionSummaryTable";

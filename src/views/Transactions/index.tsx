@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useFetchMonthlyTransactions, useAllTransactions } from "@/state/transactionsV2/hooks"
+import { useFetchMonthlyTransactions, useAllTransactions } from "@/state/transactions/hooks"
 import { TransactionType } from "@prisma/client"
 import styled from "styled-components"
 import { PageSection } from "@/components/Layout/Page"

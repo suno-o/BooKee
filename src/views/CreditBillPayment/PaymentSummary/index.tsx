@@ -1,7 +1,7 @@
 import {
   useCreditTransactionsTotalsByPayingStatus,
   useCreditTransactionsByPayingStatus
-} from "@/state/transactionsV2/hooks"
+} from "@/state/transactions/hooks"
 import styled from "styled-components"
 import Card from "@/components/Card"
 import PaymentTable from "./PaymentTable"

@@ -2,7 +2,7 @@ import { useState, useContext } from "react"
 import { ModalContext, ModalContextType } from "../.."
 import { useAppDispatch } from "@/state"
 import { useCashAccounts, useCategories } from "@/state/user/hooks"
-import { addTransaction } from "@/state/transactionsV2"
+import { addTransaction } from "@/state/transactions"
 import { refetchUserData } from "@/state/user"
 import DropDown from "@/components/DropDown"
 import { Wrapper, Label, TextInput, StyledButton } from './styles'

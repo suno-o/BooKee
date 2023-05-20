@@ -1,4 +1,4 @@
-import { useAllTransactionsByType } from "@/state/transactionsV2/hooks"
+import { useAllTransactionsByType } from "@/state/transactions/hooks"
 import styled from "styled-components"
 import TransactionSummaryTable from "@/components/BooKeeTable/TransactionSummaryTable"
 

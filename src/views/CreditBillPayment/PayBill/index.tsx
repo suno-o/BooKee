@@ -1,4 +1,4 @@
-import { useUnpaidTransactionsByAccount} from "@/state/transactionsV2/hooks"
+import { useUnpaidTransactionsByAccount} from "@/state/transactions/hooks"
 import styled from "styled-components"
 import PayingDetail from "./PayingDetail"
 

@@ -1,4 +1,4 @@
-import { useBankAndCategory } from "@/state/transactionsV2/hooks"
+import { useBankAndCategory } from "@/state/transactions/hooks"
 import { TransactionType } from "@prisma/client"
 import { Filters, TransactionTypeFilter } from "."
 import styled, { css } from "styled-components"

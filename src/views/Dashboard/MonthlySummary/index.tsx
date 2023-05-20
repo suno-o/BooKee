@@ -1,4 +1,4 @@
-import { useFetchMonthlyTransactions } from "@/state/transactionsV2/hooks"
+import { useFetchMonthlyTransactions } from "@/state/transactions/hooks"
 import styled from "styled-components"
 import DropDown from "@/components/DropDown"
 import SummaryCards from "./SummaryCards"

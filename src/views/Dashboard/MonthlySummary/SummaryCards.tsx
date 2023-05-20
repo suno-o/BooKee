@@ -1,4 +1,4 @@
-import { useAllTransactionsTotalsByType } from "@/state/transactionsV2/hooks"
+import { useAllTransactionsTotalsByType } from "@/state/transactions/hooks"
 import styled from "styled-components"
 import Card from "@/components/Card"
 import { formatCash } from "@/utils/numbers"
