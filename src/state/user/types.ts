@@ -4,11 +4,15 @@ import { AccountType } from "@prisma/client";
 export interface UserState {
   categories: Category[];
   accounts: Account[];
+  yearlyBalances: YearlyBalance[];
+  dataLoaded: boolean;
+  refetch: boolean;
 }
 
-export interface UserDataResponse {
+export interface UserData {
   categories: Category[];
-  accounts: AccountResponse[];
+  accounts: Account[];
+  yearlyBalances: YearlyBalance[];
 }
 
 /* Account */
@@ -39,4 +43,15 @@ export interface Category {
 interface Bank {
   id: string;
   name: string;
+}
+
+/* Balance snapshot */
+export interface YearlyBalance {
+  month: string;
+  balance: number;
+}
+
+export interface YearlyBalanceResponse {
+  month: number;
+  balance: number;
 }

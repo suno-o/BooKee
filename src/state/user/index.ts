@@ -1,25 +1,25 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
-import { UserState, Category, Account } from "./types"
-import { getUserCategories, getUserAccounts } from "./api"
+import { UserState, UserData, Account } from "./types"
+import { getAllUserData, getUserAccounts } from "./api"
 
 const initialState: UserState = {
   categories: [],
   accounts: [],
+  yearlyBalances: [],
+  dataLoaded: false,
+  refetch: true,
 }
 
-export const fetchCategories = createAsyncThunk<Category[]>(
-  'user/fetchCategories',
+export const fetchAllUserData = createAsyncThunk<UserData>(
+  'user/fetchAllUserData',
   async () => {
-    const categories = await getUserCategories();
-    return categories;
+    return getAllUserData();
   }
 )
-
 export const fetchAccounts = createAsyncThunk<Account[]>(
   'user/fetchAccounts',
   async () => {
-    const accounts = await getUserAccounts();
-    return accounts;
+    return getUserAccounts();
   }
 )
 
@@ -27,17 +27,32 @@ export const fetchAccounts = createAsyncThunk<Account[]>(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    refetchUserData: (state) => {
+      state.refetch = true;
+    }
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCategories.fulfilled, (state, action: PayloadAction<Category[]>) => {
-        state.categories = action.payload;
+      .addCase(fetchAllUserData.fulfilled, (state, action: PayloadAction<UserData>) => {
+        const { categories, accounts, yearlyBalances} = action.payload;
+        state.categories = categories
+        state.accounts = accounts;
+        state.yearlyBalances = yearlyBalances;
+        state.dataLoaded = true;
+        state.refetch = false;
       })
 
+      .addCase(fetchAccounts.pending, (state) => {
+        state.dataLoaded = false;
+      })
       .addCase(fetchAccounts.fulfilled, (state, action: PayloadAction<Account[]>) => {
         state.accounts = action.payload;
+        state.dataLoaded = true;
       })
   },
 })
+
+export const { refetchUserData } = userSlice.actions;
 
 export default userSlice.reducer;

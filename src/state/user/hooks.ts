@@ -1,14 +1,18 @@
 import { useEffect } from "react"
-import { fetchCategories, fetchAccounts } from "."
+import { fetchAllUserData, fetchAccounts } from "."
 import { useAppDispatch, useAppSelector } from ".."
-import { cashAccountSelector } from "./selector"
+import { selectAccountsByType, selectBalancesByAccounts, selectYearlyBalances } from "./selector"
 
-export const useFetchCategories = () => {
+/* fetch hooks */
+export const useFetchUserData = () => {
   const dispatch = useAppDispatch();
+  const { refetch } = useAppSelector(state => state.user);
 
   useEffect(() => {
-    dispatch(fetchCategories())
-  }, [])
+    if (refetch) {
+      dispatch(fetchAllUserData())
+    }
+  }, [refetch])
 }
 
 export const useFetchAccounts = () => {
@@ -19,12 +23,25 @@ export const useFetchAccounts = () => {
   }, [])
 }
 
+/* state hooks */
 export const useCategories = () => {
   const { categories } = useAppSelector(state => state.user);
   return categories;
 }
 
+export const useAccountsByType = () => {
+  return useAppSelector(selectAccountsByType);
+}
+
 export const useCashAccounts = () => {
-  const accounts = useAppSelector(cashAccountSelector);
-  return accounts;
+  const { cashAccounts } = useAppSelector(selectAccountsByType);
+  return cashAccounts;
+}
+
+export const useBalancesByAccounts = () => {
+  return useAppSelector(selectBalancesByAccounts);
+}
+
+export const useYearlyBalances = () => {
+  return useAppSelector(selectYearlyBalances);
 }
