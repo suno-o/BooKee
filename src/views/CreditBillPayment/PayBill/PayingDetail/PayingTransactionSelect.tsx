@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Transaction } from "@/state/creditBillPayment/types"
+import { Transaction } from "@/state/transactions/types"
 import Table from "@/components/Table"
 import { prettifyDateConcise } from "@/utils/date"
 import { formatCash } from "@/utils/numbers"

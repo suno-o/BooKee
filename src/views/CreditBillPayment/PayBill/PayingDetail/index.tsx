@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import PayingSummary from "./PayingSummary"
 import PayingTransactionSelect from "./PayingTransactionSelect"
-import { Transaction } from "@/state/creditBillPayment/types"
+import { Transaction } from "@/state/transactions/types"
 
 export type CarryOverTransactions = {[key: string]: boolean};
 

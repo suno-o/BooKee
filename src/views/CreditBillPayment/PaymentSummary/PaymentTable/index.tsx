@@ -4,7 +4,7 @@ import Tooltip from "@/components/Tooltip"
 import Skeleton from "@/components/Skeleton"
 import { getMonthDate } from "@/utils/date"
 import { formatCash } from "@/utils/numbers"
-import { Transaction } from "@/state/creditBillPayment/types"
+import { Transaction } from "@/state/transactions/types"
 
 interface Props {
   className?: string;

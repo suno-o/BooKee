@@ -1,13 +1,20 @@
 import { useMemo } from "react"
 import AnimatedTabView from "@/components/AnimatedTabView"
 import TransactionTable from "@/components/BooKeeTable/TransactionTable"
-import { Transaction } from "@/state/dashboard/types"
+import { Transaction } from "@/state/transactions/types"
 
 interface TransactionSummaryTableProps {
   theme: string;
   header: string;
   transactions: Transaction[];
   dataLoaded: boolean;
+}
+
+interface TransactionGroupByCategory {
+  bankId: string;
+  bankName: string;
+  categoryId: string;
+  categoryName: string;
 }
 
 interface TransactionSummaryData {
@@ -26,7 +33,7 @@ interface TransactionSummaryData {
  *   ...
  * }
  */
-const getTransactionsTotalAmount = (transactions: Transaction[], groupSumBy: keyof Transaction, labelForGroup: keyof Transaction) => {
+const getTransactionsTotalAmount = (transactions: Transaction[], groupSumBy: keyof TransactionGroupByCategory, labelForGroup: keyof TransactionGroupByCategory) => {
   return transactions.reduce((summaryData: TransactionSummaryData, transaction: Transaction) => {
     const id = transaction[groupSumBy];
     const label = transaction[labelForGroup];
