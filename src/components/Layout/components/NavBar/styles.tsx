@@ -34,6 +34,10 @@ export const Links = styled.div`
   }
 `
 
+export const Logo = styled(Link)`
+  height: 20px;
+`
+
 export const StyledLink = styled(Link)<{selected: boolean}>`
   text-decoration: none;
   color: ${p => p.theme.colors.primary_dark};

@@ -1,11 +1,14 @@
 import { useRouter } from "next/router"
+import Image from "next/image"
 import Link from "next/link"
 import Button from "@/components/Button"
 import {
   NavBarContainer,
+  Logo,
   Links,
   StyledLink,
 } from "./styles"
+import bookeeIcon from "@/assets/icons/bookee.png"
 
 const NavBar = () => {
   const router = useRouter();
@@ -18,14 +21,15 @@ const NavBar = () => {
 
   /* Note: update when the auth service is implemented */
   const homePaths = ['/', '/article/choosing-banking-products', '/articles/paying-bills', '/privacy-policy'];
+  const isHomePath = homePaths.includes(currentPath);
   
   return (
     <NavBarContainer>
-      <h2>Logo</h2>
+      <Logo href={isHomePath ? '/' : '/dashboard'}>
+        <Image src={bookeeIcon} alt='logo' width={80} height={20} />
+      </Logo>
 
-      {homePaths.includes(currentPath) ? (
-        <p style={{textAlign: 'center', fontWeight: 'bold'}}>BooKee is currently under development</p>
-      ) : (
+      {!homePaths.includes(currentPath) && (
         <Links>
           {navLinks.map(({path, name}) => (
             <StyledLink
